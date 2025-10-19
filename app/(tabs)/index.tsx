@@ -1,98 +1,119 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import React, { useEffect } from 'react';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import { useAuth } from '@/hooks/use-auth';
+import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+  const { user, logout, isAuthenticated } = useAuth();
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.replace('/login');
+    }
+  }, [isAuthenticated]);
+
+  const handleLogout = () => {
+    Alert.alert(
+      'Logout',
+      'Deseja realmente sair do aplicativo?',
+      [
+        {
+          text: 'Cancelar',
+          style: 'cancel',
+        },
+        {
+          text: 'Sair',
+          style: 'destructive',
+          onPress: async () => {
+            await logout();
+            router.replace('/login');
+          },
+        },
+      ]
+    );
+  };
+
+  return (
+    <View className="flex-1 bg-gray-50 p-6">
+      {/* Header */}
+      <View className="bg-white rounded-2xl shadow-lg p-6 mb-6">
+        <View className="flex-row items-center justify-between mb-4">
+          <View className="flex-row items-center">
+            <View className="w-12 h-12 bg-blue-100 rounded-full items-center justify-center mr-3">
+              <Ionicons name="person" size={24} color="#3B82F6" />
+            </View>
+            <View>
+              <Text className="text-lg font-bold text-gray-900">
+                Olá, {user?.name || 'Usuário'}!
+              </Text>
+              <Text className="text-sm text-gray-600">
+                {user?.email}
+              </Text>
+            </View>
+          </View>
+          <TouchableOpacity
+            onPress={handleLogout}
+            className="p-2 bg-red-50 rounded-lg"
+          >
+            <Ionicons name="log-out-outline" size={20} color="#EF4444" />
+          </TouchableOpacity>
+        </View>
+        
+        <View className="border-t border-gray-200 pt-4">
+          <Text className="text-sm text-gray-600 mb-1">Login:</Text>
+          <Text className="text-base font-medium text-gray-900 mb-3">
+            {user?.login}
+          </Text>
+          
+          <Text className="text-sm text-gray-600 mb-1">Status:</Text>
+          <View className="flex-row items-center">
+            <View className="w-2 h-2 bg-green-500 rounded-full mr-2" />
+            <Text className="text-sm font-medium text-green-600">
+              {user?.active === 'Y' ? 'Ativo' : 'Inativo'}
+            </Text>
+          </View>
+        </View>
+      </View>
+
+      {/* Welcome Message */}
+      <View className="bg-blue-50 rounded-2xl p-6 mb-6">
+        <View className="flex-row items-center mb-3">
+          <Ionicons name="checkmark-circle" size={24} color="#3B82F6" />
+          <Text className="text-lg font-semibold text-blue-900 ml-2">
+            Login realizado com sucesso!
+          </Text>
+        </View>
+        <Text className="text-blue-700">
+          Você está autenticado no sistema com token JWT válido por 24 horas.
+        </Text>
+      </View>
+
+      {/* App Info */}
+      <View className="bg-white rounded-2xl shadow-lg p-6">
+        <Text className="text-lg font-bold text-gray-900 mb-4">
+          Informações do App
+        </Text>
+        
+        <View className="space-y-3">
+          <View className="flex-row items-center">
+            <Ionicons name="shield-checkmark" size={20} color="#10B981" />
+            <Text className="text-gray-700 ml-3">Autenticação JWT segura</Text>
+          </View>
+          
+          <View className="flex-row items-center">
+            <Ionicons name="time" size={20} color="#F59E0B" />
+            <Text className="text-gray-700 ml-3">Sessão válida por 24 horas</Text>
+          </View>
+          
+          <View className="flex-row items-center">
+            <Ionicons name="refresh" size={20} color="#3B82F6" />
+            <Text className="text-gray-700 ml-3">Renovação automática de token</Text>
+          </View>
+        </View>
+      </View>
+    </View>
   );
 }
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+
