@@ -1,76 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import { useAuth } from '@/context/AuthContext'; // Usar o contexto
+import { StatusBar } from 'expo-status-bar';
+import { useState } from 'react';
 import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
+  ActivityIndicator,
   Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  ActivityIndicator,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import { router } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import AuthService from '@/services/auth';
-import { useAuth } from '@/hooks/use-auth';
 
 export default function LoginScreen() {
-  const [login, setLogin] = useState('');
-  const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const { isAuthenticated } = useAuth();
+  const [loginInput, setLoginInput] = useState('admin');
+  const [password, setPassword] = useState('admin');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { login } = useAuth(); // Obter apenas a função login
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.replace('/(tabs)');
-    }
-  }, [isAuthenticated]);
+  // O useEffect de redirecionamento foi movido para _layout.tsx
 
   const handleLogin = async () => {
-    if (!login.trim() || !password.trim()) {
+    if (!loginInput.trim() || !password.trim()) {
       Alert.alert('Erro', 'Por favor, preencha todos os campos');
       return;
     }
-
-    setIsLoading(true);
-
+    setIsSubmitting(true);
     try {
-      const response = await AuthService.login({
-        login: login.trim(),
-        password: password.trim(),
-      });
-
-      if (response.success) {
-        // Aguardar um pouco para o hook useAuth atualizar
-        setTimeout(() => {
-          router.replace('/(tabs)');
-        }, 100);
-      }
+      await login({ login: loginInput.trim(), password: password.trim() });
+      // Não precisa mais de router.replace aqui, o _layout tratará disso
     } catch (error) {
-      Alert.alert(
-        'Erro no Login',
-        error instanceof Error ? error.message : 'Erro desconhecido'
-      );
+      Alert.alert('Erro no Login', error instanceof Error ? error.message : 'Erro desconhecido');
     } finally {
-      setIsLoading(false);
+      setIsSubmitting(false);
     }
   };
 
+  // Não precisa mais do `if (isAuthLoading)` aqui, pois o _layout segura o SplashScreen
+
   return (
-    <KeyboardAvoidingView
+    <KeyboardAvoidingView 
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       className="flex-1 bg-gray-50"
     >
       <StatusBar style="dark" />
-      <ScrollView
+      <ScrollView 
         contentContainerStyle={{ flexGrow: 1 }}
         keyboardShouldPersistTaps="handled"
+        className="flex-1"
       >
-        <View className="flex-1 justify-center px-6 py-12">
-          {/* Logo/Header */}
-          <View className="mb-8">
-            <Text className="text-3xl font-bold text-center text-gray-900 mb-2">
+        <View className="flex-1 justify-center items-center px-6 py-12">
+          {/* Header */}
+          <View className="mb-8 items-center">
+            <Text className="text-3xl font-bold text-center text-[#495057] mb-2">
               Bem-vindo
             </Text>
             <Text className="text-base text-center text-gray-600">
@@ -79,51 +62,44 @@ export default function LoginScreen() {
           </View>
 
           {/* Login Form */}
-          <View className="bg-white rounded-2xl shadow-lg p-6 mb-6">
-            {/* Login Field */}
+          <View className="w-full max-w-sm bg-white rounded-2xl shadow-lg p-6">
             <View className="mb-4">
               <Text className="text-sm font-medium text-gray-700 mb-2">
-                Usuário
+                Login
               </Text>
               <TextInput
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:border-blue-500 focus:bg-white"
-                placeholder="Digite seu usuário"
-                value={login}
-                onChangeText={setLogin}
+                className="border border-gray-300 rounded-lg px-4 py-3 text-base text-gray-800 bg-white"
+                placeholder="Digite seu login"
+                value={loginInput}
+                onChangeText={setLoginInput}
                 autoCapitalize="none"
                 autoCorrect={false}
-                editable={!isLoading}
               />
             </View>
 
-            {/* Password Field */}
             <View className="mb-6">
               <Text className="text-sm font-medium text-gray-700 mb-2">
                 Senha
               </Text>
               <TextInput
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:border-blue-500 focus:bg-white"
+                className="border border-gray-300 rounded-lg px-4 py-3 text-base text-gray-800 bg-white"
                 placeholder="Digite sua senha"
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
-                autoCapitalize="none"
-                autoCorrect={false}
-                editable={!isLoading}
               />
             </View>
 
-            {/* Login Button */}
             <TouchableOpacity
               className={`w-full py-4 rounded-lg ${
-                isLoading
+                isSubmitting
                   ? 'bg-gray-400'
-                  : 'bg-blue-600 active:bg-blue-700'
+                  : 'bg-[#1F319D] active:bg-[#1F319D]'
               }`}
               onPress={handleLogin}
-              disabled={isLoading}
+              disabled={isSubmitting}
             >
-              {isLoading ? (
+              {isSubmitting ? (
                 <View className="flex-row justify-center items-center">
                   <ActivityIndicator color="white" size="small" />
                   <Text className="text-white font-semibold text-base ml-2">
@@ -136,22 +112,6 @@ export default function LoginScreen() {
                 </Text>
               )}
             </TouchableOpacity>
-          </View>
-
-          {/* Additional Info */}
-          <View className="items-center">
-            <Text className="text-sm text-gray-500 text-center">
-              Problemas para acessar?{'\n'}
-              Entre em contato com o administrador
-            </Text>
-          </View>
-
-          {/* Token Info */}
-          <View className="mt-8 p-4 bg-blue-50 rounded-lg">
-            <Text className="text-xs text-blue-600 text-center">
-              🔒 Sessão segura com token JWT{'\n'}
-              Validade: 24 horas
-            </Text>
           </View>
         </View>
       </ScrollView>
