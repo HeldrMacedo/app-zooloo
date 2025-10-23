@@ -5,6 +5,8 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 import '../assets/styles/global.css';
+import { Drawer } from 'expo-router/drawer';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 // Previne que o splash screen desapareça automaticamente
 SplashScreen.preventAutoHideAsync();
@@ -12,9 +14,11 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   // Envolve tudo com o AuthProvider
   return (
-    <AuthProvider>
-      <RootLayoutNav />
-    </AuthProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <AuthProvider>
+        <RootLayoutNav />
+      </AuthProvider>
+    </GestureHandlerRootView>
   );
 }
 
@@ -50,12 +54,8 @@ function RootLayoutNav() {
     <>
       <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
       {/*
-         O Slot aqui renderizará ou a tela de Login ou o Layout das Tabs,
+         O Stack aqui renderizará ou a tela de Login ou o Layout das Tabs com Drawer,
          dependendo da navegação controlada pelo useEffect acima.
-         Se você tiver um Stack principal, use-o aqui.
-         Se as tabs e o login forem rotas de nível superior, Slot está correto.
-         Considerando a estrutura, talvez um Stack seja mais apropriado
-         para definir as telas de login e (tabs).
       */}
        <Stack screenOptions={{ headerShown: false }}>
          <Stack.Screen name="login" />
