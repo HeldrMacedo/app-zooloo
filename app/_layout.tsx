@@ -3,10 +3,10 @@ import { useColorScheme } from '@/hooks/use-color-scheme';
 import { SplashScreen, Stack, router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
-import 'react-native-reanimated';
-import '../assets/styles/global.css';
-import { Drawer } from 'expo-router/drawer';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import 'react-native-reanimated';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import '../assets/styles/global.css';
 
 // Previne que o splash screen desapareça automaticamente
 SplashScreen.preventAutoHideAsync();
@@ -15,9 +15,11 @@ export default function RootLayout() {
   // Envolve tudo com o AuthProvider
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <AuthProvider>
         <RootLayoutNav />
       </AuthProvider>
+    </SafeAreaView>
     </GestureHandlerRootView>
   );
 }

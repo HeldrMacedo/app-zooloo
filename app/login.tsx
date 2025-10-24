@@ -37,8 +37,6 @@ export default function LoginScreen() {
     }
   };
 
-  // Não precisa mais do `if (isAuthLoading)` aqui, pois o _layout segura o SplashScreen
-
   return (
     <KeyboardAvoidingView 
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
