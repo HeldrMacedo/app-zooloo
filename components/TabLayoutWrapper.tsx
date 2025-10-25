@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 8,
     paddingBottom:4,
-    height: 60,
+   
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: '#E0E0E0',
   },
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   circularButtonContainer: {
     position: 'relative',
     alignItems: 'center',
-    bottom: 10,
+    bottom: 30,
     width: 60,
     height: 60,
   },

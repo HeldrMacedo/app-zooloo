@@ -1,18 +1,14 @@
-/*
- * Caminho: heldrmacedo/app-zooloo/app-zooloo-feature-menu-drawer/app/(tabs)/index.tsx
- */
 import { useAuth } from '@/context/AuthContext';
 import { Ionicons } from '@expo/vector-icons';
-import { ActivityIndicator, ScrollView, Text, View } from 'react-native'; // Usar ScrollView se necessário
-// Importe o Wrapper que contém a CustomBottomTab
-import { TabLayoutWrapper } from '@/components/TabLayoutWrapper'; // Ajuste o caminho se necessário
+import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
+
+import { TabLayoutWrapper } from '@/components/TabLayoutWrapper';
 
 export default function HomeScreen() {
   const { user, isLoading } = useAuth();
 
   if (isLoading) {
     return (
-      // O wrapper pode ter um fundo, então o loading pode ser simples
       <TabLayoutWrapper>
         <View className="flex-1 justify-center items-center">
           <ActivityIndicator size="large" color="#3B82F6" />
@@ -20,8 +16,6 @@ export default function HomeScreen() {
       </TabLayoutWrapper>
     );
   }
-
-  // Não precisa verificar isAuthenticated aqui, pois _layout já garante
 
   return (
     <TabLayoutWrapper>
