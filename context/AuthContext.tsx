@@ -1,13 +1,14 @@
 import type { User } from '@/services/auth';
 import AuthService from '@/services/auth';
-import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import React, { createContext, ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 
 interface AuthContextType {
   isAuthenticated: boolean;
   user: User | null;
   isLoading: boolean;
-  login: (credentials: { login: string; password: string }) => Promise<any>; // Ajuste o tipo de retorno se necessário
+  login: (credentials: { login: string; password: string }) => Promise<void>;
   logout: () => Promise<void>;
+  refreshAuth: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -15,81 +16,61 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true); // Apenas para o carregamento inicial
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    checkAuthStatus();
-  }, []);
-
-  const checkAuthStatus = async () => {
-    console.log("AuthProvider: Verificando status de autenticação...");
+  const checkAuthStatus = useCallback(async () => {
     try {
       setIsLoading(true);
       const authenticated = await AuthService.isAuthenticated();
-      console.log("AuthProvider: Status verificado - ", authenticated);
       setIsAuthenticated(authenticated);
-
-      if (authenticated) {
-        const userData = await AuthService.getStoredUser();
-        setUser(userData);
-      } else {
-        setUser(null);
-      }
-    } catch (error) {
-      console.error('AuthProvider: Erro ao verificar autenticação:', error);
+      setUser(authenticated ? await AuthService.getStoredUser() : null);
+    } catch {
       setIsAuthenticated(false);
       setUser(null);
     } finally {
       setIsLoading(false);
-      console.log("AuthProvider: Verificação de status concluída.");
     }
-  };
+  }, []);
 
-  const login = async (credentials: { login: string; password: string }) => {
+  useEffect(() => {
+    checkAuthStatus();
+  }, [checkAuthStatus]);
+
+  const login = useCallback(async (credentials: { login: string; password: string }) => {
     try {
-      // Opcional: pode ter um estado de loading específico para o login aqui se quiser
       const response = await AuthService.login(credentials);
-      if (response.success && response.user) {
-        console.log("AuthProvider: Login bem-sucedido, atualizando estado.");
-        setIsAuthenticated(true);
-        setUser(response.user);
-        // A navegação será tratada pelas telas que usam o contexto
-      } else {
-        setIsAuthenticated(false);
-        setUser(null);
-        throw new Error(response.message || 'Credenciais inválidas informadas pela API');
+      if (!response.success || !response.user) {
+        throw new Error(response.message || 'Credenciais inválidas');
       }
-      return response;
+      setIsAuthenticated(true);
+      setUser(response.user);
     } catch (error) {
-      console.error('AuthProvider: Erro no login:', error);
       setIsAuthenticated(false);
       setUser(null);
-      throw error; // Re-lança para a tela de login
+      throw error;
     }
-  };
+  }, []);
 
-  const logout = async () => {
+  const logout = useCallback(async () => {
     try {
       await AuthService.logout();
-    } catch (error) {
-      console.error('AuthProvider: Erro na chamada de logout da API:', error);
+    } catch {
+      // logout nunca deve lançar para a UI — estado local é limpo de qualquer forma
     } finally {
-      // Sempre faça logout localmente
-      console.log("AuthProvider: Fazendo logout, atualizando estado.");
       setIsAuthenticated(false);
       setUser(null);
-      // A navegação será tratada pelas telas que usam o contexto
     }
-  };
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, isLoading, login, logout }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, user, isLoading, login, logout, refreshAuth: checkAuthStatus }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Hook para usar o contexto
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (context === undefined) {

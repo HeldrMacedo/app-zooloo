@@ -14,8 +14,8 @@ import {
 } from 'react-native';
 
 export default function LoginScreen() {
-  const [loginInput, setLoginInput] = useState('admin');
-  const [password, setPassword] = useState('admin');
+  const [loginInput, setLoginInput] = useState('');
+  const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { login } = useAuth(); // Obter apenas a função login
 

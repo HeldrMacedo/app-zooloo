@@ -23,22 +23,11 @@ function RootLayoutNav() {
   const { isAuthenticated, isLoading } = useAuth(); // Obter estado do contexto
 
   useEffect(() => {
-    console.log(`RootLayoutNav Effect: isLoading=${isLoading}, isAuthenticated=${isAuthenticated}`);
     if (!isLoading) {
-      SplashScreen.hideAsync(); // Esconde o splash screen quando a verificação inicial terminar
-      if (isAuthenticated) {
-        console.log("RootLayoutNav: Autenticado, garantindo que está em /tabs");
-        // Se estiver autenticado, certifique-se de que está no grupo (tabs)
-        // O router.replace pode ser redundante se a navegação inicial já o colocar lá,
-        // mas garante que não fique preso no login se o estado mudar.
-        router.replace('/(tabs)');
-      } else {
-        console.log("RootLayoutNav: Não autenticado, garantindo que está em /login");
-        // Se não estiver autenticado, certifique-se de que está na tela de login
-        router.replace('/login');
-      }
+      SplashScreen.hideAsync();
+      router.replace(isAuthenticated ? '/(tabs)' : '/login');
     }
-  }, [isLoading, isAuthenticated]); // Executa quando isLoading ou isAuthenticated mudam
+  }, [isLoading, isAuthenticated]);
 
   // Não renderizar nada até que o estado de carregamento inicial seja resolvido
   // e a navegação inicial ocorra. O SplashScreen cobre a tela.
