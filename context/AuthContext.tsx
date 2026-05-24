@@ -38,6 +38,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const login = useCallback(async (credentials: { login: string; password: string }) => {
     try {
+
       const response = await AuthService.login(credentials);
       if (!response.success || !response.user) {
         throw new Error(response.message || 'Credenciais inválidas');

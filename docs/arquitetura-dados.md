@@ -30,6 +30,8 @@ O banco `applications` contém **79 tabelas** organizadas em 6 prefixos semânti
 **23 funções/triggers PostgreSQL**. O app mobile **nunca calcula** — envia dados brutos
 e relê os valores que os triggers preenchem.
 
+**Banco original que está servindo de base é o jb ip: [localhost] e porta 5432, user postgres, senha postgres**
+
 ---
 
 ## Diagrama de Dependências (alto nível)

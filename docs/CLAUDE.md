@@ -113,8 +113,13 @@ Para login/refresh use `{ skipAuth: true }`.
   não é fonte.
 - **`hooks/use-auth.ts` foi removido** — era duplicata do `AuthContext`. Use só `useAuth`
   de `@/context/AuthContext`.
+- **Não definir `apiBaseUrl` em `app.json` (dev):** deixar `"extra": {}` vazio é o
+  comportamento correto em desenvolvimento. O fallback de `apiConfig` lê o `hostUri` do
+  Expo (IP real da máquina, ex: `192.168.1.10`) e monta a URL automaticamente — funciona
+  para emulador e dispositivo físico. Setar `"http://localhost"` explicitamente quebra o
+  login no Android (localhost não resolve para a máquina host dentro do emulador).
 - **Produção exige HTTPS:** `apiConfig` lança erro se a URL for HTTP em build não-dev.
-  Configure `expo.extra.apiBaseUrl` em `app.json`.
+  Nesse caso sim, definir `expo.extra.apiBaseUrl` com URL HTTPS em `app.json`.
 - **Adianti retorna datas como string** em tabelas `system_*` — tratar conversão.
 - **`palpites` é string posicional**, não relacional — não tente parsear no app sem as
   amostras da Fase 0 (ver [plano.md](plano.md) seção 2.7).

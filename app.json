@@ -6,9 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "appzooloo",
-    "extra": {
-      "apiBaseUrl": "http://localhost"
-    },
+    "extra": {},
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
