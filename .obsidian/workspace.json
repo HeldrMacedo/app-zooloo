@@ -1,0 +1,209 @@
+{
+  "main": {
+    "id": "5d676b88a8eb11a7",
+    "type": "split",
+    "children": [
+      {
+        "id": "81eda1e26f853bc1",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0297402c6b2794b5",
+            "type": "leaf",
+            "state": {
+              "type": "kanban",
+              "state": {
+                "file": "tasks/roadmap.md",
+                "kanbanViewState": {
+                  "kanban-plugin": "board",
+                  "list-collapse": []
+                }
+              },
+              "icon": "lucide-trello",
+              "title": "roadmap"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "96b6d451f3ea5ab5",
+    "type": "split",
+    "children": [
+      {
+        "id": "04771b9bcd88482a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a304e67187fe34ec",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorador de arquivos"
+            }
+          },
+          {
+            "id": "855e01a486cbb00c",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Procurar"
+            }
+          },
+          {
+            "id": "cfdeea68e0f8c0a4",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Marcadores"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "bbe1a1f7c86c4e90",
+    "type": "split",
+    "children": [
+      {
+        "id": "2448632073d4a253",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0867b2e00f81ce3e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "tasks/roadmap.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Links inversos para roadmap"
+            }
+          },
+          {
+            "id": "3c27289c3539c340",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "docs/decisoes/001-por-que-expo-router.md.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Links de saída para 001-por-que-expo-router.md"
+            }
+          },
+          {
+            "id": "f3a4e9c462125b83",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Etiquetas"
+            }
+          },
+          {
+            "id": "a29a884ea8ed5598",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "Todas as propriedades"
+            }
+          },
+          {
+            "id": "2b654ce28ea5b990",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "docs/decisoes/001-por-que-expo-router.md.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Sumário de 001-por-que-expo-router.md"
+            }
+          },
+          {
+            "id": "869a4fb3bed48057",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Abrir a troca rápida": false,
+      "graph:Abrir visualização em gráfico": false,
+      "canvas:Criar novo canvas": false,
+      "daily-notes:Abrir a nota de hoje": false,
+      "templates:Inserir modelo": false,
+      "command-palette:Abrir paleta de comandos": false,
+      "bases:Criar nova base": false,
+      "obsidian-kanban:Create new board": false,
+      "templater-obsidian:Templater": false,
+      "obsidian-excalidraw-plugin:New drawing": false
+    }
+  },
+  "active": "0297402c6b2794b5",
+  "lastOpenFiles": [
+    "docs/decisoes/001-por-que-expo-router.md.md",
+    "docs/README-AUTH.md",
+    "docs/decisoes",
+    "docs/CLAUDE.md",
+    "docs",
+    "node_modules/ms/license.md"
+  ]
+}

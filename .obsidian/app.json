@@ -1,0 +1,20 @@
+{
+  "userIgnoreFilters": [
+    "node_modules/",
+    ".git",
+    ".expo",
+    ".expo-shared",
+    "build/",
+    "coverage/",
+    "dist/",
+    "android/",
+    "ios/",
+    ".vscode",
+    "__tests__/",
+    ".next/",
+    ".turbo/",
+    "*.log",
+    "package-lock.json",
+    "yarn.lock"
+  ]
+}

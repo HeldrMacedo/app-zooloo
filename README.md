@@ -48,3 +48,34 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+
+## Estrutura de arquivos para o obsidian
+app-zooloo/
+├─ docs/                      ← Arquitetura e decisões (CLAUDE.md vai aqui)
+│  ├─ CLAUDE.md               ← índice operacional do app
+│  ├─ README-AUTH.md          ← autenticação (já existe)
+│  ├─ plano.md                ← roadmap geral (já existe)
+│  ├─ arquitetura-dados.md    ← como o banco está modelado
+│  ├─ regras-negocio.md       ← cópia das regras dos jogos (regraJogos.md)
+│  └─ decisoes/               ← ADRs (Architecture Decision Records)
+│     └─ 001-por-que-expo-router.md
+│
+├─ tasks/                     ← Fases e tarefas granulares
+│  ├─ roadmap.md              ← kanban board (link para as fases)
+│  ├─ fase-0-regras.md        ← checkboxes das tarefas da Fase 0
+│  ├─ fase-1-autenticacao.md  ← já concluída (histórico)
+│  ├─ fase-2-aposta-bicho.md  ← próxima fatia (em andamento)
+│  └─ backlog.md              ← ideias/melhorias futuras
+│
+├─ bugs/                      ← Problemas conhecidos
+│  ├─ template-bug.md         ← template para novos bugs
+│  └─ 2025-05-23-login-offline.md
+│
+├─ daily/                     ← Diário de desenvolvimento (opcional)
+│  └─ 2025-05-23.md           ← "hoje fiz X, travei em Y, amanhã vou Z"
+│
+└─ templates/                 ← Templates Templater
+   ├─ nova-tarefa.md
+   ├─ novo-bug.md
+   └─ nova-decisao-arquitetural.md
