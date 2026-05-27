@@ -11,16 +11,14 @@
             "id": "0297402c6b2794b5",
             "type": "leaf",
             "state": {
-              "type": "kanban",
+              "type": "markdown",
               "state": {
-                "file": "tasks/roadmap.md",
-                "kanbanViewState": {
-                  "kanban-plugin": "board",
-                  "list-collapse": []
-                }
+                "file": "tasks/logica-tela-premios.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-trello",
-              "title": "roadmap"
+              "icon": "lucide-file",
+              "title": "logica-tela-premios"
             }
           }
         ]
@@ -96,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "tasks/roadmap.md",
+                "file": "tasks/logica-tela-premios.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -106,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Links inversos para roadmap"
+              "title": "Links inversos para logica-tela-premios"
             }
           },
           {
@@ -199,6 +197,8 @@
   },
   "active": "0297402c6b2794b5",
   "lastOpenFiles": [
+    "tasks/fase-2-aposta-bicho.md",
+    "tasks/roadmap.md",
     "docs/decisoes/001-por-que-expo-router.md.md",
     "docs/README-AUTH.md",
     "docs/decisoes",
