@@ -1,4 +1,5 @@
 import { AuthProvider, useAuth } from '@/context/AuthContext'; // Importar AuthProvider e useAuth
+import { CarrinhoProvider } from '@/context/CarrinhoContext';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { SplashScreen, Stack, router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -10,10 +11,12 @@ import '../assets/styles/global.css';
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  // Envolve tudo com o AuthProvider
+  // Envolve tudo com o AuthProvider e CarrinhoProvider
   return (
     <AuthProvider>
-      <RootLayoutNav />
+      <CarrinhoProvider>
+        <RootLayoutNav />
+      </CarrinhoProvider>
     </AuthProvider>
   );
 }

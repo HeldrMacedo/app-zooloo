@@ -1,51 +1,58 @@
-import { useAuth } from '@/context/AuthContext'; // Usar o contexto
+import { useAuth } from '@/context/AuthContext';
 import { Ionicons } from '@expo/vector-icons';
-import { ActivityIndicator, Alert, TouchableOpacity, View } from 'react-native';
-// Não precisa mais do router aqui para redirecionar para login
+import { ActivityIndicator, Alert, TouchableOpacity, View, Text } from 'react-native';
+import { router } from 'expo-router';
 
 export default function HomeScreen() {
-  // Obter user e logout do contexto. isLoading e isAuthenticated não são estritamente necessários aqui
-  // porque o _layout já garante que esta tela só é mostrada se autenticado.
-  const { user, logout, isLoading } = useAuth(); // Mantemos isLoading para o estado inicial
-
-  // O useEffect de redirecionamento foi movido para _layout.tsx
+  const { user, logout, isLoading } = useAuth();
 
   const handleLogout = () => {
-    Alert.alert( 'Logout', 'Deseja realmente sair do aplicativo?',
-      [
-        { text: 'Cancelar', style: 'cancel' },
-        { text: 'Sair', style: 'destructive', onPress: async () => {
-            await logout(); // Chama o logout do contexto
-            // Não precisa mais de router.replace aqui
-          },
+    Alert.alert('Logout', 'Deseja realmente sair do aplicativo?', [
+      { text: 'Cancelar', style: 'cancel' },
+      {
+        text: 'Sair',
+        style: 'destructive',
+        onPress: async () => {
+          await logout();
         },
-      ]
-    );
+      },
+    ]);
   };
 
-  // O _layout agora mostra o SplashScreen durante o isLoading inicial.
-  // Poderia adicionar um loading aqui se houver carregamento *específico* desta tela,
-  // mas o carregamento inicial de auth é tratado acima. Se chegar aqui e isLoading ainda for true
-  // (improvável devido ao _layout), pode mostrar um loading.
-   if (isLoading) {
-     return (
-       <View className="flex-1 justify-center items-center bg-gray-50">
-         <ActivityIndicator size="large" color="#3B82F6" />
-       </View>
-     );
-   }
+  if (isLoading) {
+    return (
+      <View className="flex-1 justify-center items-center bg-gray-50">
+        <ActivityIndicator size="large" color="#3B82F6" />
+      </View>
+    );
+  }
 
-  // Se chegou aqui, o utilizador está autenticado (garantido pelo _layout)
   return (
-    <View className="flex-1 bg-gray-50 p-6">
-       {/* ... (resto da UI como antes, usando user) ... */}
-        <TouchableOpacity
-            onPress={handleLogout}
-            className="p-2 bg-red-50 rounded-lg"
-          >
-            <Ionicons name="log-out-outline" size={20} color="#EF4444" />
+    <View className="flex-1 bg-gray-50 p-6 pt-16">
+      <View className="flex-row justify-between items-center mb-8">
+        <View>
+          <Text className="text-2xl font-bold text-gray-900">Olá, {user?.nome || 'Vendedor'}</Text>
+          <Text className="text-gray-500">O que deseja fazer hoje?</Text>
+        </View>
+        <TouchableOpacity onPress={handleLogout} className="p-3 bg-red-50 rounded-full">
+          <Ionicons name="log-out-outline" size={24} color="#EF4444" />
         </TouchableOpacity>
-        {/* ... */}
+      </View>
+
+      <View className="flex-1">
+        <TouchableOpacity
+          onPress={() => router.push('/aposta/modalidades')}
+          className="bg-blue-600 rounded-2xl p-6 shadow-sm flex-row items-center justify-between"
+        >
+          <View>
+            <Text className="text-white text-2xl font-bold mb-1">Jogo do Bicho</Text>
+            <Text className="text-blue-100">Faça sua aposta agora</Text>
+          </View>
+          <View className="bg-blue-500 p-3 rounded-full">
+            <Ionicons name="dice-outline" size={32} color="white" />
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

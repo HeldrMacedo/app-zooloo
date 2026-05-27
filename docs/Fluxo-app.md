@@ -1,8 +1,8 @@
 ---
 created: 2026-05-24
-updated: 2026-05-24
+updated: 2026-05-27
 tags: [fluxo, navegacao, arquitetura]
-status: rascunho
+status: revisado
 ---
 
 # Fluxo do App — App Zooloo
@@ -30,9 +30,7 @@ de compras**:
 3. Quando termina, abre o **carrinho**, escolhe a **extração** (dia/horário) e **finaliza**.
 4. Ao finalizar, o backend registra tudo e o app imprime o **pule** (com NSU e detalhes).
 
-❓ _A confirmar:_ a extração é única para o carrinho todo, ou cada aposta pode ter sua
-própria extração? (O fluxo abaixo assume **uma extração para o carrinho**; ajustar se for
-por aposta.)
+✔️ **Confirmado:** A extração é selecionada globalmente na tela de Preview para todas as apostas do carrinho. No entanto, o vendedor pode selecionar **múltiplas extrações** (se `cfg_parametros.multiplas_extracoes` permitir), e o app gera a combinação de jogos multiplicando-os para cada extração no payload final.
 
 ---
 
@@ -110,13 +108,12 @@ O vendedor escolhe entre:
 O mais elaborado. Etapas:
 
 **3.1 — Escolher modalidade.** Milhar, centena, dezena, grupo, etc.
-❓ _Confirmar a lista completa de modalidades do MVP em `regraJogos.md`._
+✔️ **Confirmado:** O MVP da Fase 2 foca na modalidade **MILHAR** (4 dígitos). As demais modalidades ficam ocultadas/desativadas até as próximas fases.
 
 **3.2 — Digitar os números da aposta.** Abre uma tela de digitação onde o vendedor
 informa os números conforme a modalidade (ex.: 4 dígitos para milhar, 2 para dezena).
 Ao clicar em **OK**, segue para o valor.
-❓ _Confirmar quantos dígitos cada modalidade exige e como isso vira o campo `palpites`
-posicional (ver [[fase-0-regras]])._
+✔️ **Confirmado:** A modalidade Milhar exige palpites de 4 dígitos. A listagem de palpites vira o campo `palpites` que é enviado como array e processado como string separada por vírgula no helper.
 
 **3.3 — Definir o valor por intervalo de prêmio.** Esta é a parte rica do JB. O vendedor
 informa o valor associado a um **intervalo de colocações de prêmio**, sempre dentro da
@@ -127,12 +124,11 @@ faixa **1º ao 10º**. Exemplos:
 - **1º ao 10º prêmio** → informa o valor
 - **Intervalo livre** → ex.: 3º ao 5º, 1º ao 6º, 4º ao 9º — qualquer intervalo dentro de 1–10
 
-Regras de validação (a confirmar):
+Regras de validação:
 
-- ❓ O intervalo é sempre contíguo (início ≤ fim) e limitado a 1–10?
-- ❓ O valor é por aposta ou multiplicado pela quantidade de prêmios do intervalo?
-  (Lembrar: **quem calcula é o backend** — o app só envia início, fim e valor.)
-- ❓ Pode haver mais de um intervalo na mesma aposta (ex.: 1º a R$2 e 5º a R$1)?
+- ✔️ **Intervalo Contíguo:** A API espera `colocacao_inicial` e `colocacao_final` (intervalo de 1 a 10). Se o vendedor selecionar colocações não contíguas no app, a UI preenche as lacunas automaticamente para garantir a contiguidade no payload final.
+- ✔️ **Valor da Aposta:** Controlado pelo switch `bitT_rateado` ("Por Cada" vs "Rateado"). Se "Por Cada", o total do item é multiplicado pela quantidade de prêmios no intervalo. Se "Rateado", o total do item é exatamente o valor digitado.
+- ✔️ **Múltiplos Intervalos:** Um item no carrinho só suporta um único intervalo (início ao fim), mas o vendedor pode adicionar múltiplas apostas ao carrinho (ex: uma para o 1º prêmio e outra para o 5º prêmio).
 
 Ao clicar em **OK**, a aposta vai para o **carrinho** e a tela **volta para a tela de
 modalidades**, para o vendedor montar outra aposta do JB se quiser. Se não quiser, ele
@@ -170,13 +166,12 @@ carrinho.
 
 Reúne **todas as apostas** adicionadas (de qualquer jogo). O vendedor:
 
-- Revê as apostas (e ❓ pode remover/editar?)
-- Escolhe a **extração** — o **dia e horário** disponíveis para aquelas apostas
-- Vê o **valor total** (calculado pelo backend, relido pelo app)
-- **Finaliza**
+- Revê as apostas e pode **remover** itens (edição deve ser feita removendo e adicionando novamente).
+- Escolhe as **extrações** e a **data** na tela de Preview.
+- Vê o **valor total estimado** localmente para UX (calculado multiplicando pelo número de extrações se não for rateado).
+- **Finaliza** (enviando para o backend, que recalcula oficialmente).
 
-❓ _A confirmar:_ a lista de extrações disponíveis vem do backend e depende do
-jogo/horário atual? Apostas de jogos diferentes podem compartilhar a mesma extração?
+✔️ **Confirmado:** A lista de extrações disponíveis é carregada do backend via `SorteioRestService::abertos` para a data selecionada. O app realiza a multiplicação de cada item do carrinho para cada extração no payload final.
 
 ### 7. Finalização e pule
 
@@ -225,14 +220,14 @@ ou total fica no app — o total exibido vem do backend.
 
 ## Pendências do fluxo
 
-- ❓ Extração: única por carrinho ou por aposta? Lista vem do backend?
-- ❓ JB — lista de modalidades do MVP e dígitos por modalidade
-- ❓ JB — intervalo de prêmios: contíguo? múltiplos intervalos? valor por prêmio vs. total?
-- ❓ Quininha — mínimo de números (máx confirmado = 13 de 80)
-- ❓ Seninha / Lotinha — tamanho da grade e quantidade de números escolhíveis
-- ❓ Carrinho — permite editar/remover itens?
-- ❓ Lista de jogos: fixa ou filtrada por `permissoes`?
-- ❓ Formato do `palpites` por jogo (resolver na [[fase-0-regras]])
+- ✔️ **Extração:** Selecionada na Preview, compartilhada pelas apostas do carrinho. Lista vem do backend via `SorteioRestService::abertos` para a data informada.
+- ✔️ **JB Modalidades MVP:** Apenas **MILHAR** ativo, exigindo 4 dígitos.
+- ✔️ **JB Prêmios:** Intervalo contíguo via `colocacao_inicial` e `colocacao_final`. Switch "Por Cada" vs "Rateado" controla a multiplicação.
+- ❓ Quininha — mínimo de números (máx confirmado = 13 de 80) — *Fase Futura*
+- ❓ Seninha / Lotinha — tamanho da grade e quantidade de números escolhíveis — *Fase Futura*
+- ✔️ **Carrinho:** Permite remover itens. Não possui edição direta (deve remover e reinserir).
+- ❓ Lista de jogos: fixa ou filtrada por `permissoes`? (MVP: fixo com JB ativo)
+- ✔️ **Formato do `palpites`:** Para o Milhar, palpites são enviados como array no JSON e processados no backend.
 
 ## Referências
 

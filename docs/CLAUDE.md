@@ -8,6 +8,7 @@ Roda em **celular do vendedor** e em **maquinetas POS Android** (impressora tér
 > - **Escopo, domínio, modelagem do banco, roadmap:** [[/docs/plano.md]]
 > - **Autenticação (fluxo de tokens, testes, produção):** [[/docs/README-AUTH.md]]
 > - **Backend:** [[C:/desenvolvimento/zooloo/zooloo/CLAUDE.md]]
+> - **Banco de dados:** [[C:/desenvolvimento/app-zooloo/docs/arquitetura-dados.md]]
 
 ---
 
