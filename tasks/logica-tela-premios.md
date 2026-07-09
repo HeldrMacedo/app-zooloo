@@ -2,8 +2,8 @@
 created: 2026-05-27
 updated: 2026-05-27
 fase: 2
-status: a-fazer
-tags: [tarefa, status/a-fazer, premios, jogo-do-bicho]
+status: concluido
+tags: [tarefa, status/concluido, premios, jogo-do-bicho]
 ---
 
 # Múltiplos Intervalos e Valores na Tela de Prêmios
@@ -28,32 +28,32 @@ Atualmente, a tela de prêmios limita o vendedor a escolher apenas um intervalo 
 
 ## Critérios de Aceite
 
-- [ ] A tela de prêmios exibe uma seção de "Intervalos Adicionados" listando cada prêmio cadastrado para o palpite.
-- [ ] Cada intervalo cadastrado na lista exibe:
+- [x] A tela de prêmios exibe uma seção de "Intervalos Adicionados" listando cada prêmio cadastrado para o palpite.
+- [x] Cada intervalo cadastrado na lista exibe:
   - O intervalo (ex: `1º ao 5º` ou `1º`)
   - O valor (ex: `R$ 2,00`)
   - O modo (ex: `Por Cada` ou `Rateado`)
   - Um botão para remover o intervalo específico.
-- [ ] O valor total estimado do palpite na tela reflete a soma de todos os intervalos inseridos.
-- [ ] O botão principal adiciona o palpite com toda a sua lista de prêmios ao carrinho.
-- [ ] O carrinho e a tela de Preview (Checkout) mostram corretamente os múltiplos intervalos e o somatório final estimado.
-- [ ] O envio do bilhete registra com sucesso no backend (com todos os intervalos processados pelas triggers do banco).
+- [x] O valor total estimado do palpite na tela reflete a soma de todos os intervalos inseridos.
+- [x] O botão principal adiciona o palpite com toda a sua lista de prêmios ao carrinho.
+- [x] O carrinho e a tela de Preview (Checkout) mostram corretamente os múltiplos intervalos e o somatório final estimado.
+- [x] O envio do bilhete registra com sucesso no backend (com todos os intervalos processados pelas triggers do banco).
 
 ## Subtarefas
 
-1. [ ] **Análise do Backend & Triggers**:
+1. [x] **Análise do Backend & Triggers**:
    - Verificar se `BilheteRestService::registrar` recebe um array de `jogos` onde cada entrada representa um intervalo (o que simplificaria para o app apenas enviar múltiplos objetos no array).
    - Validar se a trigger no PostgreSQL calcula corretamente as comissões e prêmios para apostas com múltiplos intervalos para o mesmo palpite.
-2. [ ] **Refatoração da Tela de Prêmios (`app/aposta/premios.tsx`)**:
+2. [x] **Refatoração da Tela de Prêmios (`app/aposta/premios.tsx`)**:
    - Criar estado local (`listaIntervalos`) para gerenciar as seleções temporárias de prêmios e valores do palpite atual.
    - Adicionar botão "Adicionar Intervalo" para acumular na lista local.
    - Adicionar componente visual da lista com opção de remoção de item.
-3. [ ] **Adaptação do Carrinho (`context/CarrinhoContext.tsx` e `types/aposta.ts`)**:
+3. [x] **Adaptação do Carrinho (`context/CarrinhoContext.tsx` e `types/aposta.ts`)**:
    - Verificar se é melhor desmembrar a estrutura para que cada intervalo seja um item separado no carrinho ou se o item do carrinho deve suportar uma lista de intervalos.
    *Nota: Se o backend espera que cada intervalo seja uma linha no array `jogos` do payload, podemos desmembrar em múltiplos `ApostaItem` no carrinho ou fazer essa quebra na tela de Preview.*
-4. [ ] **Atualização de Helpers & Cálculos**:
+4. [x] **Atualização de Helpers & Cálculos**:
    - Ajustar `utils/apostaHelpers.ts` para somar os totais quando houver múltiplos intervalos.
-5. [ ] **Testes Automatizados**:
+5. [x] **Testes Automatizados**:
    - Atualizar a suíte de testes unitários para validar múltiplos intervalos no carrinho e no payload final.
 
 ## Referências
