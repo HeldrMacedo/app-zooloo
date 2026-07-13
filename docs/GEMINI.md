@@ -1,6 +1,6 @@
 # GEMINI.md — Índice e Contexto para o App Zooloo
 
-Bem-vindo ao índice de contexto da inteligência artificial para o projeto **App Zooloo**. 
+Bem-vindo ao índice de contexto da inteligência artificial para o projeto **App Zooloo**.
 Este arquivo atua como o ponto central para compreender as regras de negócio, a arquitetura e conectar as documentações essenciais do sistema.
 
 ## 📌 Links Rápidos para Documentação (O Segundo Cérebro)
@@ -23,8 +23,8 @@ O App Zooloo é o Ponto de Venda (PDV) móvel focado em celulares e maquinetas P
 - **Stack Core:** Expo SDK 54, React Native 0.81, React 19, TypeScript (strict).
 - **Roteamento e UI:** Expo Router (file-based em `app/`), estilos com React Native `StyleSheet`.
 - **Estilização:** Evite cores hardcoded nas telas novas. Use tokens globais em `assets/styles/colors.ts` (e `fontFamily.ts` quando aplicável) e `StyleSheet` na própria tela.
-- **Comunicação REST:** 
-  - Chamadas são feitas EXCLUSIVAMENTE via `apiCall` (encapsulado em `services/apiClient.ts`). 
+- **Comunicação REST:**
+  - Chamadas são feitas EXCLUSIVAMENTE via `apiCall` (encapsulado em `services/apiClient.ts`).
   - O wrapper lida proativamente com refresh de tokens (< 60s), injeta o cabeçalho `Bearer` e empacota falhas na classe `ApiError`.
 - **Armazenamento:** `expo-secure-store` (tokens) e `@react-native-async-storage/async-storage` (dados de usuário e offline).
 
@@ -45,9 +45,9 @@ O App Zooloo é o Ponto de Venda (PDV) móvel focado em celulares e maquinetas P
 
 1. **Inicialização e Autenticação:**
    - O app usa um access token curto (15 min) e um refresh token longo (30 dias rotativo com revogação).
-   - O sistema de sessão (`AuthContext.tsx` via `useAuth()`) é a única fonte de verdade para acesso. 
+   - O sistema de sessão (`AuthContext.tsx` via `useAuth()`) é a única fonte de verdade para acesso.
    - O app pode inicializar offline se o token JWT local ainda for válido.
-   
+
 2. **Carga de Dados Base e Permissões:**
    - As funcionalidades do app dependem de permissões atreladas ao usuário logado na tabela `cad_vendedor` (ex: `pode_cancelar`, `exibe_comissao`, `pode_reimprimir`). O app deve adaptar a UI dinamicamente.
 

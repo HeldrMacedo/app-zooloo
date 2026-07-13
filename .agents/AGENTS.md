@@ -7,6 +7,7 @@ Este arquivo define as diretrizes arquiteturais, restrições e regras de negóc
 ## ⚖️ Regra de Ouro (Inegociável)
 
 **O app é estritamente uma interface operacional.**
+
 1. **NUNCA** implemente lógica de cálculo de prêmios, comissões, limites de apostas, ou lógica de validação de ganhadores no frontend (React Native/Expo).
 2. Toda a inteligência comercial, precificação, limites de cotação e validação reside no banco de dados (PostgreSQL triggers) e no backend (PHP/Adianti).
 3. O app deve apenas empacotar e enviar os dados brutos da aposta e, em seguida, **re-ler os valores calculados retornados pelo backend** para exibir na interface e gerar o comprovante.
@@ -38,6 +39,7 @@ Este arquivo define as diretrizes arquiteturais, restrições e regras de negóc
 ## 📁 Estrutura de Documentação do Projeto (Segundo Cérebro)
 
 Antes de fazer qualquer alteração arquitetural, leia a documentação correspondente em `docs/`:
+
 - **Indice Geral:** [[docs/GEMINI.md]]
 - **Histórico/Operações:** [[docs/CLAUDE.md]]
 - **Modelagem do Banco:** [[docs/arquitetura-dados.md]]
