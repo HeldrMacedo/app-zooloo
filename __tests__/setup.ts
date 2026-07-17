@@ -23,3 +23,39 @@ jest.mock('expo-constants', () => ({
     expoConfig: { hostUri: '192.168.1.10:8081', extra: {} },
   },
 }));
+
+// Safe area estável em testes (sem depender de metrics nativas).
+jest.mock('react-native-safe-area-context', () => {
+  const inset = { top: 0, right: 0, bottom: 0, left: 0 };
+  const frame = { x: 0, y: 0, width: 390, height: 844 };
+  const passthrough = function Passthrough(props) {
+    return props.children ?? null;
+  };
+
+  return {
+    SafeAreaProvider: passthrough,
+    SafeAreaConsumer: function SafeAreaConsumer(props) {
+      return props.children(inset);
+    },
+    SafeAreaView: passthrough,
+    useSafeAreaInsets: function useSafeAreaInsets() {
+      return inset;
+    },
+    useSafeAreaFrame: function useSafeAreaFrame() {
+      return frame;
+    },
+    initialWindowMetrics: { insets: inset, frame },
+  };
+});
+
+jest.mock('expo-system-ui', () => ({
+  setBackgroundColorAsync: jest.fn(async () => {}),
+  getBackgroundColorAsync: jest.fn(async () => null),
+}));
+
+jest.mock('expo-navigation-bar', () => ({
+  setBackgroundColorAsync: jest.fn(async () => {}),
+  setButtonStyleAsync: jest.fn(async () => {}),
+  setPositionAsync: jest.fn(async () => {}),
+  setVisibilityAsync: jest.fn(async () => {}),
+}));

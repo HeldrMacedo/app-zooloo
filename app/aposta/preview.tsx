@@ -1,3 +1,5 @@
+import PuleTermica from '@/components/PuleTermica';
+import { Screen } from '@/components/ui/screen';
 import { useCarrinho } from '@/context/CarrinhoContext';
 import { ApostaService } from '@/services/apostaService';
 import { Extracao } from '@/types/aposta';
@@ -5,9 +7,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Modal, ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native';
-// Em um app real usaríamos o @react-native-community/datetimepicker
-// Mas para compatibilidade base vamos usar Date global
-import PuleTermica from '@/components/PuleTermica';
 
 export default function PreviewScreen() {
   const { itens, removerItem, limparCarrinho, getTotalEstimado } = useCarrinho();
@@ -119,18 +118,18 @@ export default function PreviewScreen() {
   if (reciboData) {
     return (
       <Modal visible animationType="slide">
-        <View className="flex-1 bg-white p-4 pt-12">
+        <Screen contentClassName="bg-white" className="p-4">
           <PuleTermica data={reciboData} onFechar={() => {
             setReciboData(null);
             router.dismissAll();
           }} />
-        </View>
+        </Screen>
       </Modal>
     );
   }
 
   return (
-    <View className="flex-1 bg-gray-50 p-4">
+    <Screen safe="withHeader" className="p-4">
       <ScrollView>
         <Text className="text-xl font-bold text-gray-800 mb-4">Revisar Apostas</Text>
 
@@ -239,6 +238,6 @@ export default function PreviewScreen() {
           </Text>
         </TouchableOpacity>
       </ScrollView>
-    </View>
+    </Screen>
   );
 }

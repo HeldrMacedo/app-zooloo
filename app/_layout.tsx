@@ -1,9 +1,10 @@
 import { AuthProvider, useAuth } from '@/context/AuthContext'; // Importar AuthProvider e useAuth
 import { CarrinhoProvider } from '@/context/CarrinhoContext';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { SYSTEM_BAR_COLOR } from '@/constants/system-bars';
+import { useSystemBars } from '@/hooks/use-system-bars';
 import { SplashScreen, Stack, router } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import 'react-native-reanimated';
 import '../assets/styles/global.css';
 
@@ -11,19 +12,23 @@ import '../assets/styles/global.css';
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  // Envolve tudo com o AuthProvider e CarrinhoProvider
+  // SafeAreaProvider no root garante insets corretos em todas as telas.
   return (
-    <AuthProvider>
-      <CarrinhoProvider>
-        <RootLayoutNav />
-      </CarrinhoProvider>
-    </AuthProvider>
+    <SafeAreaProvider>
+      <AuthProvider>
+        <CarrinhoProvider>
+          <RootLayoutNav />
+        </CarrinhoProvider>
+      </AuthProvider>
+    </SafeAreaProvider>
   );
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
   const { isAuthenticated, isLoading } = useAuth(); // Obter estado do contexto
+
+  // Cor padrão das barras do sistema no app (cada Screen reforça ao focar).
+  useSystemBars({ color: SYSTEM_BAR_COLOR, style: 'light' });
 
   useEffect(() => {
     if (!isLoading) {
@@ -39,23 +44,11 @@ function RootLayoutNav() {
   }
 
   return (
-    <>
-      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-      {/*
-         O Slot aqui renderizará ou a tela de Login ou o Layout das Tabs,
-         dependendo da navegação controlada pelo useEffect acima.
-         Se você tiver um Stack principal, use-o aqui.
-         Se as tabs e o login forem rotas de nível superior, Slot está correto.
-         Considerando a estrutura, talvez um Stack seja mais apropriado
-         para definir as telas de login e (tabs).
-      */}
-       <Stack screenOptions={{ headerShown: false }}>
-         <Stack.Screen name="login" />
-         <Stack.Screen name="(tabs)" />
-         {/* Adicione outras telas de nível superior se houver, como 'modal' */}
-         <Stack.Screen name="modal" options={{ presentation: 'modal' }}/>
-       </Stack>
-      {/* <Slot /> */}
-    </>
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="login" />
+      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="aposta" />
+      <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+    </Stack>
   );
 }
