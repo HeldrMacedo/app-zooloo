@@ -1,8 +1,9 @@
-import React, { useLayoutEffect } from 'react';
-import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
-import { useNavigation, router } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { Screen } from '@/components/ui/screen';
 import { useCarrinho } from '@/context/CarrinhoContext';
+import { Ionicons } from '@expo/vector-icons';
+import { router, useNavigation } from 'expo-router';
+import { useLayoutEffect } from 'react';
+import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 
 // Modalidades estáticas para MVP - depois virão do backend.
 // Apenas a MILHAR está ativa para esta fase.
@@ -20,7 +21,7 @@ export default function ModalidadesScreen() {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity 
+        <TouchableOpacity
           onPress={() => router.push('/aposta/preview')}
           className="mr-4 relative p-2"
         >
@@ -46,11 +47,11 @@ export default function ModalidadesScreen() {
   };
 
   return (
-    <View className="flex-1 bg-gray-50 p-4">
+    <Screen safe="withHeader" className="p-4">
       <Text className="text-lg font-semibold text-gray-700 mb-4">
         Selecione a Modalidade
       </Text>
-      
+
       <FlatList
         data={MODALIDADES}
         keyExtractor={(item) => item.id.toString()}
@@ -59,8 +60,8 @@ export default function ModalidadesScreen() {
             onPress={() => handleSelect(item)}
             disabled={!item.ativa}
             className={`p-5 mb-3 rounded-xl border flex-row items-center justify-between shadow-sm
-              ${item.ativa 
-                ? 'bg-white border-blue-200 opacity-100' 
+              ${item.ativa
+                ? 'bg-white border-blue-200 opacity-100'
                 : 'bg-gray-100 border-gray-200 opacity-50'
               }`}
           >
@@ -78,6 +79,6 @@ export default function ModalidadesScreen() {
           </TouchableOpacity>
         )}
       />
-    </View>
+    </Screen>
   );
 }

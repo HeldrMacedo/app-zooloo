@@ -1,3 +1,4 @@
+import { Screen } from '@/components/ui/screen';
 import { useCarrinho } from '@/context/CarrinhoContext';
 import { calcularTotalAposta } from '@/utils/apostaHelpers';
 import { Ionicons } from '@expo/vector-icons';
@@ -140,15 +141,16 @@ export default function PremiosScreen() {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      className="flex-1 bg-gray-50"
-    >
-      <ScrollView contentContainerStyle={{ padding: 16 }}>
-        <View className="mb-6">
-          <Text className="text-gray-500 mb-1">Palpites ({modalidadeNome}):</Text>
-          <Text className="text-lg font-bold text-gray-800 tracking-widest">{palpites.join(', ')}</Text>
-        </View>
+    <Screen safe="withHeader">
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        className="flex-1"
+      >
+        <ScrollView contentContainerStyle={{ padding: 16 }}>
+          <View className="mb-6">
+            <Text className="text-gray-500 mb-1">Palpites ({modalidadeNome}):</Text>
+            <Text className="text-lg font-bold text-gray-800 tracking-widest">{palpites.join(', ')}</Text>
+          </View>
 
         <View className="mb-1">
           <Text className="text-gray-700 font-bold mb-3">Selecione os Prêmios (1º ao 10º): </Text>
@@ -241,15 +243,16 @@ export default function PremiosScreen() {
           </Text>
         </View>
 
-        <TouchableOpacity
-          onPress={handleAdicionar}
-          className={`h-14 rounded-xl items-center justify-center shadow-sm flex-row ${(listaIntervalos.length > 0 || valorDecimal > 0) ? 'bg-green-600' : 'bg-gray-300'}`}
-          disabled={listaIntervalos.length === 0 && valorDecimal <= 0}
-        >
-          <Ionicons name="cart-outline" size={24} color="white" className="mr-2" />
-          <Text className="text-white text-lg font-bold">Adicionar ao Carrinho</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </KeyboardAvoidingView>
+          <TouchableOpacity
+            onPress={handleAdicionar}
+            className={`h-14 rounded-xl items-center justify-center shadow-sm flex-row ${(listaIntervalos.length > 0 || valorDecimal > 0) ? 'bg-green-600' : 'bg-gray-300'}`}
+            disabled={listaIntervalos.length === 0 && valorDecimal <= 0}
+          >
+            <Ionicons name="cart-outline" size={24} color="white" className="mr-2" />
+            <Text className="text-white text-lg font-bold">Adicionar ao Carrinho</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </Screen>
   );
 }

@@ -1,7 +1,7 @@
-
-import { Tabs } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { TabBarBackground } from '@/components/ui/tab-bar-background';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { Ionicons } from '@expo/vector-icons';
+import { Tabs } from 'expo-router';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -12,8 +12,9 @@ export default function TabLayout() {
         tabBarActiveTintColor: '#3B82F6',
         tabBarInactiveTintColor: '#6B7280',
         headerShown: false,
+        tabBarBackground: () => <TabBarBackground />,
         tabBarStyle: {
-          backgroundColor: colorScheme === 'dark' ? '#1F2937' : '#FFFFFF',
+          backgroundColor: 'transparent',
           borderTopColor: colorScheme === 'dark' ? '#374151' : '#E5E7EB',
         },
       }}
