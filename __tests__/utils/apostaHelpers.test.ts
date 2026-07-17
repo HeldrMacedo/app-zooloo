@@ -18,6 +18,14 @@ describe('apostaHelpers', () => {
       expect(validarMilhar('12a4')).toBe(false);
       expect(validarMilhar('abcd')).toBe(false);
     });
+
+    it('deve validar conforme a quantidade de digitos da modalidade', () => {
+      expect(validarMilhar('123', 3)).toBe(true);   // Centena
+      expect(validarMilhar('12', 2)).toBe(true);    // Dezena / Grupo
+      expect(validarMilhar('1234', 3)).toBe(false);
+      expect(validarMilhar('1', 2)).toBe(false);
+      expect(validarMilhar('1234', 4)).toBe(true);  // Milhar
+    });
   });
 
   describe('calcularTotalAposta', () => {

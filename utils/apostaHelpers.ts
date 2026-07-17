@@ -1,5 +1,7 @@
-export const validarMilhar = (palpite: string): boolean => {
-  return /^\d{4}$/.test(palpite);
+/** Valida se o palpite tem exatamente a quantidade de dígitos numéricos exigida pela modalidade. */
+export const validarMilhar = (palpite: string, digitos = 4): boolean => {
+  if (!Number.isInteger(digitos) || digitos <= 0) return false;
+  return new RegExp(`^\\d{${digitos}}$`).test(palpite);
 };
 
 export const calcularTotalAposta = (
