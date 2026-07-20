@@ -28,7 +28,7 @@ Ver [plano.md](plano.md) seção 2.4. Se você se pegar somando prêmios no app,
 | Runtime | Expo SDK 54, React Native 0.81, React 19 |
 | Linguagem | TypeScript (strict), alias `@/*` → raiz |
 | Navegação | Expo Router (file-based, `app/`) |
-| Estilo | NativeWind (Tailwind) |
+| Estilo | React Native `StyleSheet` + tokens em `assets/styles/` (`colors.ts`, `fontFamily.ts`) |
 | Storage seguro | `expo-secure-store` (token/refresh) + `@react-native-async-storage` (user, cache) |
 | HTTP | `fetch` encapsulado em `services/apiClient.ts` |
 | Testes | Jest (`jest-expo`) + React Native Testing Library |
@@ -92,7 +92,7 @@ Para login/refresh use `{ skipAuth: true }`.
   Detalhes e diagrama em [README-AUTH.md](README-AUTH.md).
 - **Offline:** o app deve abrir sem rede se o JWT local ainda é válido (maquinetas).
   `isAuthenticated()` decodifica o JWT localmente antes de bater no servidor.
-- **Sem cores hardcoded** em telas novas — usar tokens de tema (`src/theme`).
+- **Sem cores hardcoded** em telas novas — usar tokens de `assets/styles/colors.ts` e `StyleSheet` local na própria tela.
 - **Imports:** use o alias `@/` (ex.: `@/services/auth`), não caminhos relativos longos.
 
 ---

@@ -21,8 +21,8 @@ Aqui estão os documentos fundamentais do projeto. Siga os links para aprofundar
 O App Zooloo é o Ponto de Venda (PDV) móvel focado em celulares e maquinetas POS Android.
 
 - **Stack Core:** Expo SDK 54, React Native 0.81, React 19, TypeScript (strict).
-- **Roteamento e UI:** Expo Router (file-based em `app/`), NativeWind (Tailwind CSS) para estilos.
-- **Estilização:** Evite cores hardcoded nas telas novas. Utilize sempre os tokens de tema em `src/theme`.
+- **Roteamento e UI:** Expo Router (file-based em `app/`), estilos com React Native `StyleSheet`.
+- **Estilização:** Evite cores hardcoded nas telas novas. Use tokens globais em `assets/styles/colors.ts` (e `fontFamily.ts` quando aplicável) e `StyleSheet` na própria tela.
 - **Comunicação REST:** 
   - Chamadas são feitas EXCLUSIVAMENTE via `apiCall` (encapsulado em `services/apiClient.ts`). 
   - O wrapper lida proativamente com refresh de tokens (< 60s), injeta o cabeçalho `Bearer` e empacota falhas na classe `ApiError`.

@@ -274,7 +274,7 @@ Resposta inclui `jb_id`, `bilhete_numero`, `string_autorizacao`, `total_bilhete`
 
 ## 5. Arquitetura mobile
 
-**Aproveitar o que já existe** (não refazer): o app já tem Expo Router (`app/(tabs)`, `app/login.tsx`, `app/_layout.tsx`), `AuthContext`, `hooks/use-auth.ts`, `services/auth.ts`, NativeWind + `assets/styles/colors.ts`/`fontFamily.ts`, componentes `themed-text`/`themed-view`, e `constants/theme.ts`. A arquitetura abaixo **estende** essa base.
+**Aproveitar o que já existe** (não refazer): o app já tem Expo Router (`app/(tabs)`, `app/login.tsx`, `app/_layout.tsx`), `AuthContext`, `hooks/use-auth.ts`, `services/auth.ts`, estilos com React Native `StyleSheet` + tokens em `assets/styles/colors.ts`/`fontFamily.ts`, componentes `themed-text`/`themed-view`, e `constants/theme.ts`. A arquitetura abaixo **estende** essa base.
 
 ### 5.1 Estrutura de pastas proposta (incremental)
 
@@ -340,17 +340,17 @@ Expo Router (já adotado). Stack para fluxos de aposta, Tabs para áreas princip
 
 ### 5.6 Design system, tema claro e dark
 
-Manter as paletas já especificadas (light com `primary #1F319D`, dark com `primary #5B6CFF`). Estrutura:
+Manter as paletas já especificadas (light com `primary #1F319D`, dark com `primary #5B6CFF`). Estilo atual do app:
 
 ```
-src/theme/
-  colors.ts  light.ts  dark.ts  spacing.ts  typography.ts  shadows.ts
-  ThemeProvider.tsx  useAppTheme.ts
+assets/styles/
+  colors.ts       # tokens globais de cor (brand, gray, blue, text, background…)
+  fontFamily.ts   # tokens de tipografia
 ```
 
-- `ThemeProvider` envolve o app; `useAppTheme()` expõe tokens.
-- Modo `system | light | dark`; preferência persistida em `expo-secure-store`/AsyncStorage; detecção via `useColorScheme` (hook já existe no projeto).
-- **Tokens centralizados** — nenhuma cor hardcoded em componentes; lint para proibir hex literais.
+- **Estilo por tela:** `StyleSheet.create` no próprio arquivo da tela (layout, spacing, radius, shadow).
+- **Cores globais:** importar de `@/assets/styles/colors` — nenhuma cor hardcoded nas telas.
+- Evolução futura (opcional): `ThemeProvider` / `useAppTheme()` com modo `system | light | dark`, preferência persistida e detecção via `useColorScheme` (hook já existe).
 - Preparar tema para **customização futura por banca** (cores vindas de `cfg_parametros`).
 
 **Regra de impressão:** o comprovante **não** segue o tema do app. O layout térmico é sempre monocromático/alto contraste (preto sobre branco), independente de light/dark. Isso evita ilegibilidade na bobina.
