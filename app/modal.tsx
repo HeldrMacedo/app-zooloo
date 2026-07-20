@@ -7,7 +7,7 @@ import { Screen } from '@/components/ui/screen';
 
 export default function ModalScreen() {
   return (
-    <Screen contentClassName="bg-transparent">
+    <Screen contentStyle={styles.screenContent}>
       <ThemedView style={styles.container}>
         <ThemedText type="title">This is a modal</ThemedText>
         <Link href="/" dismissTo style={styles.link}>
@@ -19,6 +19,9 @@ export default function ModalScreen() {
 }
 
 const styles = StyleSheet.create({
+  screenContent: {
+    backgroundColor: 'transparent',
+  },
   container: {
     flex: 1,
     alignItems: 'center',

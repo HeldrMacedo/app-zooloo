@@ -1,3 +1,4 @@
+import { colors } from '@/assets/styles/colors';
 import { TabBarBackground } from '@/components/ui/tab-bar-background';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,13 +10,13 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#3B82F6',
-        tabBarInactiveTintColor: '#6B7280',
+        tabBarActiveTintColor: colors.blue[500],
+        tabBarInactiveTintColor: colors.gray[500],
         headerShown: false,
         tabBarBackground: () => <TabBarBackground />,
         tabBarStyle: {
           backgroundColor: 'transparent',
-          borderTopColor: colorScheme === 'dark' ? '#374151' : '#E5E7EB',
+          borderTopColor: colorScheme === 'dark' ? colors.gray[700] : colors.border.light,
         },
       }}
     >

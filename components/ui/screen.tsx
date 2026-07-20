@@ -1,9 +1,10 @@
+import { colors } from '@/assets/styles/colors';
 import { SYSTEM_BAR_COLOR, SYSTEM_BAR_STYLE } from '@/constants/system-bars';
 import { useSystemBars } from '@/hooks/use-system-bars';
 import { StatusBar } from 'expo-status-bar';
 import { type ReactNode } from 'react';
-import { View, type StyleProp, type ViewStyle } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 /**
  * Presets de faixas do sistema por tipo de navegação:
@@ -33,13 +34,14 @@ export type ScreenProps = {
   /** Estilo dos ícones do sistema. Default: light (brancos). */
   systemBarStyle?: 'light' | 'dark';
   /**
-   * Classes do **conteúdo** (padding, justify, etc.).
+   * Estilos do **conteúdo** (padding, justify, background, etc.).
    * Nunca aplicar padding no shell externo — isso encolhia as faixas do sistema.
    */
-  className?: string;
-  /** Cor de fundo do conteúdo. Default: gray-50. */
-  contentClassName?: string;
+  contentStyle?: StyleProp<ViewStyle>;
+  /** Estilo do container externo (faixas + conteúdo). */
   style?: StyleProp<ViewStyle>;
+  /** Cor da faixa inferior. Default: preto. */
+  styleBarBottom?: string;
 };
 
 /**
@@ -51,35 +53,42 @@ export function Screen({
   safe = 'default',
   systemBarColor = SYSTEM_BAR_COLOR,
   systemBarStyle = SYSTEM_BAR_STYLE,
-  className,
-  contentClassName = 'bg-gray-50',
+  contentStyle,
   style,
+  styleBarBottom = colors.black,
 }: ScreenProps) {
   const insets = useSafeAreaInsets();
   const bars = BAR_PRESETS[safe];
 
   useSystemBars({ color: systemBarColor, style: systemBarStyle });
 
+  const bottomBarColor = styleBarBottom || systemBarColor;
+
   return (
-    <View className="flex-1" style={[{ backgroundColor: systemBarColor }, style]}>
-      <StatusBar style={systemBarStyle} backgroundColor={systemBarColor} />
+    <SafeAreaProvider>
+      <View style={[styles.shell, { backgroundColor: systemBarColor }, style]}>
+        <StatusBar style={systemBarStyle} backgroundColor={systemBarColor} />
 
-      {/* Faixa superior: sempre full-width */}
-      {bars.top ? (
-        <View style={{ height: insets.top, backgroundColor: systemBarColor }} />
-      ) : null}
+        {bars.top ? (
+          <View style={{ height: insets.top, backgroundColor: systemBarColor }} />
+        ) : null}
 
-      {/* Conteúdo: aqui vai padding / bg da tela */}
-      <View
-        className={['flex-1', contentClassName, className].filter(Boolean).join(' ')}
-      >
-        {children}
+        <View style={[styles.content, contentStyle]}>{children}</View>
+
+        {bars.bottom ? (
+          <View style={{ height: insets.bottom, backgroundColor: bottomBarColor }} />
+        ) : null}
       </View>
-
-      {/* Faixa inferior: sempre full-width (não herda p-4 do conteúdo) */}
-      {bars.bottom ? (
-        <View style={{ height: insets.bottom, backgroundColor: systemBarColor }} />
-      ) : null}
-    </View>
+    </SafeAreaProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  shell: {
+    flex: 1,
+  },
+  content: {
+    flex: 1,
+    backgroundColor: colors.background.screen,
+  },
+});

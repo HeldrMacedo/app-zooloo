@@ -1,5 +1,6 @@
+import { colors } from '@/assets/styles/colors';
 import { Screen } from '@/components/ui/screen';
-import { useAuth } from '@/context/AuthContext'; // Usar o contexto
+import { useAuth } from '@/context/AuthContext';
 import { useState } from 'react';
 import {
   ActivityIndicator,
@@ -7,19 +8,18 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 
 export default function LoginScreen() {
   const [loginInput, setLoginInput] = useState('');
   const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { login } = useAuth(); // Obter apenas a função login
-
-  // O useEffect de redirecionamento foi movido para _layout.tsx
+  const { login } = useAuth();
 
   const handleLogin = async () => {
     if (!loginInput.trim() || !password.trim()) {
@@ -29,7 +29,6 @@ export default function LoginScreen() {
     setIsSubmitting(true);
     try {
       await login({ login: loginInput.trim(), password: password.trim() });
-      // Não precisa mais de router.replace aqui, o _layout tratará disso
     } catch (error) {
       Alert.alert('Erro no Login', error instanceof Error ? error.message : 'Erro desconhecido');
     } finally {
@@ -37,39 +36,30 @@ export default function LoginScreen() {
     }
   };
 
-  // Não precisa mais do `if (isAuthLoading)` aqui, pois o _layout segura o SplashScreen
-
   return (
     <Screen>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        className="flex-1"
+        style={styles.flex}
       >
         <ScrollView
-          contentContainerStyle={{ flexGrow: 1 }}
+          contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
-          className="flex-1"
+          style={styles.flex}
         >
-          <View className="flex-1 justify-center items-center px-6 py-12">
-            {/* Header */}
-            <View className="mb-8 items-center">
-              <Text className="text-3xl font-bold text-center text-[#495057] mb-2">
-                Bem-vindo
-              </Text>
-              <Text className="text-base text-center text-gray-600">
-                Faça login para continuar
-              </Text>
+          <View style={styles.container}>
+            <View style={styles.header}>
+              <Text style={styles.title}>Bem-vindo</Text>
+              <Text style={styles.subtitle}>Faça login para continuar</Text>
             </View>
 
-            {/* Login Form */}
-            <View className="w-full max-w-sm bg-white rounded-2xl shadow-lg p-6">
-              <View className="mb-4">
-                <Text className="text-sm font-medium text-gray-700 mb-2">
-                  Login
-                </Text>
+            <View style={styles.card}>
+              <View style={styles.fieldGroup}>
+                <Text style={styles.label}>Login</Text>
                 <TextInput
-                  className="border border-gray-300 rounded-lg px-4 py-3 text-base text-gray-800 bg-white"
+                  style={styles.input}
                   placeholder="Digite seu login"
+                  placeholderTextColor={colors.text.placeholder}
                   value={loginInput}
                   onChangeText={setLoginInput}
                   autoCapitalize="none"
@@ -77,13 +67,12 @@ export default function LoginScreen() {
                 />
               </View>
 
-              <View className="mb-6">
-                <Text className="text-sm font-medium text-gray-700 mb-2">
-                  Senha
-                </Text>
+              <View style={styles.fieldGroupLast}>
+                <Text style={styles.label}>Senha</Text>
                 <TextInput
-                  className="border border-gray-300 rounded-lg px-4 py-3 text-base text-gray-800 bg-white"
+                  style={styles.input}
                   placeholder="Digite sua senha"
+                  placeholderTextColor={colors.text.placeholder}
                   value={password}
                   onChangeText={setPassword}
                   secureTextEntry
@@ -91,25 +80,18 @@ export default function LoginScreen() {
               </View>
 
               <TouchableOpacity
-                className={`w-full py-4 rounded-lg ${
-                  isSubmitting
-                    ? 'bg-gray-400'
-                    : 'bg-[#1F319D] active:bg-[#1F319D]'
-                }`}
+                style={[styles.button, isSubmitting && styles.buttonDisabled]}
                 onPress={handleLogin}
                 disabled={isSubmitting}
+                activeOpacity={0.8}
               >
                 {isSubmitting ? (
-                  <View className="flex-row justify-center items-center">
-                    <ActivityIndicator color="white" size="small" />
-                    <Text className="text-white font-semibold text-base ml-2">
-                      Entrando...
-                    </Text>
+                  <View style={styles.buttonContent}>
+                    <ActivityIndicator color={colors.text.inverse} size="small" />
+                    <Text style={styles.buttonTextLoading}>Entrando...</Text>
                   </View>
                 ) : (
-                  <Text className="text-white font-semibold text-base text-center">
-                    Entrar
-                  </Text>
+                  <Text style={styles.buttonText}>Entrar</Text>
                 )}
               </TouchableOpacity>
             </View>
@@ -119,3 +101,97 @@ export default function LoginScreen() {
     </Screen>
   );
 }
+
+const styles = StyleSheet.create({
+  flex: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 24,
+    paddingVertical: 48,
+  },
+  header: {
+    marginBottom: 32,
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: '700',
+    textAlign: 'center',
+    color: colors.text.title,
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: colors.text.secondary,
+  },
+  card: {
+    width: '100%',
+    maxWidth: 384,
+    backgroundColor: colors.background.card,
+    borderRadius: 16,
+    padding: 24,
+    // iOS
+    shadowColor: colors.black,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    // Android
+    elevation: 4,
+  },
+  fieldGroup: {
+    marginBottom: 16,
+  },
+  fieldGroupLast: {
+    marginBottom: 24,
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: colors.text.label,
+    marginBottom: 8,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: colors.border.default,
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    fontSize: 16,
+    color: colors.text.body,
+    backgroundColor: colors.background.input,
+  },
+  button: {
+    width: '100%',
+    paddingVertical: 16,
+    borderRadius: 8,
+    backgroundColor: colors.brand.primary,
+  },
+  buttonDisabled: {
+    backgroundColor: colors.gray[400],
+  },
+  buttonContent: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: colors.text.inverse,
+    fontWeight: '600',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  buttonTextLoading: {
+    color: colors.text.inverse,
+    fontWeight: '600',
+    fontSize: 16,
+    marginLeft: 8,
+  },
+});
