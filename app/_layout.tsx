@@ -6,7 +6,6 @@ import { SplashScreen, Stack, router } from 'expo-router';
 import { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import 'react-native-reanimated';
-import '../assets/styles/global.css';
 
 // Previne que o splash screen desapareça automaticamente
 SplashScreen.preventAutoHideAsync();

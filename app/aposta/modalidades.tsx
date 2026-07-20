@@ -1,9 +1,10 @@
+import { colors } from '@/assets/styles/colors';
 import { Screen } from '@/components/ui/screen';
 import { useCarrinho } from '@/context/CarrinhoContext';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useNavigation } from 'expo-router';
 import { useLayoutEffect } from 'react';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 // Modalidades estáticas para MVP - depois virão do backend.
 // Apenas a MILHAR está ativa para esta fase.
@@ -23,12 +24,12 @@ export default function ModalidadesScreen() {
       headerRight: () => (
         <TouchableOpacity
           onPress={() => router.push('/aposta/preview')}
-          className="mr-4 relative p-2"
+          style={styles.cartButton}
         >
-          <Ionicons name="cart-outline" size={28} color="#1F2937" />
+          <Ionicons name="cart-outline" size={28} color={colors.gray[800]} />
           {itensQuantidade > 0 && (
-            <View className="absolute top-0 right-0 bg-red-500 rounded-full w-5 h-5 items-center justify-center">
-              <Text className="text-white text-xs font-bold">{itensQuantidade}</Text>
+            <View style={styles.cartBadge}>
+              <Text style={styles.cartBadgeText}>{itensQuantidade}</Text>
             </View>
           )}
         </TouchableOpacity>
@@ -36,21 +37,18 @@ export default function ModalidadesScreen() {
     });
   }, [navigation, itensQuantidade]);
 
-  const handleSelect = (mod: typeof MODALIDADES[0]) => {
+  const handleSelect = (mod: (typeof MODALIDADES)[0]) => {
     if (mod.ativa) {
-      // Navegamos passando a modalidade por param
       router.push({
         pathname: '/aposta/milhar',
-        params: { id: mod.id, nome: mod.nome, sigla: mod.sigla, digitos: mod.digitos }
+        params: { id: mod.id, nome: mod.nome, sigla: mod.sigla, digitos: mod.digitos },
       });
     }
   };
 
   return (
-    <Screen safe="withHeader" className="p-4">
-      <Text className="text-lg font-semibold text-gray-700 mb-4">
-        Selecione a Modalidade
-      </Text>
+    <Screen safe="withHeader" contentStyle={styles.screenContent} styleBarBottom={colors.black}>
+      <Text style={styles.title}>Selecione a Modalidade</Text>
 
       <FlatList
         data={MODALIDADES}
@@ -59,22 +57,19 @@ export default function ModalidadesScreen() {
           <TouchableOpacity
             onPress={() => handleSelect(item)}
             disabled={!item.ativa}
-            className={`p-5 mb-3 rounded-xl border flex-row items-center justify-between shadow-sm
-              ${item.ativa
-                ? 'bg-white border-blue-200 opacity-100'
-                : 'bg-gray-100 border-gray-200 opacity-50'
-              }`}
+            style={[styles.card, item.ativa ? styles.cardActive : styles.cardInactive]}
+            activeOpacity={0.85}
           >
             <View>
-              <Text className={`text-xl font-bold ${item.ativa ? 'text-gray-900' : 'text-gray-400'}`}>
+              <Text style={[styles.cardName, !item.ativa && styles.cardNameInactive]}>
                 {item.nome}
               </Text>
-              <Text className="text-gray-500 text-sm mt-1">
-                {item.digitos} dígitos
-              </Text>
+              <Text style={styles.cardDigits}>{item.digitos} dígitos</Text>
             </View>
-            <View className={`w-10 h-10 rounded-full items-center justify-center ${item.ativa ? 'bg-blue-100' : 'bg-gray-200'}`}>
-              <Text className={`font-bold ${item.ativa ? 'text-blue-700' : 'text-gray-400'}`}>{item.sigla}</Text>
+            <View style={[styles.siglaWrap, item.ativa ? styles.siglaActive : styles.siglaInactive]}>
+              <Text style={[styles.siglaText, !item.ativa && styles.siglaTextInactive]}>
+                {item.sigla}
+              </Text>
             </View>
           </TouchableOpacity>
         )}
@@ -82,3 +77,91 @@ export default function ModalidadesScreen() {
     </Screen>
   );
 }
+
+const styles = StyleSheet.create({
+  screenContent: {
+    padding: 16,
+  },
+  cartButton: {
+    marginRight: 16,
+    position: 'relative',
+    padding: 8,
+  },
+  cartBadge: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    backgroundColor: colors.red[500],
+    borderRadius: 999,
+    width: 20,
+    height: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cartBadgeText: {
+    color: colors.white,
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  title: {
+    color: colors.gray[500],
+    marginBottom: 8,
+  },
+  card: {
+    padding: 20,
+    marginBottom: 12,
+    borderRadius: 12,
+    borderWidth: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    shadowColor: colors.black,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  cardActive: {
+    backgroundColor: colors.white,
+    borderColor: colors.blue[200],
+    opacity: 1,
+  },
+  cardInactive: {
+    backgroundColor: colors.gray[100],
+    borderColor: colors.border.light,
+    opacity: 0.5,
+  },
+  cardName: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: colors.gray[900],
+  },
+  cardNameInactive: {
+    color: colors.gray[400],
+  },
+  cardDigits: {
+    color: colors.gray[500],
+    fontSize: 14,
+    marginTop: 4,
+  },
+  siglaWrap: {
+    width: 40,
+    height: 40,
+    borderRadius: 999,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  siglaActive: {
+    backgroundColor: colors.blue[100],
+  },
+  siglaInactive: {
+    backgroundColor: colors.gray[200],
+  },
+  siglaText: {
+    fontWeight: '700',
+    color: colors.blue[700],
+  },
+  siglaTextInactive: {
+    color: colors.gray[400],
+  },
+});

@@ -1,37 +1,45 @@
+import { colors } from '@/assets/styles/colors';
 import { Screen } from '@/components/ui/screen';
 import { validarMilhar } from '@/utils/apostaHelpers';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useCallback, useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 export default function MilharScreen() {
   const params = useLocalSearchParams();
   const modalidadeId = Number(params.id) || 2;
-  const modalidadeNome = params.nome as string || 'MILHAR';
-  const modalidadeSigla = params.sigla as string || 'M';
+  const modalidadeNome = (params.nome as string) || 'MILHAR';
+  const modalidadeSigla = (params.sigla as string) || 'M';
   const digitosReq = Number(params.digitos) || 4;
 
   const [palpite, setPalpite] = useState('');
   const [palpitesAdicionados, setPalpitesAdicionados] = useState<string[]>([]);
   const [error, setError] = useState('');
 
-  const tryAddPalpite = useCallback((valor: string) => {
-    if (!validarMilhar(valor, digitosReq)) {
-      setError(`O palpite deve ter exatamente ${digitosReq} dígitos numéricos.`);
-      return;
-    }
+  const tryAddPalpite = useCallback(
+    (valor: string) => {
+      if (!validarMilhar(valor, digitosReq)) {
+        setError(`O palpite deve ter exatamente ${digitosReq} dígitos numéricos.`);
+        return;
+      }
 
-    setPalpitesAdicionados((prev) => {
-      // if (prev.includes(valor)) {
-      //   setError('Este palpite já foi adicionado.');
-      //   return prev;
-      // }
-      setError('');
-      return [...prev, valor];
-    });
-    // Limpa o campo para o próximo palpite (milhar, centena, dezena, etc.)
-    setPalpite('');
-  }, [digitosReq]);
+      setPalpitesAdicionados((prev) => {
+        setError('');
+        return [...prev, valor];
+      });
+      setPalpite('');
+    },
+    [digitosReq],
+  );
 
   const handleRemovePalpite = (p: string) => {
     setPalpitesAdicionados((prev) => prev.filter((item) => item !== p));
@@ -57,8 +65,8 @@ export default function MilharScreen() {
         modalidadeId,
         modalidadeNome,
         modalidadeSigla,
-        palpites: JSON.stringify(palpitesConfirmados)
-      }
+        palpites: JSON.stringify(palpitesConfirmados),
+      },
     });
   };
 
@@ -67,7 +75,6 @@ export default function MilharScreen() {
     setError('');
 
     if (cleaned.length === digitosReq) {
-      // Completou a quantidade de dígitos da modalidade: adiciona automaticamente
       tryAddPalpite(cleaned);
     } else {
       setPalpite(cleaned);
@@ -75,65 +82,171 @@ export default function MilharScreen() {
   };
 
   const placeholder = '0'.repeat(Math.max(digitosReq, 1));
+  const canAdvance = palpitesAdicionados.length > 0;
 
   return (
     <Screen safe="withHeader">
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        className="flex-1"
+        style={styles.flex}
       >
-        <ScrollView contentContainerStyle={{ padding: 16, flexGrow: 1 }}>
-          <Text className="text-xl font-bold text-gray-800 mb-2">
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          <Text style={styles.title}>
             {modalidadeNome} ({modalidadeSigla})
           </Text>
-          <Text className="text-gray-500 mb-6">
-            Digite {digitosReq} números para formar seu palpite. O palpite é adicionado automaticamente.
+          <Text style={styles.subtitle}>
+            Digite {digitosReq} números para formar seu palpite. O palpite é adicionado
+            automaticamente.
           </Text>
 
-          <View className="mb-4">
-            <View className="flex-row items-center border border-gray-300 bg-white rounded-lg px-4 h-14">
+          <View style={styles.inputSection}>
+            <View style={styles.inputWrap}>
               <TextInput
-                className="flex-1 text-2xl font-bold text-gray-800 tracking-widest text-center"
+                style={styles.input}
                 keyboardType="number-pad"
                 maxLength={digitosReq}
                 value={palpite}
                 onChangeText={handleChangePalpite}
                 placeholder={placeholder}
+                placeholderTextColor={colors.text.placeholder}
                 autoFocus
               />
             </View>
-            {error ? <Text className="text-red-500 mt-2">{error}</Text> : null}
+            {error ? <Text style={styles.error}>{error}</Text> : null}
           </View>
 
           {palpitesAdicionados.length > 0 && (
-            <View className="mt-4 mb-8">
-              <Text className="text-sm font-semibold text-gray-600 mb-2">Palpites Atuais:</Text>
-              <View className="flex-row flex-wrap">
+            <View style={styles.chipsSection}>
+              <Text style={styles.chipsLabel}>Palpites Atuais:</Text>
+              <View style={styles.chipsRow}>
                 {palpitesAdicionados.map((p, idx) => (
                   <TouchableOpacity
                     key={`${p}-${idx}`}
                     onPress={() => handleRemovePalpite(p)}
-                    className="bg-blue-50 border border-blue-200 px-3 py-2 rounded-full m-1 flex-row items-center"
+                    style={styles.chip}
                   >
-                    <Text className="text-blue-800 font-bold mr-2 tracking-widest">{p}</Text>
-                    <Text className="text-red-400 font-bold text-xs">X</Text>
+                    <Text style={styles.chipText}>{p}</Text>
+                    <Text style={styles.chipRemove}>X</Text>
                   </TouchableOpacity>
                 ))}
               </View>
             </View>
           )}
 
-          <View className="flex-1" />
+          <View style={styles.flex} />
 
           <TouchableOpacity
             onPress={handleAvancar}
-            className={`h-14 rounded-xl items-center justify-center shadow-sm 
-              ${palpitesAdicionados.length > 0 ? 'bg-blue-600' : 'bg-gray-300'}`}
+            style={[styles.nextButton, canAdvance ? styles.nextButtonActive : styles.nextButtonDisabled]}
+            activeOpacity={0.85}
           >
-            <Text className="text-white text-lg font-bold">Próximo</Text>
+            <Text style={styles.nextButtonText}>Próximo</Text>
           </TouchableOpacity>
         </ScrollView>
       </KeyboardAvoidingView>
     </Screen>
   );
 }
+
+const styles = StyleSheet.create({
+  flex: {
+    flex: 1,
+  },
+  scrollContent: {
+    padding: 16,
+    flexGrow: 1,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: colors.gray[800],
+    marginBottom: 8,
+  },
+  subtitle: {
+    color: colors.gray[500],
+    marginBottom: 24,
+  },
+  inputSection: {
+    marginBottom: 16,
+  },
+  inputWrap: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: colors.border.default,
+    backgroundColor: colors.white,
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    height: 56,
+  },
+  input: {
+    flex: 1,
+    fontSize: 24,
+    fontWeight: '700',
+    color: colors.gray[800],
+    letterSpacing: 4,
+    textAlign: 'center',
+  },
+  error: {
+    color: colors.red[500],
+    marginTop: 8,
+  },
+  chipsSection: {
+    marginTop: 16,
+    marginBottom: 32,
+  },
+  chipsLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.gray[600],
+    marginBottom: 8,
+  },
+  chipsRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  chip: {
+    backgroundColor: colors.blue[50],
+    borderWidth: 1,
+    borderColor: colors.blue[200],
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 999,
+    margin: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  chipText: {
+    color: colors.blue[800],
+    fontWeight: '700',
+    marginRight: 8,
+    letterSpacing: 4,
+  },
+  chipRemove: {
+    color: colors.red[400],
+    fontWeight: '700',
+    fontSize: 12,
+  },
+  nextButton: {
+    height: 56,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: colors.black,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  nextButtonActive: {
+    backgroundColor: colors.blue[600],
+  },
+  nextButtonDisabled: {
+    backgroundColor: colors.gray[300],
+  },
+  nextButtonText: {
+    color: colors.white,
+    fontSize: 18,
+    fontWeight: '700',
+  },
+});
