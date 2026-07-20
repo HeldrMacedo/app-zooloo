@@ -20,9 +20,9 @@ Este arquivo define as diretrizes arquiteturais, restrições e regras de negóc
 - **Linguagem:** TypeScript (modo estrito).
 - **Roteamento:** Expo Router (roteamento baseado em arquivos na pasta `app/`).
 - **Navegação:** O arquivo `app/_layout.tsx` gerencia o redirecionamento de segurança entre `/login` e `(tabs)`.
-- **Estilos:** NativeWind (Tailwind CSS).
+- **Estilos:** React Native `StyleSheet` por tela; tokens globais em `assets/styles/` (`colors.ts`, `fontFamily.ts`).
 - **Importações:** Use caminhos absolutos com alias `@/` (ex: `@/services/auth`), nunca caminhos relativos longos (ex: `../../services/auth`).
-- **Tema:** Não use cores hardcoded (plain colors). Use sempre os tokens definidos em `src/theme`.
+- **Tema / cores:** Não use cores hardcoded (hex solto). Use sempre os tokens de `assets/styles/colors.ts` e estilos locais com `StyleSheet.create` na própria tela.
 
 ---
 
