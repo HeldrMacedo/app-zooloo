@@ -5,6 +5,8 @@ import { Platform } from 'react-native';
 const TOKEN_KEY = 'zooloo.auth.token';
 const REFRESH_TOKEN_KEY = 'zooloo.auth.refresh';
 const USER_KEY = 'zooloo.auth.user';
+const TERMINAL_KEY = 'zooloo.auth.terminal';
+const DEVICE_SERIAL_KEY = 'zooloo.device.serial';
 const LEGACY_TOKEN_KEY = 'userToken';
 const LEGACY_USER_KEY = 'userData';
 
@@ -87,4 +89,38 @@ export async function getUser<T>(): Promise<T | null> {
 export async function clearUser(): Promise<void> {
   await AsyncStorage.removeItem(USER_KEY);
   await AsyncStorage.removeItem(LEGACY_USER_KEY);
+}
+
+export interface StoredTerminal {
+  terminal_id: number;
+  serial: string;
+  tipo?: string;
+  multi_usuario?: string;
+}
+
+export async function saveTerminal(terminal: StoredTerminal): Promise<void> {
+  await setSecure(TERMINAL_KEY, JSON.stringify(terminal));
+}
+
+export async function getTerminal(): Promise<StoredTerminal | null> {
+  const raw = await getSecure(TERMINAL_KEY);
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw) as StoredTerminal;
+  } catch {
+    return null;
+  }
+}
+
+export async function clearTerminal(): Promise<void> {
+  await deleteSecure(TERMINAL_KEY);
+}
+
+/** Serial estável gerado/fallback do device (não é o terminal autenticado). */
+export async function saveDeviceSerialStored(serial: string): Promise<void> {
+  await setSecure(DEVICE_SERIAL_KEY, serial);
+}
+
+export async function getDeviceSerialStored(): Promise<string | null> {
+  return getSecure(DEVICE_SERIAL_KEY);
 }

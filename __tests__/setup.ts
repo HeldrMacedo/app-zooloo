@@ -59,3 +59,30 @@ jest.mock('expo-navigation-bar', () => ({
   setPositionAsync: jest.fn(async () => {}),
   setVisibilityAsync: jest.fn(async () => {}),
 }));
+
+jest.mock('expo-application', () => ({
+  getAndroidId: jest.fn(() => 'android-test-serial-001'),
+  getIosIdForVendorAsync: jest.fn(async () => 'ios-test-serial-001'),
+}));
+
+jest.mock('expo-clipboard', () => ({
+  setStringAsync: jest.fn(async () => true),
+  getStringAsync: jest.fn(async () => ''),
+}));
+
+jest.mock('expo-router', () => ({
+  router: {
+    push: jest.fn(),
+    replace: jest.fn(),
+    back: jest.fn(),
+  },
+  useSegments: jest.fn(() => []),
+  Stack: Object.assign(
+    ({ children }: { children?: unknown }) => children ?? null,
+    { Screen: () => null },
+  ),
+  SplashScreen: {
+    preventAutoHideAsync: jest.fn(async () => {}),
+    hideAsync: jest.fn(async () => {}),
+  },
+}));

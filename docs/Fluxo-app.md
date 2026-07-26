@@ -84,11 +84,17 @@ flowchart TD
 Se `exp` está no futuro, abre direto na tela inicial — mesmo offline (maquinetas POS).
 Senão, vai para o login. Ver [[docs/README-AUTH#Por-que-o-app-abre-offline]].
 
-### 1. Login
+### 1. Login e terminal
 
-Tela `app/login.tsx`. Vendedor informa login/senha → `AuthService.login` → backend
-devolve `access`, `refresh`, `user`, `vendedor`, `permissoes`. Tokens no SecureStore;
-o guard (`app/_layout.tsx`) redireciona para a área autenticada. Ver [[docs/README-AUTH]].
+Tela `app/login.tsx`. O label **Login** e o ícone de **engrenagem** ficam na mesma
+linha (`space-between`). A engrenagem abre `app/terminal.tsx` (rota pública), que
+mostra o serial do aparelho (copiável) para cadastro no back-office.
+
+Vendedor informa login/senha → app anexa o serial do device → `AuthService.login` →
+backend autentica **e** valida `cad_terminal` → devolve `access`, `refresh`, `user`,
+`vendedor`, `permissoes`, `terminal`. Tokens e `terminal_id` no SecureStore; o guard
+(`app/_layout.tsx`) redireciona para a área autenticada. Rotas públicas: `/login`,
+`/terminal`. Ver [[docs/README-AUTH#Binding-de-terminal]].
 
 ### 2. Tela inicial — escolha do tipo de jogo
 

@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
 import { Alert } from 'react-native';
+import { router } from 'expo-router';
 
 import LoginScreen from '../../app/login';
 import { useAuth } from '../../context/AuthContext';
@@ -20,6 +21,13 @@ describe('LoginScreen', () => {
     const { getByPlaceholderText } = render(<LoginScreen />);
     expect(getByPlaceholderText('Digite seu login').props.value).toBe('');
     expect(getByPlaceholderText('Digite sua senha').props.value).toBe('');
+  });
+
+  it('exibe ícone de engrenagem e navega para /terminal', () => {
+    (useAuth as jest.Mock).mockReturnValue({ login: jest.fn() });
+    const { getByTestId } = render(<LoginScreen />);
+    fireEvent.press(getByTestId('login-gear-button'));
+    expect(router.push).toHaveBeenCalledWith('/terminal');
   });
 
   it('alerta quando campos vazios e não chama login', () => {

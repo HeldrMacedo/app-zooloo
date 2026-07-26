@@ -209,11 +209,15 @@ Entidade central do app. Cada login mobile retorna um `vendedor` com suas permis
 | Coluna | Tipo | Descrição |
 |--------|------|-----------|
 | `terminal_id` | integer PK | |
-| `vendedor_id` | integer FK→cad_vendedor | |
-| `tipo` | varchar(10) | Tipo de hardware |
-| `serial` | varchar(60) | Número de série da maquineta |
-| `multi_usuario` | char(1) | Permite múltiplos usuários |
-| `ativo` | char(1) | default 'S' |
+| `vendedor_id` | integer FK→cad_vendedor | Dono padrão do terminal |
+| `tipo` | varchar(10) | Tipo de hardware (`APP`, `POS`, `COLETOR`…) |
+| `serial` | varchar(60) | ID estável do device (o mesmo exibido no app) |
+| `multi_usuario` | char(1) | `S` = qualquer vendedor; `N` = só o dono |
+| `ativo` | char(1) | default 'S' — `N` bloqueia login e vendas |
+
+**Cadastro:** somente no back-office (**Cadastros → Terminal**). O app **não** cria
+registros. O login mobile exige o `serial` e o bilhete exige o `terminal_id` validado
+(`TerminalAuthHelper` no backend).
 
 ### `cad_extracao` — Extrações (Sorteios recorrentes)
 

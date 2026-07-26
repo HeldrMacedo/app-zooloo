@@ -1,6 +1,8 @@
 import { colors } from '@/assets/styles/colors';
 import { Screen } from '@/components/ui/screen';
 import { useAuth } from '@/context/AuthContext';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { router } from 'expo-router';
 import { useState } from 'react';
 import {
   ActivityIndicator,
@@ -55,7 +57,19 @@ export default function LoginScreen() {
 
             <View style={styles.card}>
               <View style={styles.fieldGroup}>
-                <Text style={styles.label}>Login</Text>
+                <View style={styles.labelRow}>
+                  <Text style={styles.label}>Login</Text>
+                  <TouchableOpacity
+                    onPress={() => router.push('/terminal')}
+                    accessibilityRole="button"
+                    accessibilityLabel="Configurações do terminal"
+                    hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+                    style={styles.gearButton}
+                    testID="login-gear-button"
+                  >
+                    <MaterialIcons name="settings" size={22} color={colors.text.label} />
+                  </TouchableOpacity>
+                </View>
                 <TextInput
                   style={styles.input}
                   placeholder="Digite seu login"
@@ -152,11 +166,22 @@ const styles = StyleSheet.create({
   fieldGroupLast: {
     marginBottom: 24,
   },
+  labelRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
   label: {
     fontSize: 14,
     fontWeight: '500',
     color: colors.text.label,
-    marginBottom: 8,
+  },
+  gearButton: {
+    minWidth: 44,
+    minHeight: 44,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
   },
   input: {
     borderWidth: 1,

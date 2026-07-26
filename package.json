@@ -21,6 +21,8 @@
     "@react-navigation/elements": "^2.6.3",
     "@react-navigation/native": "^7.1.8",
     "expo": "54.0.17",
+    "expo-application": "~7.0.8",
+    "expo-clipboard": "~8.0.8",
     "expo-constants": "~18.0.10",
     "expo-font": "~14.0.8",
     "expo-haptics": "~15.0.7",
@@ -75,7 +77,8 @@
     "collectCoverageFrom": [
       "services/**/*.{ts,tsx}",
       "context/**/*.{ts,tsx}",
-      "app/login.tsx"
+      "app/login.tsx",
+      "app/terminal.tsx"
     ],
     "coverageThreshold": {
       "global": {

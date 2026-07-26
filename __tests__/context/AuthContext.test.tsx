@@ -10,6 +10,7 @@ jest.mock('../../services/auth', () => ({
   default: {
     isAuthenticated: jest.fn(),
     getStoredUser: jest.fn(),
+    getStoredTerminal: jest.fn(),
     login: jest.fn(),
     logout: jest.fn(),
   },
@@ -30,20 +31,29 @@ describe('AuthContext', () => {
     expect(result.current.user).toBeNull();
   });
 
-  it('carrega user quando isAuthenticated=true', async () => {
+  it('carrega user e terminal quando isAuthenticated=true', async () => {
     const u = { id: '1', login: 'admin', name: 'A', email: 'x', active: 'Y' };
+    const t = { terminal_id: 3, serial: 'ABC' };
     (AuthService.isAuthenticated as jest.Mock).mockResolvedValue(true);
     (AuthService.getStoredUser as jest.Mock).mockResolvedValue(u);
+    (AuthService.getStoredTerminal as jest.Mock).mockResolvedValue(t);
     const { result } = renderHook(() => useAuth(), { wrapper });
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.isAuthenticated).toBe(true);
     expect(result.current.user).toEqual(u);
+    expect(result.current.terminal).toEqual(t);
   });
 
-  it('login bem-sucedido atualiza estado', async () => {
+  it('login bem-sucedido atualiza estado com terminal', async () => {
     (AuthService.isAuthenticated as jest.Mock).mockResolvedValue(false);
     const u = { id: '1', login: 'admin', name: 'A', email: 'x', active: 'Y' };
-    (AuthService.login as jest.Mock).mockResolvedValue({ success: true, message: 'ok', user: u });
+    const term = { terminal_id: 12, serial: 'S1', tipo: 'APP', multi_usuario: 'N' };
+    (AuthService.login as jest.Mock).mockResolvedValue({
+      success: true,
+      message: 'ok',
+      user: u,
+      terminal: term,
+    });
 
     const { result } = renderHook(() => useAuth(), { wrapper });
     await waitFor(() => expect(result.current.isLoading).toBe(false));
@@ -52,6 +62,7 @@ describe('AuthContext', () => {
     });
     expect(result.current.isAuthenticated).toBe(true);
     expect(result.current.user).toEqual(u);
+    expect(result.current.terminal).toEqual(term);
   });
 
   it('login falho mantém deslogado e propaga erro', async () => {
@@ -71,6 +82,7 @@ describe('AuthContext', () => {
   it('logout limpa estado mesmo se serviço falhar', async () => {
     (AuthService.isAuthenticated as jest.Mock).mockResolvedValue(true);
     (AuthService.getStoredUser as jest.Mock).mockResolvedValue({ id: '1', login: 'a', name: '', email: '', active: 'Y' });
+    (AuthService.getStoredTerminal as jest.Mock).mockResolvedValue({ terminal_id: 1, serial: 'S' });
     (AuthService.logout as jest.Mock).mockRejectedValue(new Error('offline'));
 
     const { result } = renderHook(() => useAuth(), { wrapper });
@@ -80,6 +92,7 @@ describe('AuthContext', () => {
     });
     expect(result.current.isAuthenticated).toBe(false);
     expect(result.current.user).toBeNull();
+    expect(result.current.terminal).toBeNull();
   });
 
   it('useAuth lança fora do AuthProvider', () => {

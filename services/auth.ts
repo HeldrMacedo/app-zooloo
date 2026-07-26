@@ -1,20 +1,29 @@
 import { ApiError, apiCall, decodeJwt, isTokenExpiringSoon, setRefreshHandler } from './apiClient';
+import { getDeviceSerial } from './deviceSerial';
 import {
   clearRefreshToken,
+  clearTerminal,
   clearToken,
   clearUser,
   getRefreshToken,
+  getTerminal,
   getToken,
   getUser,
   saveRefreshToken,
+  saveTerminal,
   saveToken,
   saveUser,
+  type StoredTerminal,
 } from './secureStorage';
 
 export interface LoginCredentials {
   login: string;
   password: string;
+  /** Serial do dispositivo; se omitido, resolve via getDeviceSerial(). */
+  serial?: string;
 }
+
+export type { StoredTerminal };
 
 export interface User {
   id: string;
@@ -54,6 +63,13 @@ export interface PermissoesPayload {
   pode_pagar_outro: string;
 }
 
+export interface TerminalPayload {
+  terminal_id: number;
+  serial: string;
+  tipo?: string;
+  multi_usuario?: string;
+}
+
 export interface LoginResponse {
   success: boolean;
   message: string;
@@ -64,6 +80,7 @@ export interface LoginResponse {
   refresh_expires_at?: string;
   vendedor?: VendedorPayload | null;
   permissoes?: PermissoesPayload | null;
+  terminal?: TerminalPayload | null;
   warning?: string;
 }
 
@@ -77,6 +94,9 @@ function isJwtExpired(token: string, skewSeconds = 30): boolean {
 
 class AuthService {
   async login(credentials: LoginCredentials): Promise<LoginResponse> {
+    const serial =
+      (credentials.serial && credentials.serial.trim()) || (await getDeviceSerial());
+
     let payload: LoginResponse;
     try {
       payload = await apiCall<LoginResponse>(
@@ -86,6 +106,7 @@ class AuthService {
           data: {
             login: credentials.login,
             password: credentials.password,
+            serial,
           },
         },
         { skipAuth: true },
@@ -104,6 +125,16 @@ class AuthService {
     if (payload.token) await saveToken(payload.token);
     if (payload.refresh_token) await saveRefreshToken(payload.refresh_token);
     if (payload.user) await saveUser(payload.user);
+    if (payload.terminal?.terminal_id) {
+      await saveTerminal({
+        terminal_id: payload.terminal.terminal_id,
+        serial: payload.terminal.serial,
+        tipo: payload.terminal.tipo,
+        multi_usuario: payload.terminal.multi_usuario,
+      });
+    } else {
+      await clearTerminal();
+    }
     return payload;
   }
 
@@ -172,6 +203,7 @@ class AuthService {
     await clearToken();
     await clearRefreshToken();
     await clearUser();
+    await clearTerminal();
   }
 
   async getStoredToken(): Promise<string | null> {
@@ -180,6 +212,10 @@ class AuthService {
 
   async getStoredUser(): Promise<User | null> {
     return getUser<User>();
+  }
+
+  async getStoredTerminal(): Promise<StoredTerminal | null> {
+    return getTerminal();
   }
 
   async isAuthenticated(): Promise<boolean> {

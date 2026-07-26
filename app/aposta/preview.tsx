@@ -1,8 +1,10 @@
 import { colors } from '@/assets/styles/colors';
 import PuleTermica from '@/components/PuleTermica';
 import { Screen } from '@/components/ui/screen';
+import { useAuth } from '@/context/AuthContext';
 import { useCarrinho } from '@/context/CarrinhoContext';
 import { ApostaService } from '@/services/apostaService';
+import AuthService from '@/services/auth';
 import { Extracao } from '@/types/aposta';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
@@ -21,6 +23,7 @@ import {
 
 export default function PreviewScreen() {
   const { itens, removerItem, limparCarrinho, getTotalEstimado } = useCarrinho();
+  const { terminal } = useAuth();
 
   const [dataSorteio, setDataSorteio] = useState(new Date().toISOString().split('T')[0]);
   const [extracoes, setExtracoes] = useState<Extracao[]>([]);
@@ -80,6 +83,17 @@ export default function PreviewScreen() {
 
     setLoading(true);
     try {
+      const terminalId =
+        terminal?.terminal_id ?? (await AuthService.getStoredTerminal())?.terminal_id ?? null;
+
+      if (!terminalId) {
+        Alert.alert(
+          'Terminal não vinculado',
+          'Faça login novamente neste aparelho. O terminal precisa estar cadastrado no sistema.',
+        );
+        return;
+      }
+
       const jogosPayload = [];
       for (const excId of extracoesSelecionadas) {
         for (const item of itens) {
@@ -100,7 +114,7 @@ export default function PreviewScreen() {
 
       const payload = {
         data: {
-          terminal_id: 1,
+          terminal_id: terminalId,
           jogos: jogosPayload,
         },
       };

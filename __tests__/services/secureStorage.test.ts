@@ -4,12 +4,15 @@ import * as SecureStore from 'expo-secure-store';
 
 import {
   clearRefreshToken,
+  clearTerminal,
   clearToken,
   clearUser,
   getRefreshToken,
+  getTerminal,
   getToken,
   getUser,
   saveRefreshToken,
+  saveTerminal,
   saveToken,
   saveUser,
 } from '../../services/secureStorage';
@@ -99,5 +102,23 @@ describe('secureStorage — user (AsyncStorage)', () => {
     await AsyncStorage.setItem('userData', '{}');
     await clearUser();
     expect(await getUser()).toBeNull();
+  });
+});
+
+describe('secureStorage — terminal', () => {
+  it('salva e recupera terminal', async () => {
+    await saveTerminal({ terminal_id: 5, serial: 'ABC', tipo: 'APP', multi_usuario: 'N' });
+    expect(await getTerminal()).toEqual({
+      terminal_id: 5,
+      serial: 'ABC',
+      tipo: 'APP',
+      multi_usuario: 'N',
+    });
+  });
+
+  it('clearTerminal remove o registro', async () => {
+    await saveTerminal({ terminal_id: 1, serial: 'X' });
+    await clearTerminal();
+    expect(await getTerminal()).toBeNull();
   });
 });

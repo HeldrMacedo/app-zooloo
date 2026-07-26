@@ -11,12 +11,18 @@ Esta skill orienta o agente sobre como gerenciar a sessão do usuário, validar 
 
 1. **Estado de Sessão:**
    - O `AuthContext` (`context/AuthContext.tsx` via hook `useAuth()`) é a **única fonte de verdade** sobre a sessão do usuário no app.
-   - Nunca chame o `AuthService` diretamente de componentes visuais para gerenciar estado, apenas leia as variáveis e chame os métodos expostos pelo contexto (`user`, `vendedor`, `permissoes`, `login()`, `logout()`).
+   - Nunca chame o `AuthService` diretamente de componentes visuais para gerenciar estado, apenas leia as variáveis e chame os métodos expostos pelo contexto (`user`, `terminal`, `login()`, `logout()`).
 2. **Tokens de Acesso e Refresh:**
    - Access token: TTL curto (15 min), guardado em SecureStore (`zooloo.auth.token`).
    - Refresh token: TTL longo (30 dias rotativo), guardado em SecureStore (`zooloo.auth.refresh`).
    - Qualquer refresh de token invalida o refresh anterior (lógica de detecção de reuso no backend). Certifique-se de que o app atualiza ambos simultaneamente.
-3. **Modo Offline:**
+3. **Terminal (device binding):**
+   - Login **sempre** envia `serial` do dispositivo (`services/deviceSerial.ts`); o backend valida `cad_terminal`.
+   - O serial deve ser pré-cadastrado no back-office (Cadastros → Terminal). Não há autocadastro pelo app.
+   - Após login, `terminal` (`terminal_id`, `serial`) fica no SecureStore e no `useAuth().terminal`.
+   - Emissão de bilhete **deve** usar o `terminal_id` persistido (nunca hardcode).
+   - Rotas públicas sem auth: `/login`, `/terminal` (tela do serial / engrenagem).
+4. **Modo Offline:**
    - Se o app não possuir conectividade, a função `isAuthenticated()` decodifica localmente o JWT existente. Se a data de expiração (`exp`) estiver no futuro, a navegação deve permitir que o vendedor continue acessando as telas operacionais (essencial para maquinetas POS).
 
 ## 🛡️ Permissões Baseadas no Vendedor (`cad_vendedor`)
