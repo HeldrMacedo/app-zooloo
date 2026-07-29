@@ -8,7 +8,7 @@
 
 ## 0. Como ler este documento
 
-- **Fonte de verdade de modelagem:** banco de dados oficial **`applications`** (PostgreSQL 15, através de `banco_migrado.sql`). O banco **`jb`** é a referência legada de origem, utilizada apenas para validar regras e catálogo.
+- **Fonte de verdade de modelagem:** banco de dados oficial **`applications`** (PostgreSQL 15, através de `banco_migrado.sql`). O banco **`jb`** (do sistema base legado **`jballsystem`**, localizado em `desenvolvimento/jballsystem`) é a referência legada de origem, utilizada apenas para validar regras e catálogo.
 - **Marcadores:** `[CONFIRMADO NO SQL]` = lido diretamente da estrutura/dados; `[HIPÓTESE]` = inferência a validar; `[NÃO IDENTIFICADO NO SQL]` = lacuna real.
 - **Princípio inegociável:** o app é **interface operacional**. Todo cálculo de prêmio, comissão, limite e verificação de ganhador é feito **no banco/backend** — nunca no app. Isso não é uma recomendação genérica: é como o sistema atual já funciona (ver Seção 2.4).
 

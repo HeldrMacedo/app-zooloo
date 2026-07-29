@@ -7,8 +7,9 @@ Roda em **celular do vendedor** e em **maquinetas POS Android** (impressora tér
 > Este arquivo é o índice operacional. Para detalhes, siga os ponteiros:
 > - **Escopo, domínio, modelagem do banco, roadmap:** [plano.md](plano.md)
 > - **Autenticação (fluxo de tokens, testes, produção):** [README-AUTH.md](README-AUTH.md)
-> - **Backend:** [CLAUDE.md do Backend](../../zooloo/zooloo/CLAUDE.md)
+> - **Backend:** [CLAUDE.md do Backend](../../zooloo/CLAUDE.md)
 > - **Banco de dados:** [arquitetura-dados.md](arquitetura-dados.md)
+> - **Sistema Base Legado:** `jballsystem` (na pasta irmã `../../jballsystem` ou `desenvolvimento/jballsystem`)
 
 ---
 

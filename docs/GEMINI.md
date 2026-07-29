@@ -12,6 +12,7 @@ Aqui estão os documentos fundamentais do projeto. Siga os links para aprofundar
 - 🔐 **Autenticação e Segurança:** [[README-AUTH.md]] - Fluxo de JWT (access/refresh), armazenamento no `SecureStore`, funcionamento offline e integração com Adianti.
 - 📜 **Regras de Negócio (Fase 2):** [[regras-negocio.md]] - Regras específicas das apostas (ex: Jogo do Bicho), validações e limites.
 - 🤖 **Índice Operacional (Claude):** [[CLAUDE.md]] - Índice operacional original do projeto.
+- 🏛️ **Sistema Base Legado:** `jballsystem` (localizado na pasta irmã `../../jballsystem` ou `desenvolvimento/jballsystem`) - Sistema Java/Spring Boot legado de onde regras e schemas foram derivados.
 - 🗺️ **Guia do Obsidian:** [[../roadmap-obsidian.md]] - Como a documentação está estruturada para o sistema de "segundo cérebro" usando links Markdown.
 
 ---

@@ -16,7 +16,7 @@ fonte: introspeccao-banco-postgresql
 
 > [!IMPORTANT]
 > - **`applications` (Banco Oficial / Novo Projeto):** É o banco de dados PostgreSQL 15 oficial do novo projeto Zooloo. Toda a aplicação React Native e o backend PHP/Adianti utilizam **exclusivamente** o banco `applications`.
-> - **`jb` (Referência Legada):** O banco `jb` (banco antigo do Jogo do Bicho) é uma **referência legada** (banco original de onde os dados históricos e estruturas foram extraídos/migrados). Não é utilizado em tempo de execução no novo projeto.
+> - **`jb` (Referência Legada):** O banco `jb` (banco antigo do Jogo do Bicho pertencente ao sistema base legado **`jballsystem`**, localizado em `desenvolvimento/jballsystem`) é uma **referência legada** (banco de origem de onde os dados históricos e estruturas foram extraídos/migrados). Não é utilizado em tempo de execução no novo projeto.
 
 ---
 
