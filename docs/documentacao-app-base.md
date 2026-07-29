@@ -1,7 +1,7 @@
 # Documentação do App Base — Cambista Mobile (SportingPlay)
 
 > [!NOTE]
-> Documentação gerada a partir da engenharia reversa do APK decompilado em `C:\desenvolvimento\app-base`.
+> Documentação gerada a partir da engenharia reversa do APK decompilado na pasta irmã `../app-base`.
 > O código-fonte está ofuscado (JADX), portanto nomes de variáveis e classes auxiliares podem não refletir os originais.
 
 ---
@@ -16,7 +16,7 @@
 | **Min SDK** | 21 (Android 5.0 Lollipop) |
 | **Target SDK** | 28 (Android 9 Pie) |
 | **Flavor/Variante** | `azul` |
-| **Application Class** | [SportingApplication.java](file:///c:/desenvolvimento/app-base/sources/cambista/sportingplay/info/cambistamobile/SportingApplication.java) |
+| **Application Class** | [SportingApplication.java](../../app-base/sources/cambista/sportingplay/info/cambistamobile/SportingApplication.java) |
 
 O aplicativo é uma plataforma mobile para **cambistas** (operadores de apostas lotéricas), permitindo registrar apostas, gerenciar bilhetes, processar pagamentos, imprimir comprovantes e gerar relatórios operacionais. Ele opera como terminal de ponto de venda (POS) móvel.
 
@@ -130,9 +130,9 @@ cambista.sportingplay.info.cambistamobile/
 
 | Componente | Arquivo |
 |---|---|
-| Activity principal | [LoginActivity.java](file:///c:/desenvolvimento/app-base/sources/cambista/sportingplay/info/cambistamobile/activity/login/LoginActivity.java) |
-| Entidade Auth | [AuthOdin.java](file:///c:/desenvolvimento/app-base/sources/cambista/sportingplay/info/cambistamobile/entities/auth/AuthOdin.java) |
-| Addon Sporting | [AddonSporting.java](file:///c:/desenvolvimento/app-base/sources/cambista/sportingplay/info/cambistamobile/entities/auth/AddonSporting.java) |
+| Activity principal | [LoginActivity.java](../../app-base/sources/cambista/sportingplay/info/cambistamobile/activity/login/LoginActivity.java) |
+| Entidade Auth | [AuthOdin.java](../../app-base/sources/cambista/sportingplay/info/cambistamobile/entities/auth/AuthOdin.java) |
+| Addon Sporting | [AddonSporting.java](../../app-base/sources/cambista/sportingplay/info/cambistamobile/entities/auth/AddonSporting.java) |
 
 **Funcionalidades:**
 - Login com usuário (código numérico de 8 dígitos) e senha (4 dígitos)
@@ -236,8 +236,8 @@ Módulo principal para operações de loteria.
 
 | Activity | Funcionalidade |
 |---|---|
-| [QrCodeReaderActivity](file:///c:/desenvolvimento/app-base/sources/cambista/sportingplay/info/cambistamobile/w/jbmobile/activities/QrCodeReaderActivity.java) | Leitor de QR Code |
-| [BarcodeCaptureActivity](file:///c:/desenvolvimento/app-base/sources/cambista/sportingplay/info/cambistamobile/w/jbmobile/activities/BarcodeCaptureActivity.java) | Leitor de código de barras |
+| [QrCodeReaderActivity](../../app-base/sources/cambista/sportingplay/info/cambistamobile/w/jbmobile/activities/QrCodeReaderActivity.java) | Leitor de QR Code |
+| [BarcodeCaptureActivity](../../app-base/sources/cambista/sportingplay/info/cambistamobile/w/jbmobile/activities/BarcodeCaptureActivity.java) | Leitor de código de barras |
 
 ---
 
@@ -283,13 +283,13 @@ Módulo para recarga de celular integrado.
 
 | Activity | Funcionalidade |
 |---|---|
-| [DashBoard.java](file:///c:/desenvolvimento/app-base/sources/cambista/sportingplay/info/cambistamobile/w/recarga/DashBoard.java) | Dashboard principal |
-| [Operadoras.java](file:///c:/desenvolvimento/app-base/sources/cambista/sportingplay/info/cambistamobile/w/recarga/Operadoras.java) | Seleção de operadora |
-| [ListaOperadoras.java](file:///c:/desenvolvimento/app-base/sources/cambista/sportingplay/info/cambistamobile/w/recarga/ListaOperadoras.java) | Lista de operadoras |
-| [InitCompra.java](file:///c:/desenvolvimento/app-base/sources/cambista/sportingplay/info/cambistamobile/w/recarga/InitCompra.java) | Iniciar compra |
-| [Compra.java](file:///c:/desenvolvimento/app-base/sources/cambista/sportingplay/info/cambistamobile/w/recarga/Compra.java) | Processo de compra |
-| [Boleto.java](file:///c:/desenvolvimento/app-base/sources/cambista/sportingplay/info/cambistamobile/w/recarga/Boleto.java) | Geração de boleto |
-| [Relatorios.java](file:///c:/desenvolvimento/app-base/sources/cambista/sportingplay/info/cambistamobile/w/recarga/Relatorios.java) | Relatórios de recarga |
+| [DashBoard.java](../../app-base/sources/cambista/sportingplay/info/cambistamobile/w/recarga/DashBoard.java) | Dashboard principal |
+| [Operadoras.java](../../app-base/sources/cambista/sportingplay/info/cambistamobile/w/recarga/Operadoras.java) | Seleção de operadora |
+| [ListaOperadoras.java](../../app-base/sources/cambista/sportingplay/info/cambistamobile/w/recarga/ListaOperadoras.java) | Lista de operadoras |
+| [InitCompra.java](../../app-base/sources/cambista/sportingplay/info/cambistamobile/w/recarga/InitCompra.java) | Iniciar compra |
+| [Compra.java](../../app-base/sources/cambista/sportingplay/info/cambistamobile/w/recarga/Compra.java) | Processo de compra |
+| [Boleto.java](../../app-base/sources/cambista/sportingplay/info/cambistamobile/w/recarga/Boleto.java) | Geração de boleto |
+| [Relatorios.java](../../app-base/sources/cambista/sportingplay/info/cambistamobile/w/recarga/Relatorios.java) | Relatórios de recarga |
 | RelatorioWebView | Relatório em WebView |
 | SubRelRV / SubRelRVPDD / SubRelRVRPP | Sub-relatórios de recarga |
 | SubRelEV / SubRelEVEDD / SubRelEVEP | Sub-relatórios de extrato |
@@ -491,7 +491,7 @@ service/models/
 
 | Classe | Descrição |
 |---|---|
-| [LocationService](file:///c:/desenvolvimento/app-base/sources/cambista/sportingplay/info/cambistamobile/w/jbmobile/service/LocationService.java) | Serviço de localização GPS (processo separado `:location_service`) |
+| [LocationService](../../app-base/sources/cambista/sportingplay/info/cambistamobile/w/jbmobile/service/LocationService.java) | Serviço de localização GPS (processo separado `:location_service`) |
 
 ---
 
@@ -651,10 +651,10 @@ DAOs identificados no código:
 
 | Componente | Descrição |
 |---|---|
-| [ButtonCotacao](file:///c:/desenvolvimento/app-base/sources/cambista/sportingplay/info/cambistamobile/util/ButtonCotacao.java) | Botão de cotação estilizado |
-| [ButtonEsportes](file:///c:/desenvolvimento/app-base/sources/cambista/sportingplay/info/cambistamobile/util/ButtonEsportes.java) | Botão de esportes |
-| [TextViewEsportes](file:///c:/desenvolvimento/app-base/sources/cambista/sportingplay/info/cambistamobile/util/TextViewEsportes.java) | TextView de esportes |
-| [MySpinner](file:///c:/desenvolvimento/app-base/sources/cambista/sportingplay/info/cambistamobile/util/MySpinner.java) | Spinner customizado |
+| [ButtonCotacao](../../app-base/sources/cambista/sportingplay/info/cambistamobile/util/ButtonCotacao.java) | Botão de cotação estilizado |
+| [ButtonEsportes](../../app-base/sources/cambista/sportingplay/info/cambistamobile/util/ButtonEsportes.java) | Botão de esportes |
+| [TextViewEsportes](../../app-base/sources/cambista/sportingplay/info/cambistamobile/util/TextViewEsportes.java) | TextView de esportes |
+| [MySpinner](../../app-base/sources/cambista/sportingplay/info/cambistamobile/util/MySpinner.java) | Spinner customizado |
 
 ---
 

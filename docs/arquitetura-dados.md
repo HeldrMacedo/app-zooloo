@@ -30,8 +30,7 @@ O banco `applications` contém **79 tabelas** organizadas em 6 prefixos semânti
 **23 funções/triggers PostgreSQL**. O app mobile **nunca calcula** — envia dados brutos
 e relê os valores que os triggers preenchem.
 
-**Banco original que está servindo de base é o jb ip: [localhost] e porta 5432, user postgres, senha postgres, esse banco só tem dados referente ao lotinha, quininha e seninha**
-**Arquivo Bando de dados que serve como base, contendo dados do jogo bicho: C:\desenvolvimento\jogo_bicho.sql**
+**Banco original que está servindo de base é o jb ip: [localhost] e porta 5432, user postgres, senha postgres, que contém os dados do jogo do bicho**
 
 ---
 

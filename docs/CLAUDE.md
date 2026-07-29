@@ -5,10 +5,10 @@ Bicho, Lotinha, Quininha e Seninha**, integrado ao backend PHP/Adianti via REST 
 Roda em **celular do vendedor** e em **maquinetas POS Android** (impressora térmica).
 
 > Este arquivo é o índice operacional. Para detalhes, siga os ponteiros:
-> - **Escopo, domínio, modelagem do banco, roadmap:** [[/docs/plano.md]]
-> - **Autenticação (fluxo de tokens, testes, produção):** [[/docs/README-AUTH.md]]
-> - **Backend:** [[C:/desenvolvimento/zooloo/zooloo/CLAUDE.md]]
-> - **Banco de dados:** [[C:/desenvolvimento/app-zooloo/docs/arquitetura-dados.md]]
+> - **Escopo, domínio, modelagem do banco, roadmap:** [plano.md](plano.md)
+> - **Autenticação (fluxo de tokens, testes, produção):** [README-AUTH.md](README-AUTH.md)
+> - **Backend:** [CLAUDE.md do Backend](../../zooloo/zooloo/CLAUDE.md)
+> - **Banco de dados:** [arquitetura-dados.md](arquitetura-dados.md)
 
 ---
 
@@ -45,7 +45,7 @@ npm run test:coverage  # cobertura (threshold 80% linhas/funcs/stmts, 70% branch
 npm run lint           # eslint (expo)
 ```
 
-Backend (em `C:/desenvolvimento/zooloo/zooloo`, via Docker):
+Backend (na pasta irmã `../zooloo/zooloo`, via Docker):
 ```bash
 docker exec -i applications_www sh -lc "cd /var/www/html && composer test"
 ```

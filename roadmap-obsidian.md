@@ -18,7 +18,7 @@ Um segundo cérebro não é um local onde você **joga informação**. É um sis
 
 1. Abra o Obsidian
 2. `Arquivo` → `Abrir outro vault` → `Abrir pasta como vault`
-3. Escolha `C:\desenvolvimento\app-zooloo` (a raiz do seu projeto React Native)
+3. Escolha a pasta raiz do projeto (ex: `desenvolvimento/app-zooloo`)
 4. Confirme
 
 **Por que a raiz do projeto?** Porque seus arquivos de documentação (.md) vão ficar **no mesmo lugar do código**. Quando você commitar, a documentação sobe junto. Quando outro dev clonar, já tem tudo.
@@ -52,7 +52,7 @@ Agora, quando você apertar `Ctrl+G`, vê o mapa mental do projeto com cores.
 
 ## Estrutura de pastas recomendada para Zooloo
 
-Crie essas pastas dentro de `C:\desenvolvimento\app-zooloo`:
+Crie essas pastas dentro da raiz do projeto (`desenvolvimento/app-zooloo`):
 
 ```
 app-zooloo/
@@ -327,7 +327,7 @@ O diagrama renderiza **dentro** da nota.
 
 Copie isso e vá marcando:
 
-- [ ] Obsidian instalado, vault aberto em `C:\desenvolvimento\app-zooloo`
+- [ ] Obsidian instalado, vault aberto na raiz do projeto (`desenvolvimento/app-zooloo`)
 - [ ] Plugins instalados: Dataview, Kanban, Templater, Tasks
 - [ ] Pastas criadas: `docs/`, `tasks/`, `bugs/`, `daily/`, `templates/`
 - [ ] Arquivos movidos: `plano.md` → `docs/`, `CLAUDE.md` → `docs/`, etc.

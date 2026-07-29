@@ -122,7 +122,7 @@ app/
   _layout.tsx         guard de navegação (rotas públicas: login, terminal)
 ```
 
-### Backend (`c:/desenvolvimento/zooloo/zooloo/`)
+### Backend (`../zooloo/zooloo/` ou `zooloo/zooloo/`)
 ```
 rest.php                                  router REST (CORS, Bearer guard, error envelope)
 app/service/auth/

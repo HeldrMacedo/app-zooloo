@@ -21,7 +21,7 @@ tags: [bug, status/a-fazer, componente]
 2. [Passo 2]
 
 ## Arquivos Afetados
-- [nome_do_arquivo](file:///c:/desenvolvimento/app-zooloo/...)
+- [nome_do_arquivo](../caminho/para/arquivo.ts)
 
 ## Resolução (Preencher ao resolver)
 [Descrição de como o problema foi corrigido e como foi verificado/testado.]

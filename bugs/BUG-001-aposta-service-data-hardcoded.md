@@ -17,7 +17,7 @@ O método `listarExtracoes(dataSorteio: string)` em `services/apostaService.ts` 
 - No aplicativo, tentar filtrar extrações por outra data de sorteio continuaria enviando `2026-05-27` ao backend.
 
 ## Arquivos Afetados
-- [apostaService.ts](file:///c:/desenvolvimento/app-zooloo/services/apostaService.ts)
+- [apostaService.ts](../services/apostaService.ts)
 
 ## Resolução
 Modificado o objeto `data` da requisição `apiCall` de:
