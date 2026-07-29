@@ -79,3 +79,26 @@ app-zooloo/
    ├─ nova-tarefa.md
    ├─ novo-bug.md
    └─ nova-decisao-arquitetural.md
+
+---
+
+## 🤖 Ferramentas de IA e Metodologia (AI Agent Tooling)
+
+Este projeto conta com ferramentas avançadas para apoiar o desenvolvimento com Agentes Inteligentes de IA:
+
+### 1. 🌐 [Graphify](https://github.com/Graphify-Labs/graphify)
+- **Repositório**: [https://github.com/Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify)
+- **Descrição**: Mapeia toda a base de código do projeto em um **Grafo de Conhecimento** (`graphify-out/`). Permite consultar a arquitetura, visualizar caminhos de dependência entre módulos e explorar o grafo no Obsidian ou via relatório interativo HTML (`GRAPH_TREE.html`).
+- **Comandos Principais**:
+  - `python -m graphify . --code-only`: Gera o grafo de conhecimento inicial do código.
+  - `python -m graphify update .`: Atualização incremental rápida dos arquivos modificados.
+  - `python -m graphify tree`: Gera a visualização em árvore interativa (`graphify-out/GRAPH_TREE.html`).
+
+### 2. ⚡ [Superpowers](https://github.com/obra/superpowers)
+- **Repositório**: [https://github.com/obra/superpowers](https://github.com/obra/superpowers)
+- **Descrição**: Metodologia de engenharia de software composta por 14 habilidades (*skills*) estruturadas que garantem disciplina e alto padrão no código gerado pelo agente:
+  - **`brainstorming`**: Refinamento de requisitos e decisões de design antes de programar.
+  - **`writing-plans`**: Criação de planos de implementação detalhados e testáveis.
+  - **`test-driven-development`**: Desenvolvimento Orientado a Testes (TDD).
+  - **`systematic-debugging`**: Análise sistemática de causa-raiz e logs antes de aplicar correções.
+  - **`verification-before-completion`**: Verificação rigorosa com testes no terminal antes de concluir qualquer tarefa.
