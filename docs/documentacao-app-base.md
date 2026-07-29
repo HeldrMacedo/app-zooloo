@@ -3,6 +3,7 @@
 > [!NOTE]
 > Documentação gerada a partir da engenharia reversa do APK decompilado na pasta irmã `../app-base`.
 > O código-fonte está ofuscado (JADX), portanto nomes de variáveis e classes auxiliares podem não refletir os originais.
+> **Nota sobre o Banco de Dados:** O sistema legado utilizava o banco de dados `jb` como base. O novo projeto Zooloo utiliza exclusivamente o banco migrado **`applications`** (PostgreSQL 15).
 
 ---
 

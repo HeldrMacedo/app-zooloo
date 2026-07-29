@@ -12,6 +12,14 @@ fonte: introspeccao-banco-postgresql
 
 ---
 
+## 📌 Clarificação de Ambiente de Banco de Dados
+
+> [!IMPORTANT]
+> - **`applications` (Banco Oficial / Novo Projeto):** É o banco de dados PostgreSQL 15 oficial do novo projeto Zooloo. Toda a aplicação React Native e o backend PHP/Adianti utilizam **exclusivamente** o banco `applications`.
+> - **`jb` (Referência Legada):** O banco `jb` (banco antigo do Jogo do Bicho) é uma **referência legada** (banco original de onde os dados históricos e estruturas foram extraídos/migrados). Não é utilizado em tempo de execução no novo projeto.
+
+---
+
 ## Visão Geral
 
 O banco `applications` contém **79 tabelas** organizadas em 6 prefixos semânticos:
@@ -30,7 +38,7 @@ O banco `applications` contém **79 tabelas** organizadas em 6 prefixos semânti
 **23 funções/triggers PostgreSQL**. O app mobile **nunca calcula** — envia dados brutos
 e relê os valores que os triggers preenchem.
 
-**Banco original que está servindo de base é o jb ip: [localhost] e porta 5432, user postgres, senha postgres, que contém os dados do jogo do bicho**
+> **Nota de Origem da Migração:** O banco original que serviu de carga inicial foi o banco legado `jb` (`localhost:5432`, db: `jb`). Atualmente, todas as operações ocorrem no banco migrado **`applications`**.
 
 ---
 

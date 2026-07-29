@@ -8,7 +8,7 @@ Este arquivo atua como o ponto central para compreender as regras de negócio, a
 Aqui estão os documentos fundamentais do projeto. Siga os links para aprofundar em cada área:
 
 - 📖 **Plano Técnico e Roadmap:** [[../plano.md]] - Detalhes do escopo, análise do banco PostgreSQL, catálogo de modalidades e o plano de desenvolvimento.
-- 🏗️ **Arquitetura de Dados:** [[arquitetura-dados.md]] - Estrutura do banco de dados (prefixos `int_`, `cad_`, `cfg_`, `mov_`), triggers e dependências.
+- 🏗️ **Arquitetura de Dados:** [[arquitetura-dados.md]] - Estrutura do banco de dados oficial `applications` (prefixos `int_`, `cad_`, `cfg_`, `mov_`), triggers e dependências. (Nota: O banco `jb` é a referência legada).
 - 🔐 **Autenticação e Segurança:** [[README-AUTH.md]] - Fluxo de JWT (access/refresh), armazenamento no `SecureStore`, funcionamento offline e integração com Adianti.
 - 📜 **Regras de Negócio (Fase 2):** [[regras-negocio.md]] - Regras específicas das apostas (ex: Jogo do Bicho), validações e limites.
 - 🤖 **Índice Operacional (Claude):** [[CLAUDE.md]] - Índice operacional original do projeto.

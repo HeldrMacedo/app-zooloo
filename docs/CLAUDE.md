@@ -15,8 +15,8 @@ Roda em **celular do vendedor** e em **maquinetas POS Android** (impressora tér
 ## Regra de ouro (inegociável)
 
 **O app é interface operacional. NUNCA calcula prêmio, comissão, limite ou ganhador.**
-Toda precificação e verificação é feita por triggers no PostgreSQL e exposta via
-endpoints REST. O app envia dados brutos e **relê** os valores que o backend devolve.
+Toda precificação e verificação é feita por triggers no PostgreSQL (banco oficial **`applications`**) e exposta via
+endpoints REST. (Nota: O banco **`jb`** é a referência legada do sistema antigo). O app envia dados brutos e **relê** os valores que o backend devolve.
 Ver [plano.md](plano.md) seção 2.4. Se você se pegar somando prêmios no app, pare.
 
 ---
