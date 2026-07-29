@@ -166,8 +166,8 @@
             "state": {
               "type": "calendar",
               "state": {},
-              "icon": "calendar-with-checkmark",
-              "title": "Calendar"
+              "icon": "lucide-ghost",
+              "title": "calendar"
             }
           }
         ]
@@ -192,6 +192,7 @@
   },
   "active": "0297402c6b2794b5",
   "lastOpenFiles": [
+    "graphify-out/GRAPH_REPORT.md",
     "tasks/roadmap.md",
     "tasks/logica-tela-premios.md",
     "tasks/fase-2-aposta-bicho.md",
