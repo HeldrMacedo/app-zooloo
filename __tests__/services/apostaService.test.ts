@@ -54,7 +54,7 @@ describe('ApostaService', () => {
     it('deve chamar apiCall e retornar as extracoes', async () => {
       const mockDataSorteio = '2023-10-10';
       const mockResponse = [
-        { id: 1, descricao: 'PTM', descricao_mobile: 'PTM - 11:20', hora_limite: '11:20' }
+        { sorteio_id: 8, extracao_id: 6, descricao: 'CM 17:00', descricao_mobile: 'CM 17:00', hora_limite: '17:00:00' }
       ];
 
       // O service simula o retorno envelopado ou array direto
@@ -73,7 +73,7 @@ describe('ApostaService', () => {
     it('deve extrair data caso a api retorne num envelope', async () => {
       const mockDataSorteio = '2023-10-10';
       const mockResponseData = [
-        { id: 1, descricao: 'PTM', descricao_mobile: 'PTM - 11:20', hora_limite: '11:20' }
+        { sorteio_id: 8, extracao_id: 6, descricao: 'CM 17:00', descricao_mobile: 'CM 17:00', hora_limite: '17:00:00' }
       ];
 
       (apiCall as jest.Mock).mockResolvedValueOnce({ data: mockResponseData });

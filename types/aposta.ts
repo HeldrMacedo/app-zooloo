@@ -17,6 +17,7 @@ export interface ApostaItem {
 }
 
 export interface Extracao {
+  sorteio_id: number;
   extracao_id: number;
   descricao: string;
   descricao_mobile: string;

@@ -1,4 +1,4 @@
-import { validarMilhar, calcularTotalAposta, parsePalpitesPosicionais } from '../../utils/apostaHelpers';
+import { validarMilhar, calcularTotalAposta, parsePalpitesPosicionais, getHojeLocalDate } from '../../utils/apostaHelpers';
 
 describe('apostaHelpers', () => {
   describe('validarMilhar', () => {
@@ -55,6 +55,13 @@ describe('apostaHelpers', () => {
     it('deve juntar os palpites com virgula', () => {
       expect(parsePalpitesPosicionais(['1234', '5678'])).toBe('1234,5678');
       expect(parsePalpitesPosicionais(['0000'])).toBe('0000');
+    });
+  });
+
+  describe('getHojeLocalDate', () => {
+    it('deve formatar data local no formato YYYY-MM-DD sem fuso UTC', () => {
+      const mockDate = new Date(2026, 6, 29, 21, 30, 0); // 2026-07-29 21:30:00 local
+      expect(getHojeLocalDate(mockDate)).toBe('2026-07-29');
     });
   });
 });

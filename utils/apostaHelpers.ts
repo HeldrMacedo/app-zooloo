@@ -30,3 +30,11 @@ export const parsePalpitesPosicionais = (palpites: string[]): string => {
   // Por enquanto (MVP Milhar), unimos com vírgula.
   return palpites.join(',');
 };
+
+/** Retorna a data atual no fuso horário local no formato YYYY-MM-DD (evitando timezone skew do toISOString). */
+export const getHojeLocalDate = (date = new Date()): string => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};

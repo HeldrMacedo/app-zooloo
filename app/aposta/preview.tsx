@@ -6,6 +6,7 @@ import { useCarrinho } from '@/context/CarrinhoContext';
 import { ApostaService } from '@/services/apostaService';
 import AuthService from '@/services/auth';
 import { Extracao } from '@/types/aposta';
+import { getHojeLocalDate } from '@/utils/apostaHelpers';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
@@ -25,7 +26,7 @@ export default function PreviewScreen() {
   const { itens, removerItem, limparCarrinho, getTotalEstimado } = useCarrinho();
   const { terminal } = useAuth();
 
-  const [dataSorteio, setDataSorteio] = useState(new Date().toISOString().split('T')[0]);
+  const [dataSorteio, setDataSorteio] = useState(getHojeLocalDate());
   const [extracoes, setExtracoes] = useState<Extracao[]>([]);
   const [extracoesSelecionadas, setExtracoesSelecionadas] = useState<number[]>([]);
   const [ratearExtracoes, setRatearExtracoes] = useState(false);
@@ -44,7 +45,7 @@ export default function PreviewScreen() {
 
       setExtracoes(data || []);
       if (data && data.length > 0) {
-        setExtracoesSelecionadas([data[0].extracao_id]);
+        setExtracoesSelecionadas([data[0].sorteio_id]);
       } else {
         setExtracoesSelecionadas([]);
       }
@@ -202,11 +203,11 @@ export default function PreviewScreen() {
           ) : (
             <View>
               {extracoes.map((ext) => {
-                const isSelected = extracoesSelecionadas.includes(ext.extracao_id);
+                const isSelected = extracoesSelecionadas.includes(ext.sorteio_id);
                 return (
                   <TouchableOpacity
-                    key={ext.extracao_id}
-                    onPress={() => handleToggleExtracao(ext.extracao_id)}
+                    key={ext.sorteio_id}
+                    onPress={() => handleToggleExtracao(ext.sorteio_id)}
                     style={styles.extracaoRow}
                   >
                     <View>
