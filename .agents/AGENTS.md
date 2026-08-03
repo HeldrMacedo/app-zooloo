@@ -9,9 +9,10 @@ Este arquivo define as diretrizes arquiteturais, restrições e regras de negóc
 **O app é estritamente uma interface operacional.**
 
 1. **NUNCA** implemente lógica de cálculo de prêmios, comissões, limites de apostas, ou lógica de validação de ganhadores no frontend (React Native/Expo).
-2. Toda a inteligência comercial, precificação, limites de cotação e validação reside no banco de dados oficial do novo projeto (**`applications`** no PostgreSQL) e no backend (PHP/Adianti). O banco **`jb`** é estritamente uma referência legada do sistema antigo (**`jballsystem`**, localizado em `desenvolvimento/jballsystem`) e não é utilizado em tempo de execução.
-3. O app deve apenas empacotar e enviar os dados brutos da aposta e, em seguida, **re-ler os valores calculados retornados pelo backend** para exibir na interface e gerar o comprovante.
-4. Qualquer tentativa de violar essa regra gerará bugs catastróficos de divergência de valores.
+2. Toda a inteligência comercial, precificação, limites de cotação e validação reside no banco de dados oficial do novo projeto (**`applications`** no PostgreSQL em ambiente dev e **`teste`** para testes automatizados) e no backend (PHP/Adianti). O banco **`jb`** é estritamente uma referência legada do sistema antigo (**`jballsystem`**, localizado em `desenvolvimento/jballsystem`) e não é utilizado em tempo de execução.
+3. **Ambiente de Testes Automatizados**: Todos os testes automatizados (unitários e de integração) DEVEM rodar estritamente no banco de dados chamado **`teste`** no PostgreSQL, garantindo o isolamento do banco de desenvolvimento (`applications`).
+4. O app deve apenas empacotar e enviar os dados brutos da aposta e, em seguida, **re-ler os valores calculados retornados pelo backend** para exibir na interface e gerar o comprovante.
+5. Qualquer tentativa de violar essa regra gerará bugs catastróficos de divergência de valores.
 
 ---
 

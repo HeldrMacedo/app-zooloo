@@ -43,6 +43,24 @@ export interface BilheteRegistroPayload {
   };
 }
 
+export interface SorteioDetalhe {
+  jb_sorteio_id: number;
+  sorteio_id: number;
+  sorteio_numero?: number;
+  data_sorteio?: string;
+  extracao_descricao: string;
+  modalidade_id: number;
+  modalidade_apresentacao: string;
+  palpites: string[];
+  colocao_inicial: number;
+  colocao_final: number;
+  valor_palpites: number;
+  total_sorteio: number;
+  sorteado?: string;
+  sorteado_valor?: number;
+  previsao_premio?: number;
+}
+
 export interface BilheteRegistroResponse {
   jb_id: number;
   bilhete_numero: number;
@@ -50,4 +68,9 @@ export interface BilheteRegistroResponse {
   total_bilhete: number;
   data_hora: string;
   vendedor_nome: string;
+  area_descricao?: string;
+  nome_cliente?: string;
+  fone_cliente?: string;
+  terminal_id?: number | string;
+  sorteios?: SorteioDetalhe[];
 }

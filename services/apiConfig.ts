@@ -15,7 +15,7 @@ function getExtra(): Extra {
 function resolveDevHost(): string {
   const hostUri = Constants.expoConfig?.hostUri || '';
   const host = hostUri ? hostUri.split(':')[0] : '';
-  if (host) return host;
+  if (host && !host.includes('exp.direct') && !host.includes('exp.host')) return host;
   return Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
 }
 

@@ -20,6 +20,12 @@ describe('apiConfig.getApiBaseUrl', () => {
     expect(getApiBaseUrl()).toBe('http://192.168.1.10/rest.php');
   });
 
+  it('ignora hostUri de tunnel (.exp.direct) e usa fallback local', () => {
+    (global as any).__DEV__ = true;
+    Constants.expoConfig = { hostUri: 'caybdba-anonymous-8081.exp.direct', extra: {} };
+    expect(getApiBaseUrl()).toMatch(/^http:\/\/(localhost|10\.0\.2\.2)\/rest\.php$/);
+  });
+
   it('respeita expo.extra.apiBaseUrl quando definido', () => {
     (global as any).__DEV__ = true;
     Constants.expoConfig = { hostUri: '', extra: { apiBaseUrl: 'https://api.zooloo.com.br' } };

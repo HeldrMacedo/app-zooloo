@@ -140,8 +140,8 @@
     "semantic_hash": ""
   },
   "__tests__/services/apiConfig.test.ts": {
-    "mtime": 1784400188.2596323,
-    "ast_hash": "4cb6b9beb1a92ebdae9b80c10e925b0d",
+    "mtime": 1785687747.9532862,
+    "ast_hash": "a2fa51b49d57523c9bdf03abe0b9a84d",
     "semantic_hash": ""
   },
   "__tests__/services/apostaService.test.ts": {
@@ -175,13 +175,13 @@
     "semantic_hash": ""
   },
   "app.json": {
-    "mtime": 1784400188.2596323,
-    "ast_hash": "fa2dd6b6dc3f2318ddea7e507a77fc5c",
+    "mtime": 1785716476.207795,
+    "ast_hash": "ed68b9e202442f8f81cf2ab004edb4ed",
     "semantic_hash": ""
   },
   "app/(tabs)/_layout.tsx": {
-    "mtime": 1785085297.4311929,
-    "ast_hash": "a5a454932a7bc1ef7d282c4b61e707a7",
+    "mtime": 1785715976.649354,
+    "ast_hash": "0efe8f0fa9a724e6f60f7fbd9db9c88c",
     "semantic_hash": ""
   },
   "app/(tabs)/index.tsx": {
@@ -250,8 +250,8 @@
     "semantic_hash": ""
   },
   "components/PuleTermica.tsx": {
-    "mtime": 1785074731.0619195,
-    "ast_hash": "a7a1ed47c21bf29308f8a1542b697aa1",
+    "mtime": 1785705143.2046921,
+    "ast_hash": "fab428628d310c8891ed2f4178b7e806",
     "semantic_hash": ""
   },
   "components/external-link.tsx": {
@@ -375,8 +375,8 @@
     "semantic_hash": ""
   },
   "services/apiConfig.ts": {
-    "mtime": 1784400188.2662253,
-    "ast_hash": "f9f20254b04857f34b3a9e7f93a2e24f",
+    "mtime": 1785687736.8353817,
+    "ast_hash": "31c81726cba28f331db11da9658f72bb",
     "semantic_hash": ""
   },
   "services/apostaService.ts": {
@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "types/aposta.ts": {
-    "mtime": 1785370040.0887258,
-    "ast_hash": "1285be8252aa22feb216409e0dcc315d",
+    "mtime": 1785702884.7269378,
+    "ast_hash": "104c34a7f9fde540a87dde544b7462a6",
     "semantic_hash": ""
   },
   "utils/apostaHelpers.ts": {
@@ -465,8 +465,8 @@
     "semantic_hash": ""
   },
   ".agents/AGENTS.md": {
-    "mtime": 1785366836.859228,
-    "ast_hash": "05636552e7def38eba65162d4411c751",
+    "mtime": 1785695947.636307,
+    "ast_hash": "a11554a9446fd65ef3b474dedcbd2d96",
     "semantic_hash": ""
   },
   ".agents/rules/graphify.md": {
@@ -700,8 +700,8 @@
     "semantic_hash": ""
   },
   "docs/CLAUDE.md": {
-    "mtime": 1785366836.865228,
-    "ast_hash": "aac26512aeb50156837654018e2405ea",
+    "mtime": 1785696357.8449807,
+    "ast_hash": "338435be8fb70b2e4b00fae3ca4607e3",
     "semantic_hash": ""
   },
   "docs/Fluxo-app.md": {
@@ -847,6 +847,81 @@
   "assets/images/splash-icon.png": {
     "mtime": 1784400188.2611897,
     "ast_hash": "97dae5a0e62ad8551d8a31897b425e63",
+    "semantic_hash": ""
+  },
+  "__tests__/services/PrinterService.test.ts": {
+    "mtime": 1785715487.3214247,
+    "ast_hash": "255601b66d2c6a89a55523b643bb7990",
+    "semantic_hash": ""
+  },
+  "app/(tabs)/configuracoes.tsx": {
+    "mtime": 1785715969.1853094,
+    "ast_hash": "6432ec3047e5efa2ad423aba75d9657a",
+    "semantic_hash": ""
+  },
+  "modules/zooloo-printer/.eslintrc.js": {
+    "mtime": 1785714954.4351933,
+    "ast_hash": "9007a698e752439174d2b72151641644",
+    "semantic_hash": ""
+  },
+  "modules/zooloo-printer/android/build.gradle": {
+    "mtime": 1785714954.4361932,
+    "ast_hash": "a98485a1decb4d1a01925aab1775e230",
+    "semantic_hash": ""
+  },
+  "modules/zooloo-printer/android/src/main/java/expo/modules/zoolooprinter/PrinterManager.kt": {
+    "mtime": 1785715168.5945,
+    "ast_hash": "779ed33d38952ab6afe7d870bc3400d7",
+    "semantic_hash": ""
+  },
+  "modules/zooloo-printer/android/src/main/java/expo/modules/zoolooprinter/ZoolooPrinterModule.kt": {
+    "mtime": 1785715180.0665698,
+    "ast_hash": "5569edf278db27cfab0a51f3311b7a6d",
+    "semantic_hash": ""
+  },
+  "modules/zooloo-printer/android/src/main/java/expo/modules/zoolooprinter/ZoolooPrinterView.kt": {
+    "mtime": 1785714954.4391932,
+    "ast_hash": "0a32b06cded666ca350cc74da2c339a4",
+    "semantic_hash": ""
+  },
+  "modules/zooloo-printer/expo-module.config.json": {
+    "mtime": 1785714954.4401932,
+    "ast_hash": "5109d1dc2517f506b0099bd65fbf460b",
+    "semantic_hash": ""
+  },
+  "modules/zooloo-printer/index.ts": {
+    "mtime": 1785714954.4441934,
+    "ast_hash": "c22c34300a137991188a23f12536a911",
+    "semantic_hash": ""
+  },
+  "modules/zooloo-printer/src/ZoolooPrinter.types.ts": {
+    "mtime": 1785714954.4431932,
+    "ast_hash": "a8bd119840aec43610114c1a9ed69ace",
+    "semantic_hash": ""
+  },
+  "modules/zooloo-printer/src/ZoolooPrinterModule.ts": {
+    "mtime": 1785715217.7597983,
+    "ast_hash": "d29e92a5dede985ee8aba60d30b1872d",
+    "semantic_hash": ""
+  },
+  "modules/zooloo-printer/src/ZoolooPrinterModule.web.ts": {
+    "mtime": 1785714954.443046,
+    "ast_hash": "8aa1dfb1c36eee5a93412d17abe855ef",
+    "semantic_hash": ""
+  },
+  "modules/zooloo-printer/src/ZoolooPrinterView.tsx": {
+    "mtime": 1785714954.4431932,
+    "ast_hash": "af8a21656ee93edc6dbcef7745e21453",
+    "semantic_hash": ""
+  },
+  "modules/zooloo-printer/src/ZoolooPrinterView.web.tsx": {
+    "mtime": 1785714954.4441934,
+    "ast_hash": "0d2d5fdfc75f499db43420b6f5174cdf",
+    "semantic_hash": ""
+  },
+  "services/PrinterService.ts": {
+    "mtime": 1785715229.5748699,
+    "ast_hash": "d38f9524668af96d2c388821d134b284",
     "semantic_hash": ""
   }
 }

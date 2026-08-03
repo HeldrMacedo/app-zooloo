@@ -1,0 +1,9 @@
+{
+  "platforms": ["apple", "android", "web"],
+  "apple": {
+    "modules": ["ZoolooPrinterModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.zoolooprinter.ZoolooPrinterModule"]
+  }
+}
