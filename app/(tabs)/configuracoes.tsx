@@ -1,8 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  ActivityIndicator,
+  Alert,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '@/assets/styles/colors';
-import { PrinterService } from '@/services/PrinterService';
+import { PreferredPrinter, PrinterService } from '@/services/PrinterService';
 import { BluetoothDevice } from '../../modules/zooloo-printer';
 
 export default function ConfiguracoesScreen() {
@@ -10,39 +18,67 @@ export default function ConfiguracoesScreen() {
   const [loading, setLoading] = useState(true);
   const [connectingTo, setConnectingTo] = useState<string | null>(null);
   const [connectedDevice, setConnectedDevice] = useState<string | null>(null);
+  const [preferred, setPreferred] = useState<PreferredPrinter | null>(null);
+  const [printing, setPrinting] = useState(false);
 
-  useEffect(() => {
-    loadDevices();
-  }, []);
-
-  const loadDevices = async () => {
+  const loadDevices = useCallback(async () => {
     setLoading(true);
     try {
+      const ok = await PrinterService.ensureBluetoothPermissions();
+      if (!ok) {
+        Alert.alert(
+          'Permissão necessária',
+          'Ative a permissão de Bluetooth para listar e conectar impressoras.',
+        );
+        setDevices([]);
+        return;
+      }
+
+      const preferredPrinter = await PrinterService.getPreferredPrinter();
+      setPreferred(preferredPrinter);
+
       const pairedDevices = await PrinterService.getPairedDevices();
       setDevices(pairedDevices);
+
+      const alreadyConnected = await PrinterService.isConnected();
+      if (alreadyConnected && preferredPrinter) {
+        setConnectedDevice(preferredPrinter.macAddress);
+      } else if (preferredPrinter) {
+        const reconnected = await PrinterService.ensureConnected();
+        if (reconnected) {
+          setConnectedDevice(preferredPrinter.macAddress);
+        }
+      }
     } catch (error) {
       console.error(error);
       Alert.alert('Erro', 'Não foi possível buscar as impressoras pareadas.');
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    loadDevices();
+  }, [loadDevices]);
 
   const handleConnect = async (device: BluetoothDevice) => {
     setConnectingTo(device.macAddress);
     try {
-      // Se houver uma conectada, desconecta primeiro
       if (connectedDevice) {
         await PrinterService.disconnect();
       }
 
-      const success = await PrinterService.connect(device.macAddress);
-      
+      const success = await PrinterService.connect(device.macAddress, device.name);
+
       if (success) {
         setConnectedDevice(device.macAddress);
+        setPreferred({ name: device.name, macAddress: device.macAddress });
         Alert.alert('Sucesso', `Conectado à impressora: ${device.name}`);
       } else {
-        Alert.alert('Erro', 'Falha ao conectar na impressora. Verifique se ela está ligada e pareada corretamente.');
+        Alert.alert(
+          'Erro',
+          'Falha ao conectar na impressora. Verifique se ela está ligada e pareada corretamente.',
+        );
       }
     } catch (error) {
       console.error(error);
@@ -52,53 +88,90 @@ export default function ConfiguracoesScreen() {
     }
   };
 
+  const handleDisconnect = async () => {
+    await PrinterService.disconnect();
+    setConnectedDevice(null);
+    Alert.alert('Desconectado', 'Impressora desconectada.');
+  };
+
+  const handleClearPreferred = async () => {
+    await PrinterService.disconnect();
+    await PrinterService.clearPreferredPrinter();
+    setConnectedDevice(null);
+    setPreferred(null);
+  };
+
   const handleTestPrint = async () => {
-    if (!connectedDevice) {
-      Alert.alert('Atenção', 'Conecte-se a uma impressora primeiro.');
-      return;
-    }
-    const success = await PrinterService.printReceipt([
-      'ZOOLOO BET - TESTE DE IMPRESSÃO',
-      '===============================',
-      'Data: ' + new Date().toLocaleString(),
-      'Terminal: CAIXA-01',
-      '',
-      'A conexão Bluetooth e os',
-      'comandos nativos ESC/POS',
-      'estão funcionando perfeitamente!',
-      '===============================',
-      'Obrigado por utilizar o Zooloo'
-    ]);
-    if (!success) {
-      Alert.alert('Erro', 'Falha ao imprimir o teste.');
+    setPrinting(true);
+    try {
+      const connected = await PrinterService.ensureConnected();
+      if (!connected) {
+        Alert.alert('Atenção', 'Conecte-se a uma impressora primeiro.');
+        return;
+      }
+
+      if (preferred) {
+        setConnectedDevice(preferred.macAddress);
+      }
+
+      const success = await PrinterService.printReceipt([
+        'ZOOLOO BET - TESTE DE IMPRESSÃO',
+        '===============================',
+        'Data: ' + new Date().toLocaleString(),
+        'Terminal: CAIXA-01',
+        '',
+        'A conexão Bluetooth e os',
+        'comandos nativos ESC/POS',
+        'estão funcionando perfeitamente!',
+        '===============================',
+        'Obrigado por utilizar o Zooloo',
+      ]);
+
+      if (success) {
+        Alert.alert('Sucesso', 'Cupom de teste enviado para a impressora.');
+      } else {
+        Alert.alert('Erro', 'Falha ao imprimir o teste. Verifique a conexão e tente novamente.');
+      }
+    } finally {
+      setPrinting(false);
     }
   };
 
   const renderItem = ({ item }: { item: BluetoothDevice }) => {
     const isConnected = connectedDevice === item.macAddress;
     const isConnecting = connectingTo === item.macAddress;
+    const isPreferred = preferred?.macAddress === item.macAddress;
 
     return (
-      <TouchableOpacity 
+      <TouchableOpacity
         style={[styles.deviceCard, isConnected && styles.deviceCardConnected]}
         onPress={() => handleConnect(item)}
         disabled={isConnecting}
       >
         <View style={styles.deviceInfo}>
-          <Ionicons name="print-outline" size={24} color={isConnected ? '#fff' : colors.gray[700]} />
+          <Ionicons
+            name="print-outline"
+            size={24}
+            color={isConnected ? '#fff' : colors.gray[700]}
+          />
           <View style={styles.deviceTextContainer}>
-            <Text style={[styles.deviceName, isConnected && styles.textWhite]}>{item.name}</Text>
-            <Text style={[styles.deviceMac, isConnected && styles.textWhite]}>{item.macAddress}</Text>
+            <Text style={[styles.deviceName, isConnected && styles.textWhite]}>
+              {item.name}
+              {isPreferred && !isConnected ? ' (preferida)' : ''}
+            </Text>
+            <Text style={[styles.deviceMac, isConnected && styles.textWhite]}>
+              {item.macAddress}
+            </Text>
           </View>
         </View>
-        
+
         {isConnecting ? (
           <ActivityIndicator color={isConnected ? '#fff' : colors.blue[500]} />
         ) : (
-          <Ionicons 
-            name={isConnected ? "checkmark-circle" : "chevron-forward"} 
-            size={24} 
-            color={isConnected ? '#fff' : colors.gray[400]} 
+          <Ionicons
+            name={isConnected ? 'checkmark-circle' : 'chevron-forward'}
+            size={24}
+            color={isConnected ? '#fff' : colors.gray[400]}
           />
         )}
       </TouchableOpacity>
@@ -115,6 +188,18 @@ export default function ConfiguracoesScreen() {
         </TouchableOpacity>
       </View>
 
+      {preferred && (
+        <View style={styles.preferredBanner}>
+          <Ionicons name="star" size={16} color={colors.blue[600]} />
+          <Text style={styles.preferredText}>
+            Preferida: {preferred.name} ({preferred.macAddress})
+          </Text>
+          <TouchableOpacity onPress={handleClearPreferred} hitSlop={8}>
+            <Text style={styles.clearPreferred}>Limpar</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
       {loading ? (
         <View style={styles.centerContainer}>
           <ActivityIndicator size="large" color={colors.blue[500]} />
@@ -124,7 +209,11 @@ export default function ConfiguracoesScreen() {
         <View style={styles.centerContainer}>
           <Ionicons name="bluetooth-outline" size={48} color={colors.gray[400]} />
           <Text style={styles.emptyText}>Nenhuma impressora pareada encontrada.</Text>
-          <Text style={styles.emptySubText}>Pareie o dispositivo nas configurações do Android e tente novamente.</Text>
+          <Text style={styles.emptySubText}>
+            1. Conceda permissão de Bluetooth ao app.{'\n'}
+            2. Pareie a impressora nas configurações do Android.{'\n'}
+            3. Toque em Atualizar.
+          </Text>
         </View>
       ) : (
         <FlatList
@@ -135,11 +224,32 @@ export default function ConfiguracoesScreen() {
         />
       )}
 
-      {connectedDevice && (
+      {(connectedDevice || preferred) && (
         <View style={styles.footer}>
-          <TouchableOpacity style={styles.testButton} onPress={handleTestPrint}>
-            <Ionicons name="receipt-outline" size={20} color="#fff" style={{ marginRight: 8 }} />
-            <Text style={styles.testButtonText}>Imprimir Cupom de Teste</Text>
+          {connectedDevice && (
+            <TouchableOpacity style={styles.disconnectButton} onPress={handleDisconnect}>
+              <Ionicons name="close-circle-outline" size={20} color={colors.gray[700]} />
+              <Text style={styles.disconnectButtonText}>Desconectar</Text>
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity
+            style={[styles.testButton, printing && styles.testButtonDisabled]}
+            onPress={handleTestPrint}
+            disabled={printing}
+          >
+            {printing ? (
+              <ActivityIndicator color="#fff" style={{ marginRight: 8 }} />
+            ) : (
+              <Ionicons
+                name="receipt-outline"
+                size={20}
+                color="#fff"
+                style={{ marginRight: 8 }}
+              />
+            )}
+            <Text style={styles.testButtonText}>
+              {printing ? 'Imprimindo...' : 'Imprimir Cupom de Teste'}
+            </Text>
           </TouchableOpacity>
         </View>
       )}
@@ -150,7 +260,7 @@ export default function ConfiguracoesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background.light,
+    backgroundColor: colors.background.screen,
   },
   header: {
     flexDirection: 'row',
@@ -179,6 +289,26 @@ const styles = StyleSheet.create({
     color: colors.blue[600],
     fontWeight: '600',
   },
+  preferredBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    backgroundColor: colors.blue[50],
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border.light,
+  },
+  preferredText: {
+    flex: 1,
+    fontSize: 13,
+    color: colors.gray[700],
+  },
+  clearPreferred: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: colors.blue[600],
+  },
   centerContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -202,6 +332,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.gray[500],
     textAlign: 'center',
+    lineHeight: 22,
   },
   listContainer: {
     padding: 16,
@@ -251,14 +382,34 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderTopWidth: 1,
     borderTopColor: colors.border.light,
+    gap: 10,
+  },
+  disconnectButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    padding: 12,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.border.light,
+    backgroundColor: colors.gray[50],
+  },
+  disconnectButtonText: {
+    color: colors.gray[700],
+    fontSize: 15,
+    fontWeight: '600',
   },
   testButton: {
     flexDirection: 'row',
-    backgroundColor: colors.green[500],
+    backgroundColor: colors.green[600],
     padding: 16,
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  testButtonDisabled: {
+    opacity: 0.7,
   },
   testButtonText: {
     color: '#fff',

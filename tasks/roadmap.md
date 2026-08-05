@@ -10,7 +10,8 @@ kanban-plugin: board
 
 ## 🟡 A Fazer
 
-- [ ] Fase 3 — Impressão térmica #fase/3
+- [ ] Fase 3 — Impressão térmica (CloudPOS interno maquininha) #fase/3
+- [x] Fase 3 — Bluetooth ESC/POS hardening (permissões, persistência, bilhete real) #fase/3
 - [ ] Criar a tela de cadastro de terminal.
 
 

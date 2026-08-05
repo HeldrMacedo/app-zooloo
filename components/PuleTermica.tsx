@@ -1,7 +1,10 @@
 import { colors } from '@/assets/styles/colors';
+import { PrinterService } from '@/services/PrinterService';
 import { BilheteRegistroResponse } from '@/types/aposta';
 import { Ionicons } from '@expo/vector-icons';
+import { useState } from 'react';
 import {
+  ActivityIndicator,
   Alert,
   Linking,
   Platform,
@@ -35,7 +38,7 @@ function getSiglaModalidade(nome: string): string {
   return 'J';
 }
 
-function gerarTextoComprovante(data: BilheteRegistroResponse): string {
+export function gerarLinhasComprovante(data: BilheteRegistroResponse): string[] {
   const dataHora = data.data_hora || new Date().toLocaleString('pt-BR');
   const vendedor = (data.vendedor_nome || 'OPERADOR').toUpperCase();
   const ponto = (data.area_descricao || 'PRJ').toUpperCase();
@@ -105,24 +108,77 @@ function gerarTextoComprovante(data: BilheteRegistroResponse): string {
   lines.push('Pagamento:');
   lines.push('Dinheiro');
 
-  return lines.join('\n');
+  return lines;
+}
+
+function gerarTextoComprovante(data: BilheteRegistroResponse): string {
+  return gerarLinhasComprovante(data).join('\n');
 }
 
 export default function PuleTermica({ data, onFechar }: PuleTermicaProps) {
+  const [printing, setPrinting] = useState(false);
+
   const handleImprimir = async () => {
-    const texto = gerarTextoComprovante(data);
-    if (Platform.OS === 'web' && typeof window !== 'undefined' && (window as any).print) {
-      (window as any).print();
+    const lines = gerarLinhasComprovante(data);
+    const texto = lines.join('\n');
+
+    if (Platform.OS === 'web') {
+      if (typeof window !== 'undefined' && (window as { print?: () => void }).print) {
+        (window as { print: () => void }).print();
+        return;
+      }
+      try {
+        await Share.share({ title: 'Comprovante Zooloo', message: texto });
+      } catch {
+        Alert.alert('Impressão', 'Não foi possível compartilhar o comprovante.');
+      }
       return;
     }
 
+    setPrinting(true);
     try {
-      await Share.share({
-        title: 'Imprimir Comprovante Zooloo',
-        message: texto,
-      });
-    } catch {
-      Alert.alert('Impressão', 'Comando de impressão enviado para a impressora térmica.');
+      const connected = await PrinterService.ensureConnected();
+      if (!connected) {
+        Alert.alert(
+          'Impressora não conectada',
+          'Configure uma impressora em Ajustes ou compartilhe o comprovante.',
+          [
+            {
+              text: 'Compartilhar',
+              onPress: () => {
+                Share.share({
+                  title: 'Imprimir Comprovante Zooloo',
+                  message: texto,
+                }).catch(() => undefined);
+              },
+            },
+            { text: 'OK', style: 'cancel' },
+          ],
+        );
+        return;
+      }
+
+      const ok = await PrinterService.printReceipt(lines);
+      if (!ok) {
+        Alert.alert(
+          'Erro',
+          'Falha ao imprimir. Verifique a impressora e tente novamente.',
+          [
+            {
+              text: 'Compartilhar',
+              onPress: () => {
+                Share.share({ message: texto }).catch(() => undefined);
+              },
+            },
+            { text: 'OK', style: 'cancel' },
+          ],
+        );
+        return;
+      }
+
+      Alert.alert('Sucesso', 'Comprovante enviado para a impressora.');
+    } finally {
+      setPrinting(false);
     }
   };
 
@@ -248,9 +304,20 @@ export default function PuleTermica({ data, onFechar }: PuleTermicaProps) {
         </View>
 
         <View style={styles.actionsContainer}>
-          <TouchableOpacity onPress={handleImprimir} style={styles.printButton} activeOpacity={0.85}>
-            <Ionicons name="print-outline" size={22} color={colors.white} />
-            <Text style={styles.printButtonText}>Imprimir Comprovante</Text>
+          <TouchableOpacity
+            onPress={handleImprimir}
+            style={[styles.printButton, printing && styles.printButtonDisabled]}
+            activeOpacity={0.85}
+            disabled={printing}
+          >
+            {printing ? (
+              <ActivityIndicator color={colors.white} />
+            ) : (
+              <Ionicons name="print-outline" size={22} color={colors.white} />
+            )}
+            <Text style={styles.printButtonText}>
+              {printing ? 'Imprimindo...' : 'Imprimir Comprovante'}
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={handleWhatsApp} style={styles.whatsappButton} activeOpacity={0.85}>
@@ -399,6 +466,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 8,
     width: '100%',
+  },
+  printButtonDisabled: {
+    opacity: 0.75,
   },
   printButtonText: {
     color: colors.white,

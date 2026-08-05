@@ -9,7 +9,7 @@ class ZoolooPrinterModule : Module() {
   override fun definition() = ModuleDefinition {
     Name("ZoolooPrinter")
 
-    AsyncFunction("getPairedDevices") { ->
+    AsyncFunction("getPairedDevices") {
       printerManager.getPairedDevices()
     }
 
@@ -17,18 +17,26 @@ class ZoolooPrinterModule : Module() {
       printerManager.connect(macAddress)
     }
 
-    AsyncFunction("disconnect") { ->
+    AsyncFunction("disconnect") {
       printerManager.disconnect()
+    }
+
+    AsyncFunction("isConnected") {
+      printerManager.isConnected()
     }
 
     AsyncFunction("printText") { text: String ->
       printerManager.printText(text)
     }
-    
+
     // Commands in ESC/POS can be passed as an array of numbers
     AsyncFunction("printCommand") { command: List<Int> ->
       val bytes = command.map { it.toByte() }.toByteArray()
       printerManager.printCommand(bytes)
+    }
+
+    AsyncFunction("printLines") { lines: List<String> ->
+      printerManager.printLines(lines)
     }
   }
 }
