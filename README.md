@@ -49,8 +49,8 @@ Join our community of developers creating universal apps.
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
 
-
 ## Estrutura de arquivos para o obsidian
+
 app-zooloo/
 ├─ docs/                      ← Arquitetura e decisões (CLAUDE.md vai aqui)
 │  ├─ CLAUDE.md               ← índice operacional do app
@@ -87,6 +87,7 @@ app-zooloo/
 Este projeto conta com ferramentas avançadas para apoiar o desenvolvimento com Agentes Inteligentes de IA:
 
 ### 1. 🌐 [Graphify](https://github.com/Graphify-Labs/graphify)
+
 - **Repositório**: [https://github.com/Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify)
 - **Descrição**: Mapeia toda a base de código do projeto em um **Grafo de Conhecimento** (`graphify-out/`). Permite consultar a arquitetura, visualizar caminhos de dependência entre módulos e explorar o grafo no Obsidian ou via relatório interativo HTML (`GRAPH_TREE.html`).
 - **Comandos Principais**:
@@ -95,10 +96,50 @@ Este projeto conta com ferramentas avançadas para apoiar o desenvolvimento com 
   - `python -m graphify tree`: Gera a visualização em árvore interativa (`graphify-out/GRAPH_TREE.html`).
 
 ### 2. ⚡ [Superpowers](https://github.com/obra/superpowers)
+
 - **Repositório**: [https://github.com/obra/superpowers](https://github.com/obra/superpowers)
 - **Descrição**: Metodologia de engenharia de software composta por 14 habilidades (*skills*) estruturadas que garantem disciplina e alto padrão no código gerado pelo agente:
   - **`brainstorming`**: Refinamento de requisitos e decisões de design antes de programar.
   - **`writing-plans`**: Criação de planos de implementação detalhados e testáveis.
   - **`test-driven-development`**: Desenvolvimento Orientado a Testes (TDD).
   - **`systematic-debugging`**: Análise sistemática de causa-raiz e logs antes de aplicar correções.
-  - **`verification-before-completion`**: Verificação rigorosa com testes no terminal antes de concluir qualquer tarefa.
+  - **`verification-before-completion`**: Verificação rigorosa com testes no terminal antes de concluir qualquer tarefa.
+
+## Como gerar APK para a maquininha
+
+cd /home/helder/Desenvolvimento/app-zooloo/android
+
+# 32-bit + 64-bit, útil se a POS for 32-bit
+
+./gradlew assembleRelease -PreactNativeArchitectures=armeabi-v7a,arm64-v8a
+Instale:
+
+adb install -r app/build/outputs/apk/release/app-release.apk
+
+## Como testar direito no celular
+
+Opção A — desenvolvimento (recomendada para debug)
+
+No PC:
+
+cd /home/helder/Desenvolvimento/app-zooloo
+npx expo start --dev-client
+
+• Celular e PC na mesma rede Wi‑Fi.
+• Abra o app de novo.
+• Se pedir host: IP da máquina (ex. 192.168.x.x:8081), não localhost.
+
+Com USB:
+
+adb reverse tcp:8081 tcp:8081
+npx expo start --dev-client
+
+Opção B — APK que abre sozinho (sem Metro)
+Gere release (JS embutido):
+
+cd android
+./gradlew assembleRelease
+
+# APK: android/app/build/outputs/apk/release/app-release.apk
+
+(ou npx expo run:android --variant release)
