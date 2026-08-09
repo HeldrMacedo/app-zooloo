@@ -175,8 +175,8 @@
     "semantic_hash": ""
   },
   "app.json": {
-    "mtime": 1785716476.207795,
-    "ast_hash": "ed68b9e202442f8f81cf2ab004edb4ed",
+    "mtime": 1786314524.7734802,
+    "ast_hash": "6d79f7eb97a9a54de78633e5ca7aeaf9",
     "semantic_hash": ""
   },
   "app/(tabs)/_layout.tsx": {
@@ -685,8 +685,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1785366836.865228,
-    "ast_hash": "c65e8155db80b2599d299b098f0662d5",
+    "mtime": 1786314375.7983685,
+    "ast_hash": "21000b8ace1891cf4ee46d3b9bd14c49",
     "semantic_hash": ""
   },
   "bugs/BUG-001-aposta-service-data-hardcoded.md": {
