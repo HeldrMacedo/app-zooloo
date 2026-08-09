@@ -31,6 +31,14 @@ class ZoolooPrinterModule extends NativeModule<ZoolooPrinterModuleEvents> {
   async printLines(_lines: string[]): Promise<boolean> {
     return false;
   }
+
+  async isInternalPrinterAvailable(): Promise<boolean> {
+    return false;
+  }
+
+  async printInternal(_lines: string[]): Promise<boolean> {
+    return false;
+  }
 }
 
 export default registerWebModule(ZoolooPrinterModule, 'ZoolooPrinterModule');

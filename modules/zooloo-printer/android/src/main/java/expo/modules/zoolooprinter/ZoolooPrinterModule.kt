@@ -38,5 +38,14 @@ class ZoolooPrinterModule : Module() {
     AsyncFunction("printLines") { lines: List<String> ->
       printerManager.printLines(lines)
     }
+
+    // CloudPOS internal printer — stubs until official SDK is integrated
+    AsyncFunction("isInternalPrinterAvailable") {
+      printerManager.isInternalPrinterAvailable()
+    }
+
+    AsyncFunction("printInternal") { lines: List<String> ->
+      printerManager.printInternal(lines)
+    }
   }
 }

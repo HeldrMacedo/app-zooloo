@@ -127,6 +127,7 @@ Detalhe completo em [[docs/fluxo-app]] e [[analise-comparativa-fluxo-jb]].
 
 - [x] Tela de pule renderiza dados retornados (ID, NSU, modalidade, números, intervalo, valor, extração, data/hora, vendedor)
 - [x] Layout compatível com largura de impressora térmica (32/48 colunas) — preparação Fase 3
+- [x] Impressão térmica Bluetooth via `PrinterService` em `PuleTermica` (fallback Share se sem impressora) — hardening Fase 3
 
 ### Qualidade
 

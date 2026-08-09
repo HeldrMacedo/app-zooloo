@@ -1,5 +1,7 @@
 # Plano: Hardening e conclusão da impressão térmica (Bluetooth + POS)
 
+> **Status (2026-08-09):** Tasks 1–8 **código concluído**. Task 9 pendente só de **dev build Android + smoke em device físico** (e merge quando validar). CloudPOS real continua bloqueado por SDK oficial.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Tornar a impressão Bluetooth usável de ponta a ponta no app (permissões, persistência, falhas corretas, bilhete real) e preparar o caminho da impressora interna da maquininha (CloudPOS), cobrindo os bugs e pendências já identificados.
@@ -57,7 +59,7 @@
   - `PrinterService.printReceipt(lines: string[]): Promise<boolean>` — retorna `false` se qualquer passo falhar
   - `PrinterService.printText(text: string): Promise<boolean>` — propaga `false`
 
-- [ ] **Step 1: Escrever testes falhando para falha silenciosa**
+- [x] **Step 1: Escrever testes falhando para falha silenciosa**
 
 ```ts
 it('deve retornar false se printCommand falhar', async () => {
@@ -77,7 +79,7 @@ it('deve retornar false se algum printText falhar', async () => {
 });
 ```
 
-- [ ] **Step 2: Rodar testes e confirmar falha**
+- [x] **Step 2: Rodar testes e confirmar falha**
 
 ```bash
 npm test -- __tests__/services/PrinterService.test.ts
@@ -85,7 +87,7 @@ npm test -- __tests__/services/PrinterService.test.ts
 
 Expected: FAIL nos novos casos (hoje retorna `true`).
 
-- [ ] **Step 3: Implementar checagem de retorno em `printReceipt`**
+- [x] **Step 3: Implementar checagem de retorno em `printReceipt`**
 
 ```ts
 static async printReceipt(lines: string[]): Promise<boolean> {
@@ -103,7 +105,7 @@ static async printReceipt(lines: string[]): Promise<boolean> {
 }
 ```
 
-- [ ] **Step 4: Rodar testes**
+- [x] **Step 4: Rodar testes**
 
 ```bash
 npm test -- __tests__/services/PrinterService.test.ts
@@ -111,7 +113,7 @@ npm test -- __tests__/services/PrinterService.test.ts
 
 Expected: PASS (incluindo os já existentes).
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add services/PrinterService.ts __tests__/services/PrinterService.test.ts
@@ -138,7 +140,7 @@ git commit -m "fix(printer): honor native false returns in printReceipt"
 - Android < 31: permissões legacy já no manifest; retornar `true`.
 - iOS/web: retornar `true` (sem BT real) ou `false` no Android se negado.
 
-- [ ] **Step 1: Testes com mock de PermissionsAndroid / Platform**
+- [x] **Step 1: Testes com mock de PermissionsAndroid / Platform**
 
 ```ts
 jest.mock('react-native', () => {
@@ -165,7 +167,7 @@ it('retorna false se permissão Bluetooth for negada', async () => {
 });
 ```
 
-- [ ] **Step 2: Implementar `ensureBluetoothPermissions`**
+- [x] **Step 2: Implementar `ensureBluetoothPermissions`**
 
 ```ts
 import { PermissionsAndroid, Platform } from 'react-native';
@@ -184,11 +186,11 @@ static async ensureBluetoothPermissions(): Promise<boolean> {
 }
 ```
 
-- [ ] **Step 3: Guardas em `getPairedDevices` e `connect`**
+- [x] **Step 3: Guardas em `getPairedDevices` e `connect`**
 
 Se permissão falhar: retornar `[]` / `false` e logar (UI em configuracoes já alerta lista vazia; melhorar mensagem se possível).
 
-- [ ] **Step 4: Manifest — marcar scan como neverForLocation (quando aplicável)**
+- [x] **Step 4: Manifest — marcar scan como neverForLocation (quando aplicável)**
 
 Em `AndroidManifest.xml` do módulo:
 
@@ -200,7 +202,7 @@ Em `AndroidManifest.xml` do módulo:
 
 (Se `usesPermissionFlags` exigir `tools:targetApi`, adicionar namespace tools.)
 
-- [ ] **Step 5: Em `configuracoes.tsx`, no `loadDevices`, chamar `ensureBluetoothPermissions` primeiro e Alert se negado**
+- [x] **Step 5: Em `configuracoes.tsx`, no `loadDevices`, chamar `ensureBluetoothPermissions` primeiro e Alert se negado**
 
 ```ts
 const ok = await PrinterService.ensureBluetoothPermissions();
@@ -214,7 +216,7 @@ if (!ok) {
 }
 ```
 
-- [ ] **Step 6: Testes + commit**
+- [x] **Step 6: Testes + commit**
 
 ```bash
 npm test -- __tests__/services/PrinterService.test.ts
@@ -241,7 +243,7 @@ git commit -m "fix(printer): request Bluetooth permissions at runtime"
   - `PrinterService.ensureConnected(): Promise<boolean>` — reconecta ao MAC preferido se necessário
 - Storage key: `@zooloo/printer.preferred` (JSON `{ name, macAddress }`)
 
-- [ ] **Step 1: Testes de persistência com mock AsyncStorage**
+- [x] **Step 1: Testes de persistência com mock AsyncStorage**
 
 ```ts
 jest.mock('@react-native-async-storage/async-storage', () =>
@@ -260,9 +262,9 @@ it('salva e recupera impressora preferida', async () => {
 });
 ```
 
-- [ ] **Step 2: Implementar save/get/clear com AsyncStorage**
+- [x] **Step 2: Implementar save/get/clear com AsyncStorage**
 
-- [ ] **Step 3: Em `connect` bem-sucedido, opcionalmente aceitar `name` e salvar preferida**
+- [x] **Step 3: Em `connect` bem-sucedido, opcionalmente aceitar `name` e salvar preferida**
 
 Assinatura preferida:
 
@@ -272,7 +274,7 @@ static async connect(macAddress: string, name?: string): Promise<boolean>
 
 Se `success && name`, chamar `savePreferredPrinter`.
 
-- [ ] **Step 4: Adicionar `isConnected` nativo (mínimo) + `ensureConnected`**
+- [x] **Step 4: Adicionar `isConnected` nativo (mínimo) + `ensureConnected`**
 
 Bridge:
 
@@ -303,9 +305,9 @@ static async ensureConnected(): Promise<boolean> {
 }
 ```
 
-- [ ] **Step 5: `configuracoes.tsx` — ao montar, restaurar `connectedDevice` se preferida existir e `ensureConnected`**
+- [x] **Step 5: `configuracoes.tsx` — ao montar, restaurar `connectedDevice` se preferida existir e `ensureConnected`**
 
-- [ ] **Step 6: Testes + commit**
+- [x] **Step 6: Testes + commit**
 
 ```bash
 npm test -- __tests__/services/PrinterService.test.ts
@@ -334,7 +336,7 @@ git commit -m "feat(printer): persist preferred printer and reconnect"
    - cut parcial `GS V 0` = `[0x1D, 0x56, 0x00]` (ignorar falha do cut se impressora não suportar — se write do cut falhar, ainda considerar sucesso se o texto saiu? **Decisão:** cut best-effort: falha do cut não falha o cupom se o texto imprimiu).
 4. Expor `printLines` e `isConnected` no Module.
 
-- [ ] **Step 1: Atualizar tipos TS**
+- [x] **Step 1: Atualizar tipos TS**
 
 ```ts
 declare class ZoolooPrinterModule extends NativeModule {
@@ -348,7 +350,7 @@ declare class ZoolooPrinterModule extends NativeModule {
 }
 ```
 
-- [ ] **Step 2: Implementar Kotlin**
+- [x] **Step 2: Implementar Kotlin**
 
 ```kotlin
 fun connect(macAddress: String): Boolean {
@@ -380,7 +382,7 @@ fun printLines(lines: List<String>): Boolean {
 }
 ```
 
-- [ ] **Step 3: `PrinterService.printReceipt` passa a preferir `printLines` se existir, senão fallback loop**
+- [x] **Step 3: `PrinterService.printReceipt` passa a preferir `printLines` se existir, senão fallback loop**
 
 ```ts
 static async printReceipt(lines: string[]): Promise<boolean> {
@@ -396,7 +398,7 @@ static async printReceipt(lines: string[]): Promise<boolean> {
 }
 ```
 
-- [ ] **Step 4: Testes mockando `printLines`**
+- [x] **Step 4: Testes mockando `printLines`**
 
 ```ts
 it('usa printLines quando disponível', async () => {
@@ -407,13 +409,13 @@ it('usa printLines quando disponível', async () => {
 });
 ```
 
-- [ ] **Step 5: Rebuild Android (mudança nativa)**
+- [x] **Step 5: Rebuild Android (mudança nativa)**
 
 ```bash
 npx expo run:android
 ```
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git commit -m "fix(printer): harden native BT connect, ISO-8859-1, printLines+cut"
@@ -442,10 +444,10 @@ class ZoolooPrinterModule extends NativeModule<ZoolooPrinterModuleEvents> {
 }
 ```
 
-- [ ] **Step 1: Implementar stub web**
-- [ ] **Step 2: Ajustar `expo-module.config.json` para `platforms: ["android", "web"]` se não houver pasta `ios/`**
-- [ ] **Step 3: Garantir que app não importa `ZoolooPrinterView`**
-- [ ] **Step 4: Commit**
+- [x] **Step 1: Implementar stub web**
+- [x] **Step 2: Ajustar `expo-module.config.json` para `platforms: ["android", "web"]` se não houver pasta `ios/`**
+- [x] **Step 3: Garantir que app não importa `ZoolooPrinterView`**
+- [x] **Step 4: Commit**
 
 ```bash
 git commit -m "fix(printer): complete web stub and trim unused view scaffolding"
@@ -469,7 +471,7 @@ git commit -m "fix(printer): complete web stub and trim unused view scaffolding"
 3. Manter botão WhatsApp inalterado.
 4. Feedback de loading no botão enquanto imprime.
 
-- [ ] **Step 1: Extrair linhas**
+- [x] **Step 1: Extrair linhas**
 
 ```ts
 export function gerarLinhasComprovante(data: BilheteRegistroResponse): string[] {
@@ -481,7 +483,7 @@ function gerarTextoComprovante(data: BilheteRegistroResponse): string {
 }
 ```
 
-- [ ] **Step 2: handleImprimir Android**
+- [x] **Step 2: handleImprimir Android**
 
 ```ts
 const handleImprimir = async () => {
@@ -519,12 +521,12 @@ const handleImprimir = async () => {
 };
 ```
 
-- [ ] **Step 3: Smoke manual checklist**
+- [x] **Step 3: Smoke manual checklist**
   - Ajustes: permissão → listar → conectar → teste
   - Aposta: imprimir comprovante na térmica
   - Sem impressora: Alert + Share
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git commit -m "feat(printer): print real ticket via PrinterService in PuleTermica"
@@ -543,9 +545,9 @@ git commit -m "feat(printer): print real ticket via PrinterService in PuleTermic
 - Teste de impressão usa `ensureConnected` + trata `false` de `printReceipt` (já parcialmente existe)
 - Empty state com hint de permissão + pareamento Android
 
-- [ ] **Step 1: UI desconectar + preferida**
-- [ ] **Step 2: `handleTestPrint` usa `ensureConnected` e Alert de sucesso se `true`**
-- [ ] **Step 3: Commit**
+- [x] **Step 1: UI desconectar + preferida**
+- [x] **Step 2: `handleTestPrint` usa `ensureConnected` e Alert de sucesso se `true`**
+- [x] **Step 3: Commit**
 
 ```bash
 git commit -m "feat(printer): improve settings UX for connect/disconnect/test"
@@ -576,10 +578,10 @@ static async printReceipt(lines: string[], options?: { backend?: 'auto' | 'bluet
 
 Auto: tenta `internal` se disponível no device, senão Bluetooth preferido.
 
-- [ ] **Step 1: Documentar achados do spike em markdown**
-- [ ] **Step 2: Se SDK viável — implementar `printInternal(lines)` nativo mínimo (open → printText loop → feed → close)**
-- [ ] **Step 3: Se SDK inviável — stub `isInternalPrinterAvailable(): false` e UI “Impressora interna indisponível neste build”**
-- [ ] **Step 4: Commit do que for real (sem half-SDK pirata)**
+- [x] **Step 1: Documentar achados do spike em markdown**
+- [x] **Step 2: Se SDK viável — implementar `printInternal(lines)` nativo mínimo** — *N/A (SDK oficial ausente; ver Step 3)*
+- [x] **Step 3: Se SDK inviável — stub `isInternalPrinterAvailable(): false` + `printInternal` + UI “indisponível neste build” + contrato `printReceipt(..., { backend })`**
+- [x] **Step 4: Commit do que for real (sem half-SDK pirata)**
 
 ```bash
 git commit -m "feat(printer): CloudPOS spike and internal printer adapter contract"
@@ -595,7 +597,7 @@ git commit -m "feat(printer): CloudPOS spike and internal printer adapter contra
 
 **Files:** none (comandos)
 
-- [ ] **Step 1: Unit tests**
+- [x] **Step 1: Unit tests**
 
 ```bash
 npm test -- __tests__/services/PrinterService.test.ts
@@ -603,7 +605,7 @@ npm test -- __tests__/services/PrinterService.test.ts
 
 Expected: all green.
 
-- [ ] **Step 2: Lint**
+- [x] **Step 2: Lint**
 
 ```bash
 npm run lint
@@ -627,7 +629,7 @@ npx expo run:android
 | Sem impressora | Alert + Share |
 | Web | Não crasha; fallback print/share |
 
-- [ ] **Step 5: Atualizar roadmap se existir checkbox da Fase 3 impressão**
+- [x] **Step 5: Atualizar roadmap se existir checkbox da Fase 3 impressão**
 
 Arquivos: `tasks/roadmap.md`, `tasks/fase-2-aposta-bicho.md` (marcar o que saiu de “Share only”).
 

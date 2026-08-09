@@ -11,6 +11,11 @@ export type PreferredPrinter = {
 
 export type PrinterBackend = 'bluetooth' | 'internal';
 
+export type PrintReceiptOptions = {
+  /** auto: tenta internal se disponível, senão Bluetooth. Default: auto */
+  backend?: 'auto' | 'bluetooth' | 'internal';
+};
+
 export class PrinterService {
   /**
    * Backends disponíveis neste build/device.
@@ -38,6 +43,25 @@ export class PrinterService {
       }
       return false;
     } catch {
+      return false;
+    }
+  }
+
+  /**
+   * Impressão via adapter nativo da maquininha (CloudPOS).
+   * Stub: false até SDK oficial.
+   */
+  static async printInternal(lines: string[]): Promise<boolean> {
+    try {
+      const mod = ZoolooPrinterModule as {
+        printInternal?: (lines: string[]) => Promise<boolean>;
+      };
+      if (typeof mod.printInternal === 'function') {
+        return await mod.printInternal(lines);
+      }
+      return false;
+    } catch (error) {
+      console.error('Erro ao imprimir na impressora interna:', error);
       return false;
     }
   }
@@ -202,34 +226,66 @@ export class PrinterService {
   }
 
   /**
-   * Imprime um cupom, usando formatação simples ESC/POS.
+   * Imprime um cupom (Bluetooth ESC/POS ou internal CloudPOS).
    * Retorna false se qualquer passo nativo falhar.
+   *
+   * backend:
+   * - `auto` (default): tenta internal se disponível, senão Bluetooth
+   * - `bluetooth`: só Bluetooth preferido/conectado
+   * - `internal`: só impressora embutida (falha se indisponível)
    */
-  static async printReceipt(lines: string[]): Promise<boolean> {
+  static async printReceipt(
+    lines: string[],
+    options?: PrintReceiptOptions,
+  ): Promise<boolean> {
+    const backend = options?.backend ?? 'auto';
+
     try {
-      if (typeof ZoolooPrinterModule.printLines === 'function') {
-        return await ZoolooPrinterModule.printLines(lines);
-      }
-
-      // Fallback legado (um write por linha)
-      if (!(await ZoolooPrinterModule.printCommand([0x1b, 0x40]))) {
-        return false;
-      }
-
-      for (const line of lines) {
-        if (!(await ZoolooPrinterModule.printText(line + '\n'))) {
+      if (backend === 'internal') {
+        if (!(await PrinterService.isInternalPrinterAvailable())) {
           return false;
         }
+        return await PrinterService.printInternal(lines);
       }
 
-      if (!(await ZoolooPrinterModule.printText('\n\n\n'))) {
-        return false;
+      if (backend === 'auto' && (await PrinterService.isInternalPrinterAvailable())) {
+        const internalOk = await PrinterService.printInternal(lines);
+        if (internalOk) {
+          return true;
+        }
+        // fallback Bluetooth se internal falhar
       }
 
-      return true;
+      return await PrinterService.printBluetoothReceipt(lines);
     } catch (error) {
       console.error('Erro ao imprimir cupom:', error);
       return false;
     }
+  }
+
+  /**
+   * Caminho Bluetooth ESC/POS (printLines nativo ou loop legado).
+   */
+  private static async printBluetoothReceipt(lines: string[]): Promise<boolean> {
+    if (typeof ZoolooPrinterModule.printLines === 'function') {
+      return await ZoolooPrinterModule.printLines(lines);
+    }
+
+    // Fallback legado (um write por linha)
+    if (!(await ZoolooPrinterModule.printCommand([0x1b, 0x40]))) {
+      return false;
+    }
+
+    for (const line of lines) {
+      if (!(await ZoolooPrinterModule.printText(line + '\n'))) {
+        return false;
+      }
+    }
+
+    if (!(await ZoolooPrinterModule.printText('\n\n\n'))) {
+      return false;
+    }
+
+    return true;
   }
 }

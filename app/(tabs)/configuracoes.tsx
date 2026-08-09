@@ -20,10 +20,14 @@ export default function ConfiguracoesScreen() {
   const [connectedDevice, setConnectedDevice] = useState<string | null>(null);
   const [preferred, setPreferred] = useState<PreferredPrinter | null>(null);
   const [printing, setPrinting] = useState(false);
+  const [internalAvailable, setInternalAvailable] = useState(false);
 
   const loadDevices = useCallback(async () => {
     setLoading(true);
     try {
+      const internal = await PrinterService.isInternalPrinterAvailable();
+      setInternalAvailable(internal);
+
       const ok = await PrinterService.ensureBluetoothPermissions();
       if (!ok) {
         Alert.alert(
@@ -200,6 +204,19 @@ export default function ConfiguracoesScreen() {
         </View>
       )}
 
+      <View style={styles.internalBanner}>
+        <Ionicons
+          name={internalAvailable ? 'hardware-chip-outline' : 'information-circle-outline'}
+          size={16}
+          color={internalAvailable ? colors.green[600] : colors.gray[500]}
+        />
+        <Text style={styles.internalBannerText}>
+          {internalAvailable
+            ? 'Impressora interna da maquininha disponível neste dispositivo.'
+            : 'Impressora interna (CloudPOS) indisponível neste build. Use Bluetooth.'}
+        </Text>
+      </View>
+
       {loading ? (
         <View style={styles.centerContainer}>
           <ActivityIndicator size="large" color={colors.blue[500]} />
@@ -308,6 +325,22 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '600',
     color: colors.blue[600],
+  },
+  internalBanner: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    backgroundColor: colors.gray[50],
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border.light,
+  },
+  internalBannerText: {
+    flex: 1,
+    fontSize: 12,
+    lineHeight: 18,
+    color: colors.gray[600],
   },
   centerContainer: {
     flex: 1,

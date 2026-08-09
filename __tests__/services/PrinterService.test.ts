@@ -11,6 +11,8 @@ jest.mock('../../modules/zooloo-printer', () => ({
   printText: jest.fn(),
   printCommand: jest.fn(),
   printLines: jest.fn(),
+  isInternalPrinterAvailable: jest.fn(),
+  printInternal: jest.fn(),
 }));
 
 describe('PrinterService', () => {
@@ -42,6 +44,13 @@ describe('PrinterService', () => {
       [PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT]: PermissionsAndroid.RESULTS.GRANTED,
       [PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN]: PermissionsAndroid.RESULTS.GRANTED,
     } as Awaited<ReturnType<typeof PermissionsAndroid.requestMultiple>>);
+
+    // Reattach printLines if a previous test deleted it for the legacy fallback path
+    if (typeof (ZoolooPrinterModule as { printLines?: unknown }).printLines !== 'function') {
+      (ZoolooPrinterModule as { printLines: jest.Mock }).printLines = jest.fn();
+    }
+    (ZoolooPrinterModule.isInternalPrinterAvailable as jest.Mock).mockResolvedValue(false);
+    (ZoolooPrinterModule.printInternal as jest.Mock).mockResolvedValue(false);
   });
 
   it('deve retornar a lista de dispositivos pareados', async () => {
@@ -171,7 +180,57 @@ describe('PrinterService', () => {
   });
 
   it('backends: sem CloudPOS reporta apenas bluetooth', async () => {
+    (ZoolooPrinterModule.isInternalPrinterAvailable as jest.Mock).mockResolvedValue(false);
+
     await expect(PrinterService.isInternalPrinterAvailable()).resolves.toBe(false);
     await expect(PrinterService.getAvailableBackends()).resolves.toEqual(['bluetooth']);
+  });
+
+  it('backends: com CloudPOS reporta bluetooth e internal', async () => {
+    (ZoolooPrinterModule.isInternalPrinterAvailable as jest.Mock).mockResolvedValue(true);
+
+    await expect(PrinterService.getAvailableBackends()).resolves.toEqual([
+      'bluetooth',
+      'internal',
+    ]);
+  });
+
+  it('printReceipt backend=internal usa printInternal e não Bluetooth', async () => {
+    (ZoolooPrinterModule.isInternalPrinterAvailable as jest.Mock).mockResolvedValue(true);
+    (ZoolooPrinterModule.printInternal as jest.Mock).mockResolvedValue(true);
+
+    const ok = await PrinterService.printReceipt(['A'], { backend: 'internal' });
+    expect(ok).toBe(true);
+    expect(ZoolooPrinterModule.printInternal).toHaveBeenCalledWith(['A']);
+    expect(ZoolooPrinterModule.printLines).not.toHaveBeenCalled();
+  });
+
+  it('printReceipt backend=internal retorna false se indisponível', async () => {
+    (ZoolooPrinterModule.isInternalPrinterAvailable as jest.Mock).mockResolvedValue(false);
+
+    const ok = await PrinterService.printReceipt(['A'], { backend: 'internal' });
+    expect(ok).toBe(false);
+    expect(ZoolooPrinterModule.printInternal).not.toHaveBeenCalled();
+  });
+
+  it('printReceipt auto usa internal quando disponível e bem-sucedido', async () => {
+    (ZoolooPrinterModule.isInternalPrinterAvailable as jest.Mock).mockResolvedValue(true);
+    (ZoolooPrinterModule.printInternal as jest.Mock).mockResolvedValue(true);
+
+    const ok = await PrinterService.printReceipt(['A']);
+    expect(ok).toBe(true);
+    expect(ZoolooPrinterModule.printInternal).toHaveBeenCalledWith(['A']);
+    expect(ZoolooPrinterModule.printLines).not.toHaveBeenCalled();
+  });
+
+  it('printReceipt auto faz fallback Bluetooth se internal falhar', async () => {
+    (ZoolooPrinterModule.isInternalPrinterAvailable as jest.Mock).mockResolvedValue(true);
+    (ZoolooPrinterModule.printInternal as jest.Mock).mockResolvedValue(false);
+    (ZoolooPrinterModule.printLines as jest.Mock).mockResolvedValue(true);
+
+    const ok = await PrinterService.printReceipt(['A']);
+    expect(ok).toBe(true);
+    expect(ZoolooPrinterModule.printInternal).toHaveBeenCalled();
+    expect(ZoolooPrinterModule.printLines).toHaveBeenCalledWith(['A']);
   });
 });

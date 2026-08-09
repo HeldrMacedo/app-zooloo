@@ -120,4 +120,16 @@ class PrinterManager {
         printCommand(byteArrayOf(0x1D, 0x56, 0x00))
         return true
     }
+
+    /**
+     * Impressora embutida CloudPOS.
+     * Stub: false até integrar SDK oficial do fabricante (sem SO/classes decompilados).
+     * Ver docs/superpowers/specs/2026-08-04-cloudpos-printer.md
+     */
+    fun isInternalPrinterAvailable(): Boolean = false
+
+    /**
+     * Impressão na embutida. Stub até SDK oficial.
+     */
+    fun printInternal(lines: List<String>): Boolean = false
 }

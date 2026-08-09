@@ -13,6 +13,10 @@ declare class ZoolooPrinterModule extends NativeModule {
   printText(text: string): Promise<boolean>;
   printCommand(command: number[]): Promise<boolean>;
   printLines(lines: string[]): Promise<boolean>;
+  /** CloudPOS embutida — stub false até SDK oficial. */
+  isInternalPrinterAvailable(): Promise<boolean>;
+  /** Impressão na embutida — stub false até SDK oficial. */
+  printInternal(lines: string[]): Promise<boolean>;
 }
 
 // This call loads the native module object from the JSI.

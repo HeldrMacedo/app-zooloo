@@ -1,7 +1,13 @@
 # Spike: impressora interna CloudPOS (maquininha)
 
 **Data:** 2026-08-04  
-**Status:** spike documentado — **não integrado em produção**
+**Status:** spike documentado + **contrato/stub no código** — **não integrado em produção** (sem SDK oficial)
+
+Contrato já exposto:
+
+- Nativo: `isInternalPrinterAvailable()` / `printInternal(lines)` → `false` (stub)
+- JS: `PrinterService.getAvailableBackends()`, `printReceipt(lines, { backend })`
+- UI Ajustes: banner “Impressora interna (CloudPOS) indisponível neste build”
 
 ## Contexto
 
