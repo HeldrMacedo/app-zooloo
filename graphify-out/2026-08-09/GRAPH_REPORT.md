@@ -1,16 +1,16 @@
-# Graph Report - app-zooloo  (2026-08-09)
+# Graph Report - app-zooloo  (2026-08-02)
 
 ## Corpus Check
-- 176 files · ~326,798 words
+- 174 files · ~321,487 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 8540 nodes · 21945 edges · 285 communities (222 shown, 63 thin omitted)
-- Extraction: 90% EXTRACTED · 10% INFERRED · 0% AMBIGUOUS · INFERRED: 2282 edges (avg confidence: 0.54)
+- 8481 nodes · 21850 edges · 283 communities (225 shown, 58 thin omitted)
+- Extraction: 90% EXTRACTED · 10% INFERRED · 0% AMBIGUOUS · INFERRED: 2278 edges (avg confidence: 0.54)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `5ea50b9c`
+- Built from commit: `9a8bed42`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -32,9 +32,9 @@
 - t$d
 - .registerCommands
 - e
-- t
-- ExcalidrawPlugin
-- isValid
+- l
+- .forEach
+- Kn
 - .then
 - handleImageRequest
 - constructor
@@ -48,27 +48,27 @@
 - get
 - calendar/main.js
 - isValid
-- ToolsPanel
+- ObsidianMenu
 - .slice
-- getBoundingClientRect
+- popperGenerator
 - f
-- debug
-- .linkClick
+- t
+- ToolsPanel
 - constructor
-- tA
-- createImgElement
-- format
-- contains
+- i
+- FloatingModal
+- display
+- .add
 - add
 - rgb2css
 - arabicPresentationForms
 - createFilterOrErrorMessage
 - fe
 - y$1
-- screen.tsx
-- hsla
-- create_new_note_from_template
-- DataviewInlineApi
+- preview.tsx
+- s$a
+- e
+- Link
 - resolve
 - n
 - dependencies
@@ -80,13 +80,13 @@
 - server.cjs
 - wrapValue
 - apiClient.ts
-- FloatingModal
+- FileSuggestionModal
 - toString
 - LocalStorageCache
 - ExcalidrawSidepanelTab
 - handleNewStatus
 - parseLine
-- ScriptEngine
+- DataviewInlineApi
 - .onClose
 - Documentação do App Base — Cambista Mobile (SportingPlay)
 - ExcalidrawSidepanelView
@@ -94,32 +94,32 @@
 - expo
 - collapsible.tsx
 - CalendarView
-- ContentSearcher
+- sanitizeSvgTree
 - GenericInputPrompt
-- display
-- Plano: Hardening e conclusão da impressão térmica (Bluetooth + POS)
+- z
+- parseBuffer
 - getDateFromFile
 - Subagent-Driven Development
-- e
+- Fe
 - init$1
 - diagramToHTML
-- EventManager
-- init
+- AuthContext.tsx
+- update
 - parseCFFTable
 - .handleError
 - devDependencies
 - Test-Driven Development (TDD)
-- append
+- init
 - userIgnoreFilters
 - create_default_slot$1
 - create_if_block$1
-- errorlog
-- SuggestionModal
-- dW
+- .getExcalidrawSVG
+- InsertLinkDialog
+- Vr
 - templater-obsidian/manifest.json
 - scripts
 - jest
-- resolveFlowCollection
+- parseDocument
 - GenericSuggester
 - pn
 - Fase 2 — Aposta do Jogo do Bicho (com carrinho)
@@ -134,21 +134,21 @@
 - obsidian-excalidraw-plugin/manifest.json
 - obsidian-tasks-plugin/manifest.json
 - Autenticação — App Zooloo
-- Zn
+- makeCFFTable
 - Zone
 - dataview/manifest.json
 - addName
-- k
+- d$1
 - HotkeyEditor
 - obsidian-kanban/manifest.json
 - calendar/manifest.json
 - .toMessage
-- ZoolooPrinterModule
+- ZoolooPrinter.types.ts
 - PrinterManager
-- preview.tsx
+- CarrinhoContext.tsx
 - Settings
 - reset-project.js
-- .forEach
+- e
 - Plano Técnico de Desenvolvimento — App Zooloo
 - DataviewInlineIOApi
 - InlineWidget
@@ -196,7 +196,7 @@
 - GEMINI.md
 - 2. Cadastros Mestres (`cad_`)
 - ZoolooPrinterModule
-- InvalidZone
+- .formatDateTimeFromString
 - argument
 - DropManager
 - expo-symbols
@@ -248,7 +248,7 @@
 - ActionButton
 - start-server.sh
 - Antigravity CLI (`agy`) Tool Mapping
-- instance
+- resolveBlockMap
 - btn-resetar-premios.md
 - rules/graphify.md
 - spec-document-reviewer-prompt.md
@@ -259,7 +259,7 @@
 - test-academic.md
 - plan-document-reviewer-prompt.md
 - workflows/graphify.md
-- InsertLinkDialog
+- b$4
 - expo-font
 - expo-haptics
 - expo-router
@@ -271,21 +271,19 @@
 - react-native-worklets
 - @react-navigation/native
 - ScriptInstallPrompt
-- join
-- nextAfter
+- e$4
+- getElementMatrix
 - filterAttrsToElementValues
-- milhar.tsx
+- Exemplo concreto: como usar na Fase 2 (aposta do Bicho)
 - ZoolooPrinterModule
 - ZoolooPrinterView
-- Spike: impressora interna CloudPOS (maquininha)
-- InsertPDFModal
+- ZoolooPrinterModule
+- .help
 - NodeBase
 - schema
-- encryptStoredAPIKey
-- Setup inicial do Obsidian para o projeto Zooloo
-- .constructor
-- UIModeSettingsComponent
-- YAMLParseError
+- Group
+- ModifierKeySettingsComponent
+- YAMLError
 
 ## God Nodes (most connected - your core abstractions)
 1. `ExcalidrawAutomate` - 374 edges
@@ -304,33 +302,33 @@
   .obsidian/plugins/dataview/main.js → __tests__/context/AuthContext.test.tsx
 - `ConfiguracoesScreen()` --indirect_call--> `error()`  [INFERRED]
   app/(tabs)/configuracoes.tsx → .obsidian/plugins/obsidian-tasks-plugin/main.js
+- `bindAll()` --references--> `functions`  [EXTRACTED]
+  .obsidian/plugins/dataview/main.js → package.json
 - `penIcon()` --references--> `react`  [EXTRACTED]
   .obsidian/plugins/obsidian-excalidraw-plugin/main.js → package.json
 - `Mr()` --indirect_call--> `_R()`  [INFERRED]
   .obsidian/plugins/obsidian-kanban/main.js → .obsidian/plugins/obsidian-tasks-plugin/main.js
-- `HomeScreen()` --calls--> `useAuth()`  [EXTRACTED]
-  app/(tabs)/index.tsx → context/AuthContext.tsx
 
 ## Import Cycles
 - None detected.
 
-## Communities (285 total, 63 thin omitted)
+## Communities (283 total, 58 thin omitted)
 
 ### Community 0 - "obsidian-excalidraw-plugin/main.js"
 Cohesion: 0.00
-Nodes (336): a$7(), allwaysPassedUseAttrs, anyModifierKeysPressed(), applyArabicRequireLigatures(), applyLatinLigatures(), areValidElements(), attrHandlers, b$2() (+328 more)
+Nodes (344): a$7(), allwaysPassedUseAttrs, anyModifierKeysPressed(), applyArabicRequireLigatures(), applyLatinLigatures(), attrHandlers, b$2(), bezier() (+336 more)
 
 ### Community 1 - "dataview/main.js"
 Cohesion: 0.01
-Nodes (270): RFC-1123, RFC-2616, RFC-2822, accurateMatrix, add_css(), add_css$1(), add_css$2(), add_css$3() (+262 more)
+Nodes (267): RFC-1123, RFC-2616, RFC-2822, accurateMatrix, add_css(), add_css$1(), add_css$2(), add_css$3() (+259 more)
 
 ### Community 2 - "obsidian-kanban/main.js"
 Cohesion: 0.01
-Nodes (166): aB(), abutsStart(), aI(), aw(), Ax(), BD(), bimap(), block() (+158 more)
+Nodes (150): abutsStart(), addView(), Ax(), bimap(), block(), Bt(), By(), CB() (+142 more)
 
 ### Community 3 - "obsidian-tasks-plugin/main.js"
 Cohesion: 0.01
-Nodes (144): jO(), jy(), $2(), addPreset(), addStatus(), adjustRelativeLinksInDescription(), ag(), allPropertyNames() (+136 more)
+Nodes (146): jO(), jy(), $2(), addPreset(), addStatus(), addTimezone(), ag(), allPropertyNames() (+138 more)
 
 ### Community 4 - "L$1"
 Cohesion: 0.15
@@ -338,227 +336,227 @@ Nodes (19): A$2(), C$1(), children(), d$1(), F$2(), G$1(), g$2(), H$1() (+11 mor
 
 ### Community 5 - "DateTime"
 Cohesion: 0.02
-Nodes (50): computeOrdinal(), DateTime, dayOfWeek(), daysInYear(), extractASCII(), extractRFC1123Or850(), extractRFC2822(), fixOffset() (+42 more)
+Nodes (47): bestBy(), computeOrdinal(), DateTime, dayOfWeek(), daysInYear(), diffRelative(), fixOffset(), formatOptsToTokens() (+39 more)
 
 ### Community 6 - "ExcalidrawView"
 Cohesion: 0.03
-Nodes (19): calculateUIModeValue(), deleteAppStateKeys(), ExcalidrawView, exportImageToFile(), getExportInternalLinks(), getExportTheme(), getFrameBasedOnFrameNameOrId(), getIMGFilename() (+11 more)
+Nodes (20): calculateUIModeValue(), deleteAppStateKeys(), ExcalidrawView, exportImageToFile(), getExcalidrawMarkdownHeader(), getExcalidrawMarkdownHeaderSection(), getExportInternalLinks(), getIMGFilename() (+12 more)
 
 ### Community 7 - "Locale"
-Cohesion: 0.03
-Nodes (31): eraForDateTime(), expandMacroTokens(), extractIANAZone(), formatOptsToTokens(), formatRelativeTime(), Formatter, getCachedDTF(), getCachedLF() (+23 more)
+Cohesion: 0.04
+Nodes (15): extractIANAZone(), getCachedDTF(), getCachedLF(), IANAZone, intlConfigString(), listStuff(), Locale, mapMonths() (+7 more)
 
 ### Community 8 - ".push"
 Cohesion: 0.02
-Nodes (153): ABS(), absolutize(), ADD(), addSegment(), addTerminatorSegment(), ALIGNRP(), AND(), arcToCubicCurves() (+145 more)
+Nodes (152): ABS(), absolutize(), ADD(), addSegment(), addTerminatorSegment(), ALIGNRP(), analyze(), AND() (+144 more)
 
 ### Community 9 - "ExcalidrawAutomate"
 Cohesion: 0.02
-Nodes (36): blobToBase64(), cloneElement(), copyLinkToSelectedElementToClipboard(), createPNG(), cropCanvas(), editorInsertText(), ensureActiveScriptSettingsObject(), errorMessage() (+28 more)
+Nodes (31): blobToBase64(), checkExcalidrawVersion(), checkScriptUpdates(), createPNG(), download(), editorInsertText(), ensureActiveScriptSettingsObject(), ExcalidrawAutomate (+23 more)
 
 ### Community 10 - "Document"
 Cohesion: 0.03
-Nodes (66): addCommentBefore(), addMergeToJSMap(), addPairToJSMap(), ALIAS, anchorIsValid(), anchorNames(), asItemIndex(), assertCollection() (+58 more)
+Nodes (74): addCommentBefore(), addMergeToJSMap(), addPairToJSMap(), ALIAS, anchorIsValid(), anchorNames(), asItemIndex(), assertCollection() (+66 more)
 
 ### Community 11 - "fromObject"
 Cohesion: 0.04
-Nodes (105): _0(), $2(), after(), Am(), aP(), aS(), ba(), bc() (+97 more)
+Nodes (100): _0(), $2(), after(), Am(), aP(), aS(), b0(), ba() (+92 more)
 
 ### Community 12 - "a"
-Cohesion: 0.08
-Nodes (111): p(), a(), aa(), ae(), aN(), aO(), B(), bb() (+103 more)
+Cohesion: 0.07
+Nodes (115): p(), a(), ae(), aN(), B(), bb(), be(), bw() (+107 more)
 
 ### Community 13 - "Duration"
 Cohesion: 0.03
-Nodes (27): adjustTime(), asNumber(), clone$1(), compareValue(), DataviewIOApi, dayDiff(), diff(), diffRelative() (+19 more)
+Nodes (23): adjustTime(), asNumber(), clone$1(), dayDiff(), diff(), Duration, durationToMillis(), formatRelativeTime() (+15 more)
 
 ### Community 14 - "t$d"
 Cohesion: 0.03
-Nodes (32): addYouTubeThumbnail(), AIModelConfigModal, AIProviderProfileModal, AIUsageModal, checkExcalidrawVersion(), checkScriptUpdates(), displayFontMessage(), download() (+24 more)
+Nodes (27): addYouTubeThumbnail(), AIModelConfigModal, AIProviderProfileModal, AIUsageModal, displayFontMessage(), EmbeddableSettings, ExportDialog, fragWithHTML() (+19 more)
 
 ### Community 15 - ".registerCommands"
-Cohesion: 0.05
-Nodes (39): addBackOfTheNoteCard(), addFiles(), addTextWithOEmbed(), ANIMATED_IMAGE_TYPES, carveOutImage(), carveOutPDF(), cloneElement$1(), CommandManager (+31 more)
+Cohesion: 0.06
+Nodes (39): addBackOfTheNoteCard(), addFiles(), addTextWithOEmbed(), ANIMATED_IMAGE_TYPES, captureScreenshot(), carveOutImage(), carveOutPDF(), cloneElement$1() (+31 more)
 
 ### Community 16 - "e"
 Cohesion: 0.05
-Nodes (60): a(), A$1(), b(), c(), combineExtractors(), create_component(), createFixedTaskView(), d() (+52 more)
+Nodes (57): a(), A$1(), b(), c(), combineExtractors(), create_component(), d(), DataArrayImpl (+49 more)
 
-### Community 17 - "t"
-Cohesion: 0.04
-Nodes (102): T(), AD(), addDataAttribute(), addInternalClasses(), _addQueryRenderChild(), addTooltip(), Ae(), apply() (+94 more)
+### Community 17 - "l"
+Cohesion: 0.05
+Nodes (96): T(), AD(), addDataAttribute(), addInternalClasses(), Ae(), apply(), applyEdits(), as() (+88 more)
 
-### Community 18 - "ExcalidrawPlugin"
-Cohesion: 0.03
-Nodes (14): emulateCTRLClickForLinks(), ExcalidrawPlugin, fileShouldDefaultAsExcalidraw(), foldExcalidrawSection(), getCJKDataURLs(), getDrawingFilename(), getFontDataURL(), getFontMetrics() (+6 more)
+### Community 18 - ".forEach"
+Cohesion: 0.02
+Nodes (27): applyArabicPresentationForms(), applySubstitution(), arabicRequiredLigatures(), chainingSubstitutionFormat3$1(), CommandManager, copyLinkToSelectedElementToClipboard(), ExcalidrawPlugin, ExcalidrawSettingTab (+19 more)
 
-### Community 19 - "isValid"
-Cohesion: 0.03
-Nodes (89): a1(), Al(), allDateFields(), aq(), BD(), by(), calculate(), category() (+81 more)
+### Community 19 - "Kn"
+Cohesion: 0.06
+Nodes (50): Al(), aq(), BD(), by(), compareTaskSortKeys(), compareTaskSortKeysIfEitherIsNull(), compareTaskSortKeysIfOptionalMoment(), connectedCallback() (+42 more)
 
 ### Community 20 - ".then"
 Cohesion: 0.07
 Nodes (73): _advanceReadiness(), all(), _binStringToArrayBuffer(), callWhenReady(), _checkBlobSupport(), _checkBlobSupportWithoutCaching(), checkIfLocalStorageThrows(), _classCallCheck() (+65 more)
 
 ### Community 21 - "handleImageRequest"
-Cohesion: 0.04
-Nodes (90): AI_BASE_URL_SUFFIXES, analyzeAIImage(), applyOutgoingTokenBudget(), buildGenerateAIImageResult(), buildMultipartFormBody(), buildNormalizedMessages(), concatUint8Arrays(), createSyntheticResponse() (+82 more)
+Cohesion: 0.03
+Nodes (94): AI_BASE_URL_SUFFIXES, analyzeAIImage(), applyOutgoingTokenBudget(), buildGenerateAIImageResult(), buildMultipartFormBody(), buildNormalizedMessages(), concatUint8Arrays(), createSyntheticResponse() (+86 more)
 
 ### Community 22 - "constructor"
-Cohesion: 0.06
-Nodes (49): a2(), activatePlaceholder(), AR(), bindScrollHandlers(), Bx(), Cg(), close(), compileSettings() (+41 more)
+Cohesion: 0.04
+Nodes (69): a2(), activatePlaceholder(), applySettingsUpdate(), AR(), bindScrollHandlers(), Bx(), calculateDragIntersect(), Cg() (+61 more)
 
 ### Community 23 - "templater-obsidian/main.js"
 Cohesion: 0.04
-Nodes (68): additional_functions(), Co(), constructor(), create_dynamic_templates(), create_static_templates(), createForm(), __destroy_into_raw(), enterCallback() (+60 more)
+Nodes (72): additional_functions(), br(), Co(), constructor(), create_dynamic_templates(), create_static_templates(), createForm(), __destroy_into_raw() (+64 more)
 
 ### Community 24 - "DataviewApi"
 Cohesion: 0.05
-Nodes (27): bindAll(), bufferToString(), canonicalizeVarName(), Context, DataviewApi, defaultLinkHandler(), executeCalendar(), executeInline() (+19 more)
+Nodes (35): bufferToString(), Context, DataviewApi, DataviewCalendarRenderer, defaultLinkHandler(), enumerateChildren(), executeCalendar(), executeCore() (+27 more)
 
 ### Community 25 - "ExcalidrawData"
 Cohesion: 0.04
-Nodes (29): arrayToMap$1(), changeThemeOfExcalidrawMD(), Collection, compress(), EMBEDDABLE_THEME_FRONTMATTER_VALUES, EmbeddedFile, ExcalidrawData, format() (+21 more)
+Nodes (31): applyReviver(), arrayToMap$1(), changeThemeOfExcalidrawMD(), compress(), compressAsync(), EMBEDDABLE_THEME_FRONTMATTER_VALUES, EmbeddedFile, ExcalidrawData (+23 more)
 
 ### Community 26 - ".onload"
-Cohesion: 0.05
-Nodes (12): addFields(), bestBy(), BinaryOpHandler, createBinaryOps(), DataviewPlugin, FileImporter, FullIndex, inlinePlugin() (+4 more)
+Cohesion: 0.06
+Nodes (12): addFields(), compareValue(), DataviewIOApi, DataviewPlugin, FullIndex, inlinePlugin(), isDataviewDisabled(), ListItem$1 (+4 more)
 
 ### Community 27 - "setDynamicStyle"
-Cohesion: 0.15
-Nodes (11): alphaTo(), COLOR_NAMES, darkerBy(), getAllWindowDocuments(), getHighlightColor(), lighterBy(), setDynamicStyle(), setStyleText() (+3 more)
+Cohesion: 0.12
+Nodes (17): alphaTo(), COLOR_NAMES, darkerBy(), getAllWindowDocuments(), getHighlightColor(), hsla(), hueTo(), lighterBy() (+9 more)
 
 ### Community 28 - "get"
-Cohesion: 0.04
-Nodes (66): aC(), addView(), archiveCompletedCards(), bk(), clear(), forceRefresh(), get(), getAView() (+58 more)
+Cohesion: 0.05
+Nodes (58): aC(), archiveCompletedCards(), bk(), forceRefresh(), get(), getAView(), getBoard(), getBoardSettings() (+50 more)
 
 ### Community 29 - ".push"
 Cohesion: 0.04
-Nodes (79): addEdgeIfNotToInternal(), bE(), BS(), bySymbol(), c0(), ce(), createFromImportedValue(), CU() (+71 more)
+Nodes (76): bE(), BS(), c0(), ce(), Cg(), constructExplanation(), CU(), cW() (+68 more)
 
 ### Community 30 - "get"
-Cohesion: 0.06
-Nodes (64): n$a, _0(), assign(), b0(), cancelledDate(), checkAndReturnWithFollowingPattern(), checkAndReturnWithoutFollowingPattern(), clone() (+56 more)
+Cohesion: 0.05
+Nodes (76): n$a, _0(), adjustRelativeLinksInDescription(), assign(), b0(), cancelledDate(), checkAndReturnWithFollowingPattern(), checkAndReturnWithoutFollowingPattern() (+68 more)
 
 ### Community 31 - "calendar/main.js"
 Cohesion: 0.03
-Nodes (51): activeFile, attr(), binding_callbacks, binding_callbacks$1, classList(), configureGlobalMomentLocale(), ConfirmationModal, createDailyNotesStore() (+43 more)
+Nodes (46): activeFile, attr(), binding_callbacks, binding_callbacks$1, classList(), configureGlobalMomentLocale(), ConfirmationModal, customTagsSource (+38 more)
 
 ### Community 32 - "isValid"
 Cohesion: 0.03
-Nodes (101): add(), At(), b0(), bM(), bN(), count(), d1(), days() (+93 more)
+Nodes (115): a0(), al(), At(), bl(), bM(), bN(), cc(), clone() (+107 more)
 
-### Community 33 - "ToolsPanel"
-Cohesion: 0.06
-Nodes (8): clsx(), ObsidianMenu, penIcon(), r$d(), resetStrokeOptions(), setPen(), TOOLS_PANEL_WIDTH(), ToolsPanel
+### Community 33 - "ObsidianMenu"
+Cohesion: 0.15
+Nodes (7): clsx(), ObsidianMenu, penIcon(), r$d(), resetStrokeOptions(), setPen(), TOOLS_PANEL_WIDTH()
 
 ### Community 34 - ".slice"
-Cohesion: 0.05
-Nodes (52): $1(), _3(), B1(), bf(), Cf(), cO(), day(), Df() (+44 more)
+Cohesion: 0.04
+Nodes (57): _3(), au(), B1(), bf(), bh(), bi(), Cf(), CH() (+49 more)
 
-### Community 35 - "getBoundingClientRect"
+### Community 35 - "popperGenerator"
 Cohesion: 0.06
-Nodes (64): arrow(), clamp(), computeAutoPlacement(), computeOffsets(), computeStyles(), detectOverflow(), distanceAndSkiddingToXY(), effect() (+56 more)
+Nodes (68): areValidElements(), arrow(), clamp(), computeAutoPlacement(), computeOffsets(), computeStyles(), detectOverflow(), distanceAndSkiddingToXY() (+60 more)
 
 ### Community 36 - "f"
 Cohesion: 0.11
-Nodes (65): ki(), nF(), At(), B(), be(), bi(), bn(), br() (+57 more)
+Nodes (66): ki(), nF(), rF(), At(), B(), be(), bi(), bn() (+58 more)
 
-### Community 37 - "debug"
-Cohesion: 0.09
-Nodes (38): AC(), applySearchBoxFilterAndRerender(), configure(), debug(), deprecate(), dL(), executeParser(), filterResults() (+30 more)
+### Community 37 - "t"
+Cohesion: 0.06
+Nodes (45): AC(), acquire(), bc(), bU(), configure(), debug(), deprecate(), Ev() (+37 more)
 
-### Community 38 - ".linkClick"
-Cohesion: 0.08
-Nodes (23): arrayToMap(), captureScreenshot(), getBoundTextElementId(), _getContainerElement(), getElementsAtPointer(), getElementWithLinkAtPointer(), getImageElementAtPointer(), getLinkFromMarkdownLink() (+15 more)
+### Community 38 - "ToolsPanel"
+Cohesion: 0.05
+Nodes (23): arrayToMap(), getBoundTextElementId(), _getContainerElement(), getElementsAtPointer(), getElementWithLinkAtPointer(), getImageElementAtPointer(), getLinkFromMarkdownLink(), getLinkTextFromLink() (+15 more)
 
 ### Community 39 - "constructor"
 Cohesion: 0.03
-Nodes (81): $1(), AA(), addItemForInstruction(), addItemsForInstructions(), addTaskGroup(), addTaskGroups(), addTitleRow(), B1() (+73 more)
+Nodes (89): $1(), AA(), addItemForInstruction(), addItemsForInstructions(), addTaskGroup(), addTaskGroups(), addTitleRow(), applySearchBoxFilterAndRerender() (+81 more)
 
-### Community 40 - "tA"
-Cohesion: 0.15
-Nodes (20): applySettingsUpdate(), calculateDragIntersect(), Ck(), dragEnd(), dragEndHTML(), dragMove(), dragMoveHTML(), dragStart() (+12 more)
+### Community 40 - "i"
+Cohesion: 0.05
+Nodes (48): aa(), aB(), aO(), aw(), BD(), Br(), cI(), dO() (+40 more)
 
-### Community 41 - "createImgElement"
-Cohesion: 0.07
-Nodes (33): addFilterToForeignObjects(), addSVGToImgSrc(), convertSVGStringToElement(), createImageDiv(), createImgElement(), createSVG(), CropImage, filterFiles() (+25 more)
+### Community 41 - "FloatingModal"
+Cohesion: 0.05
+Nodes (38): addFilterToForeignObjects(), cloneElement(), convertSVGStringToElement(), createImageDiv(), createImgElement(), createSVG(), CropImage, emulateCTRLClickForLinks() (+30 more)
 
-### Community 42 - "format"
-Cohesion: 0.06
-Nodes (56): a0(), al(), bl(), cc(), clone(), create(), cS(), e0() (+48 more)
+### Community 42 - "display"
+Cohesion: 0.14
+Nodes (20): deleteStatus(), display(), findStatusIndex(), OW(), parseCommaSeparatedFolders(), previewText(), removeValidationError(), renderFolderArray() (+12 more)
 
-### Community 43 - "contains"
-Cohesion: 0.08
-Nodes (18): CanvasNodeFactory, contains(), createLeaf(), CustomEmbeddable(), ExcalidrawLoading, getContainerForDocument(), getExcalidraAndMarkdowViewsForFile(), getLeaf() (+10 more)
+### Community 43 - ".add"
+Cohesion: 0.04
+Nodes (25): CanvasNodeFactory, contains(), ContentSearcher, createLeaf(), CustomEmbeddable(), escapeRegExp(), EventManager, ExcalidrawLoading (+17 more)
 
 ### Community 44 - "add"
 Cohesion: 0.05
-Nodes (62): add(), addAllTaskGroups(), addBacklinks(), addChildren(), addClassName(), addCopyButton(), addDefaultStatusTypes(), addEditButton() (+54 more)
+Nodes (59): add(), addAllTaskGroups(), addBacklinks(), addChildren(), addClassName(), addCopyButton(), addDefaultStatusTypes(), addEditButton() (+51 more)
 
 ### Community 45 - "rgb2css"
 Cohesion: 0.05
 Nodes (44): Color, compand(), css2rgb(), gammaAdjustSRGB(), getLabWhitePoint(), hcl2rgb(), hsl2css(), hsl2rgb() (+36 more)
 
 ### Community 46 - "arabicPresentationForms"
-Cohesion: 0.14
-Nodes (18): arabicPresentationForms(), arabicSentenceEndCheck(), arabicSentenceStartCheck(), arabicWordEndCheck(), arabicWordStartCheck(), chainingSubstitutionFormat3(), decompositionSubstitutionFormat1(), isArabicChar() (+10 more)
+Cohesion: 0.25
+Nodes (11): arabicPresentationForms(), arabicSentenceEndCheck(), arabicSentenceStartCheck(), arabicWordEndCheck(), arabicWordStartCheck(), isArabicChar(), isIsolatedArabicChar(), isTashkeelArabicChar() (+3 more)
 
 ### Community 47 - "createFilterOrErrorMessage"
-Cohesion: 0.06
-Nodes (57): buildFilterFunction(), buildGroupingTree(), canCreateFilterForLine(), checkForUnexpandedTemplateText(), cL(), cleanDescription(), comparator(), createFilterOrErrorMessage() (+49 more)
+Cohesion: 0.05
+Nodes (67): addTooltip(), buildFilterFunction(), buildGroupingTree(), calculate(), canCreateFilterForLine(), category(), cL(), cleanDescription() (+59 more)
 
 ### Community 48 - "fe"
 Cohesion: 0.07
 Nodes (7): fe(), Ga(), gr(), ju(), Ku(), Pn(), qu()
 
 ### Community 49 - "y$1"
-Cohesion: 0.04
-Nodes (63): asyncEvalInContext(), asyncTryOrPropagate(), B$2(), chainOpt(), createFixedListView(), createFixedTableView(), createListView(), createTableView() (+55 more)
+Cohesion: 0.10
+Nodes (33): asyncTryOrPropagate(), createFixedListView(), createFixedTableView(), createFixedTaskView(), createListView(), createTableView(), createTaskView(), ErrorMessage() (+25 more)
 
-### Community 50 - "screen.tsx"
-Cohesion: 0.08
-Nodes (32): MODALIDADES, ModalidadesScreen(), styles, IntervaloAdicionado, NUMEROS_PREMIO, PremiosScreen(), styles, PUBLIC_ROUTES (+24 more)
+### Community 50 - "preview.tsx"
+Cohesion: 0.10
+Nodes (28): MilharScreen(), styles, MODALIDADES, ModalidadesScreen(), styles, IntervaloAdicionado, NUMEROS_PREMIO, PremiosScreen() (+20 more)
 
-### Community 51 - "hsla"
-Cohesion: 0.09
-Nodes (30): a$c(), alpha(), alphaBy(), b$5(), blend_f(), chroma(), css(), cubehelix() (+22 more)
-
-### Community 52 - "create_new_note_from_template"
+### Community 51 - "s$a"
 Cohesion: 0.12
-Nodes (38): add_syntax_highlighting_settings(), add_trigger_on_new_file_creation_setting(), append_template_to_active_file(), create_new_note_from_template(), create_running_config(), desktopShouldHighlight(), disable_highlighter(), enable_highlighter() (+30 more)
+Nodes (19): a$c(), alpha(), alphaBy(), b$5(), blend_f(), chroma(), css(), cubehelix() (+11 more)
 
-### Community 53 - "DataviewInlineApi"
-Cohesion: 0.03
-Nodes (14): DataviewInlineApi, extractSubtags(), FunctionBuilder, getExtension(), getFileTitle(), Link, ListItem(), PageMetadata (+6 more)
+### Community 52 - "e"
+Cohesion: 0.10
+Nodes (46): add_syntax_highlighting_settings(), add_trigger_on_new_file_creation_setting(), append_template_to_active_file(), create_new_note_from_template(), create_running_config(), De(), desktopShouldHighlight(), disable_highlighter() (+38 more)
+
+### Community 53 - "Link"
+Cohesion: 0.06
+Nodes (10): extractSubtags(), FunctionBuilder, getExtension(), getFileTitle(), Link, PageMetadata, parseInnerLink(), splitOnUnescapedPipe() (+2 more)
 
 ### Community 54 - "resolve"
-Cohesion: 0.09
-Nodes (40): addNamespaces(), addResource(), addResourceBundle(), addResources(), changeLanguage(), cloneInstance(), dir(), emit() (+32 more)
+Cohesion: 0.06
+Nodes (51): addNamespaces(), _addQueryRenderChild(), addResource(), addResourceBundle(), addResources(), changeLanguage(), cloneInstance(), dir() (+43 more)
 
 ### Community 55 - "n"
 Cohesion: 0.04
-Nodes (89): ag(), Ah(), Av(), bi(), bO(), Br(), cleanUp(), dO() (+81 more)
+Nodes (93): $1(), add(), ag(), Ah(), Av(), bg(), bO(), Ca() (+85 more)
 
 ### Community 56 - "dependencies"
 Cohesion: 0.06
 Nodes (33): expo, expo-application, expo-clipboard, expo-constants, expo-image, expo-linking, @expo/metro-runtime, expo-navigation-bar (+25 more)
 
 ### Community 57 - "auth.ts"
-Cohesion: 0.14
-Nodes (28): AuthContext, AuthContextType, AuthProvider(), expo-secure-store, AuthService, isJwtExpired(), LoginCredentials, LoginResponse (+20 more)
+Cohesion: 0.18
+Nodes (23): expo-secure-store, AuthService, isJwtExpired(), LoginCredentials, LoginResponse, PermissoesPayload, TerminalPayload, VendedorPayload (+15 more)
 
 ### Community 58 - "extractInlineFields"
-Cohesion: 0.14
-Nodes (12): buildInlineFields(), CsvCache, extractInlineFields(), extractSpecialTaskFields(), findClosing(), findSeparator(), findSpecificInlineField(), setEmojiShorthandCompletionField() (+4 more)
+Cohesion: 0.08
+Nodes (20): buildInlineFields(), canonicalizeVarName(), CsvCache, extractInlineFields(), extractSpecialTaskFields(), findClosing(), findSeparator(), findSpecificInlineField() (+12 more)
 
 ### Community 59 - "explainQuery"
-Cohesion: 0.15
-Nodes (17): constructExplanation(), explainDebugSettings(), explainError(), explainExpression(), explainFilterIndented(), explainFilters(), explainGroups(), explainIgnoreGlobalQuery() (+9 more)
+Cohesion: 0.10
+Nodes (24): allLinesIdentical(), applyFilter(), applyQueryToTasks(), applyTaskLimit(), explainDebugSettings(), explainError(), explainFilterIndented(), explainFilters() (+16 more)
 
 ### Community 60 - ".renderButtons"
 Cohesion: 0.11
-Nodes (11): cleanBlockRef(), cleanSectionHeading(), EmbeddableMenu, getActivePDFPageNumberFromPDFView(), getExcalidrawFileForwardLinks(), getLinkParts(), getLinkParts$1(), getTransclusion() (+3 more)
+Nodes (11): cleanBlockRef(), cleanSectionHeading(), EmbeddableMenu, getExcalidrawFileForwardLinks(), getLinkParts(), getLinkParts$1(), getTransclusion(), isHeadingBlockEntry() (+3 more)
 
 ### Community 61 - "InlineLinkSuggester"
 Cohesion: 0.10
@@ -570,35 +568,35 @@ Nodes (55): bootstrapPage(), brandMarkup(), broadcast(), browserLauncherForPlatf
 
 ### Community 63 - "wrapValue"
 Cohesion: 0.06
-Nodes (25): extractISOOffset(), FixedOffsetZone, formatOffset(), getCachedINF(), isBoolean(), isDate(), isDuration(), isFunction() (+17 more)
+Nodes (27): extractASCII(), extractISOOffset(), extractRFC1123Or850(), extractRFC2822(), FixedOffsetZone, formatOffset(), fromStrings(), isBoolean() (+19 more)
 
 ### Community 64 - "apiClient.ts"
-Cohesion: 0.15
-Nodes (16): apiCall(), ApiEnvelope, ApiError, base64UrlDecode(), CallOptions, decodeJwt(), isTokenExpiringSoon(), JwtPayload (+8 more)
+Cohesion: 0.12
+Nodes (19): apiCall(), ApiEnvelope, ApiError, base64UrlDecode(), CallOptions, decodeJwt(), isTokenExpiringSoon(), JwtPayload (+11 more)
 
-### Community 65 - "FloatingModal"
-Cohesion: 0.07
-Nodes (11): AUDIO_TYPES, CODE_TYPES, FileSuggestionModal, FloatingModal, InsertMDDialog, LaTexPrompt, parseHmtxTableAll(), predictViewType() (+3 more)
+### Community 65 - "FileSuggestionModal"
+Cohesion: 0.14
+Nodes (7): AUDIO_TYPES, CODE_TYPES, FileSuggestionModal, InsertMDDialog, predictViewType(), renderLinkSuggestion(), VIDEO_TYPES
 
 ### Community 66 - "toString"
-Cohesion: 0.10
-Nodes (22): areTagsShown(), asMarkdown(), Bq(), canSaveEdits(), getMarkdownFileInfo(), getSuggestions(), gl(), grabSuggestions() (+14 more)
+Cohesion: 0.05
+Nodes (41): a1(), addOneSettingsBlock(), addRow(), addRowIfNew(), allDateFields(), append(), areTagsShown(), asMarkdown() (+33 more)
 
 ### Community 67 - "LocalStorageCache"
-Cohesion: 0.09
+Cohesion: 0.10
 Nodes (6): IndexMap, LocalStorageCache, outro_and_destroy_block(), transition_in(), transition_out(), ValueCaseInsensitiveIndexMap
 
 ### Community 69 - "handleNewStatus"
-Cohesion: 0.07
-Nodes (35): bySymbolOrCreate(), createNextOccurrence(), createUnknownStatus(), deserialize(), equals(), extractDateField(), extractField(), extractHashtags() (+27 more)
+Cohesion: 0.06
+Nodes (39): addEdgeIfNotToInternal(), bySymbol(), bySymbolOrCreate(), copyStatusWithNewName(), createNextOccurrence(), createUnknownStatus(), deserialize(), equals() (+31 more)
 
 ### Community 70 - "parseLine"
-Cohesion: 0.07
-Nodes (42): allLinesIdentical(), allSupportedDelimiters(), applyFilter(), applyQueryToTasks(), applyTaskLimit(), createListItem(), createStatementsFromExpandedPlaceholders(), expandPlaceholders() (+34 more)
+Cohesion: 0.08
+Nodes (35): allSupportedDelimiters(), createListItem(), createStatementsFromExpandedPlaceholders(), expandPlaceholders(), fromInstructionLine(), getFiltersAndSimplifiedLine(), getPrecedingHeader(), getSection() (+27 more)
 
-### Community 71 - "ScriptEngine"
-Cohesion: 0.11
-Nodes (5): ExcalidrawSettingTab, getExcalidrawViews(), getLastActiveExcalidrawView(), ScriptEngine, stripYamlFrontmatter()
+### Community 71 - "DataviewInlineApi"
+Cohesion: 0.03
+Nodes (18): asyncEvalInContext(), B$2(), BinaryOpHandler, createBinaryOps(), currentLocale(), DataviewInlineApi, DataviewInlineJSRenderer, DataviewInlineRenderer (+10 more)
 
 ### Community 72 - ".onClose"
 Cohesion: 0.06
@@ -607,6 +605,10 @@ Nodes (6): CommandLinkOptInPrompt, ImportSVGDialog, InsertCommandDialog, InsertI
 ### Community 73 - "Documentação do App Base — Cambista Mobile (SportingPlay)"
 Cohesion: 0.04
 Nodes (47): 10. Variantes / Flavors, 11. Banco de Dados Local — GreenDAO, 12. Componentes UI Customizados, 13. Mapa de Navegação Completo, 14. Resumo de Funcionalidades, 1. Visão Geral, 2. Arquitetura Geral, 3.1 Pacote Principal (+39 more)
+
+### Community 74 - "ExcalidrawSidepanelView"
+Cohesion: 0.07
+Nodes (5): ExcalidrawSidepanelView, getLastActiveExcalidrawView(), ScriptEngine, search$1(), stripYamlFrontmatter()
 
 ### Community 75 - "Lexer"
 Cohesion: 0.25
@@ -621,44 +623,48 @@ Cohesion: 0.12
 Nodes (17): styles, ParallaxScrollView(), Props, styles, styles, ThemedText(), ThemedTextProps, ThemedView() (+9 more)
 
 ### Community 78 - "CalendarView"
-Cohesion: 0.12
-Nodes (6): CalendarView, createConfirmationDialog(), get_store_value(), showFileMenu(), tryToCreateDailyNote(), tryToCreateWeeklyNote()
-
-### Community 79 - "ContentSearcher"
-Cohesion: 0.08
-Nodes (24): applyDefaultSvgTheme(), BLOCKED_SVG_TAGS, ContentSearcher, createTreeWalker(), cssTextToReactStyle(), domNodeToReact(), escapeRegExp(), excalidrawSword() (+16 more)
-
-### Community 81 - "display"
-Cohesion: 0.12
-Nodes (22): add_auto_jump_to_cursor(), add_file_templates_setting(), add_folder_templates_setting(), add_ignore_folders_on_creation_setting(), add_internal_functions_setting(), add_startup_templates_setting(), add_template_folder_setting(), add_template_hotkey() (+14 more)
-
-### Community 82 - "Plano: Hardening e conclusão da impressão térmica (Bluetooth + POS)"
 Cohesion: 0.10
-Nodes (19): Cobertura dos achados da análise, Fase 1 — Bluetooth usável em produção, Fase 2 — Impressora interna da maquininha (CloudPOS), Fase 3 — Verificação final, Fora de escopo (proposital), Global Constraints, Mapa de arquivos, Ordem de execução e dependências (+11 more)
+Nodes (10): CalendarView, clamp(), createConfirmationDialog(), get_store_value(), getDotsForDailyNote(), getWordCount(), getWordLengthAsDots(), showFileMenu() (+2 more)
+
+### Community 79 - "sanitizeSvgTree"
+Cohesion: 0.11
+Nodes (22): applyDefaultSvgTheme(), BLOCKED_SVG_TAGS, createTreeWalker(), cssTextToReactStyle(), domNodeToReact(), excalidrawSword(), getIconAsJSX(), isUnsafeAttribute() (+14 more)
+
+### Community 81 - "z"
+Cohesion: 0.13
+Nodes (24): add_auto_jump_to_cursor(), add_file_templates_setting(), add_folder_templates_setting(), add_ignore_folders_on_creation_setting(), add_internal_functions_setting(), add_startup_templates_setting(), add_template_folder_setting(), add_template_hotkey() (+16 more)
+
+### Community 82 - "parseBuffer"
+Cohesion: 0.18
+Nodes (15): addGlyphNames(), addGlyphNamesAll(), addGlyphNamesToUnicodeMap(), getTag(), getULong(), getUShort(), loadSync(), nodeBufferToArrayBuffer() (+7 more)
 
 ### Community 83 - "getDateFromFile"
-Cohesion: 0.17
-Nodes (17): createDailyNote(), createWeeklyNote(), getAllDailyNotes(), getAllWeeklyNotes(), getDailyNote(), getDailyNoteSettings(), getDateFromFile(), getDateUID$1() (+9 more)
+Cohesion: 0.12
+Nodes (23): createDailyNote(), createWeeklyNote(), ensureFolderExists(), getAllDailyNotes(), getAllWeeklyNotes(), getDailyNote(), getDailyNoteSettings(), getDateFromFile() (+15 more)
 
 ### Community 84 - "Subagent-Driven Development"
 Cohesion: 0.06
 Nodes (26): Code Reviewer Prompt Template, Example Output, Common Rationalizations, Example, How to Request, Red Flags, Requesting Code Review, When to Request Review (+18 more)
 
-### Community 85 - "e"
-Cohesion: 0.08
-Nodes (38): rF(), UO(), Bo(), ci(), closing_tag(), cr(), De(), dn() (+30 more)
+### Community 85 - "Fe"
+Cohesion: 0.13
+Nodes (23): UO(), Bo(), ci(), closing_tag(), cr(), dn(), Fe(), Fo() (+15 more)
 
 ### Community 86 - "init$1"
-Cohesion: 0.12
-Nodes (19): add_render_callback$1(), blank_object$1(), children$1(), destroy_component$1(), detach$1(), flush$1(), init$1(), is_empty$1() (+11 more)
+Cohesion: 0.08
+Nodes (27): add_render_callback$1(), bind(), blank_object$1(), Calendar, children$1(), component_subscribe(), create_fragment(), destroy_component$1() (+19 more)
 
 ### Community 87 - "diagramToHTML"
-Cohesion: 0.24
-Nodes (9): diagramToHTML(), extractDiagramHTML(), getDiagramToHTMLFinishReason(), isDiagramToHTMLDebugEnabled(), isMaxTokenFinishReason(), logDiagramToHTMLDebug(), shouldRetryDiagramToHTML(), stringifyDiagramDebugValue() (+1 more)
+Cohesion: 0.19
+Nodes (11): diagramToHTML(), errorHTML(), extractDiagramHTML(), getDiagramToHTMLFinishReason(), getJsonErrorMessage(), isDiagramToHTMLDebugEnabled(), isMaxTokenFinishReason(), logDiagramToHTMLDebug() (+3 more)
 
-### Community 89 - "init"
-Cohesion: 0.09
-Nodes (25): add_css$4(), add_render_callback(), appHasPeriodicNotesPluginLoaded(), blank_object(), CalendarPlugin, check_outros(), children(), create_fragment$4() (+17 more)
+### Community 88 - "AuthContext.tsx"
+Cohesion: 0.15
+Nodes (14): PreviewScreen(), PUBLIC_ROUTES, RootLayoutNav(), LoginScreen(), HomeScreen(), AuthContext, AuthContextType, AuthProvider() (+6 more)
+
+### Community 89 - "update"
+Cohesion: 0.12
+Nodes (16): add_render_callback(), appHasPeriodicNotesPluginLoaded(), CalendarPlugin, check_outros(), createDailyNotesStore(), createSelectedFileStore(), createWeeklyNotesStore(), detach() (+8 more)
 
 ### Community 90 - "parseCFFTable"
 Cohesion: 0.14
@@ -676,9 +682,9 @@ Nodes (21): eslint, eslint-config-expo, jest, jest-expo, devDependencies, eslint
 Cohesion: 0.06
 Nodes (29): Common Rationalizations, Debugging Integration, Example: Bug Fix, Final Rule, Good Tests, GREEN - Minimal Code, Overview, Red Flags - STOP and Start Over (+21 more)
 
-### Community 94 - "append"
-Cohesion: 0.13
-Nodes (17): add_css(), add_css$1(), add_css$2(), add_css$3(), add_css$5(), append(), Arrow, create_fragment$2() (+9 more)
+### Community 94 - "init"
+Cohesion: 0.08
+Nodes (32): add_css(), add_css$1(), add_css$2(), add_css$3(), add_css$4(), add_css$5(), append(), Arrow (+24 more)
 
 ### Community 95 - "userIgnoreFilters"
 Cohesion: 0.12
@@ -692,13 +698,13 @@ Nodes (17): assign(), create_default_slot(), create_default_slot$1(), create_eac
 Cohesion: 0.14
 Nodes (16): create_catch_block(), create_else_block(), create_fragment$5(), create_if_block$1(), create_pending_block(), create_slot(), create_then_block(), get_current_component() (+8 more)
 
-### Community 98 - "errorlog"
-Cohesion: 0.07
-Nodes (23): checkVersionMismatch(), createFileAndAwaitMetacacheUpdate(), EmbeddedFilesLoader, errorlog(), getBinaryFileFromDataURL(), getDataURL(), getDataURLFromURL(), getExportPadding$1() (+15 more)
+### Community 98 - ".getExcalidrawSVG"
+Cohesion: 0.22
+Nodes (9): getExportPadding$1(), getExportTheme$1(), getSVGData(), getWithBackground$1(), hasExportBackground(), hasExportTheme$1(), isMaskFile$1(), replaceSVGColors() (+1 more)
 
-### Community 100 - "dW"
-Cohesion: 0.14
-Nodes (17): addRow(), addRowIfNew(), Cg(), cW(), cx(), dW(), dx(), getTypeForUnknownSymbol() (+9 more)
+### Community 100 - "Vr"
+Cohesion: 0.22
+Nodes (14): aI(), DP(), iI(), jv(), Qr(), qv(), S0(), sa() (+6 more)
 
 ### Community 101 - "templater-obsidian/manifest.json"
 Cohesion: 0.13
@@ -712,9 +718,9 @@ Nodes (14): main, name, private, scripts, android, ios, lint, reset-project (+6 
 Cohesion: 0.11
 Nodes (20): global, branches, lines, statements, jest, collectCoverageFrom, coverageThreshold, moduleNameMapper (+12 more)
 
-### Community 104 - "resolveFlowCollection"
-Cohesion: 0.09
-Nodes (24): composeCollection(), composeDoc(), composeEmptyNode(), composeNode(), Composer, composeScalar(), containsNewline(), emptyScalarPosition() (+16 more)
+### Community 104 - "parseDocument"
+Cohesion: 0.19
+Nodes (8): Composer, end(), getErrorPos(), parse(), parseDocument(), parseOptions(), parsePrelude(), prettifyError()
 
 ### Community 107 - "Fase 2 — Aposta do Jogo do Bicho (com carrinho)"
 Cohesion: 0.06
@@ -730,15 +736,19 @@ Nodes (3): destroy_component(), is_empty(), SvelteComponent
 
 ### Community 111 - "roadmap-obsidian.md"
 Cohesion: 0.07
-Nodes (28): 1. Criar a nota da fase, 1. Linkar commits do Git, 2. Durante o desenvolvimento, 2. Embedar código do projeto, 3. Fim do dia, 3. Gráficos de dependências, 4. Como o Graph View te ajuda, Ao desenvolver (+20 more)
+Nodes (27): 1. Linkar commits do Git, 2. Embedar código do projeto, 3. Gráficos de dependências, Ao desenvolver, Checklist de setup completo, Como criar links bidirecionais (o coração do sistema), Como transformar o roadmap em Kanban visual, Como usar Dataview para consultas poderosas (+19 more)
 
 ### Community 112 - "setupDragAndDrop"
-Cohesion: 0.10
-Nodes (26): acquire(), addOneSettingsBlock(), append(), calculateDropPosition(), clearDropIndicator(), clearDropIndicators(), _couldLockImmediately(), createAddNewPresetButton() (+18 more)
+Cohesion: 0.24
+Nodes (12): calculateDropPosition(), clearDropIndicator(), clearDropIndicators(), createAddNewPresetButton(), getTargetIndex(), renderPresetItem(), renderPresetsSettings(), savePresetsSettings() (+4 more)
 
 ### Community 113 - "include"
 Cohesion: 0.17
 Nodes (11): expo-env.d.ts, expo/tsconfig.base, .expo/types/**/*.ts, **/*.ts, **/*.tsx, compilerOptions, jsx, paths (+3 more)
+
+### Community 114 - "PrinterService"
+Cohesion: 0.29
+Nodes (3): ConfiguracoesScreen(), styles, PrinterService
 
 ### Community 115 - "blockString"
 Cohesion: 0.42
@@ -756,9 +766,9 @@ Nodes (10): author, authorUrl, description, fundingUrl, helpUrl, id, isDesktopOn
 Cohesion: 0.07
 Nodes (27): 10. Pendências conhecidas (próximas etapas), 11. Solução de problemas comuns, 1. Visão geral do fluxo, 2. Endpoints do backend, 3. Onde estão os arquivos, 4.1 Banco, 4.2 Backend — `application.php`, 4.3 Frontend — `app.json` (+19 more)
 
-### Community 119 - "Zn"
-Cohesion: 0.17
-Nodes (16): au(), bh(), cm(), DH(), FA(), isAfter(), isBefore(), iu() (+8 more)
+### Community 119 - "makeCFFTable"
+Cohesion: 0.20
+Nodes (12): encodeString(), equals(), makeCFFTable(), makeCharsets(), makeDict(), makeGlobalSubrIndex(), makeHeader(), makeNameIndex() (+4 more)
 
 ### Community 121 - "dataview/manifest.json"
 Cohesion: 0.20
@@ -768,9 +778,9 @@ Nodes (9): author, authorUrl, description, helpUrl, id, isDesktopOnly, minAppVer
 Cohesion: 0.67
 Nodes (4): addName(), makeFvarAxis(), makeFvarInstance(), makeFvarTable()
 
-### Community 123 - "k"
-Cohesion: 0.07
-Nodes (53): analyze(), b(), b$4(), bezier(), binom_row(), c(), c$8(), cloneKnownAIProviderProfiles() (+45 more)
+### Community 123 - "d$1"
+Cohesion: 0.33
+Nodes (7): c$8(), d$1(), f$1(), i$8(), p$1(), s$8(), u$6()
 
 ### Community 125 - "obsidian-kanban/manifest.json"
 Cohesion: 0.20
@@ -784,25 +794,25 @@ Nodes (8): author, authorUrl, description, id, isDesktopOnly, minAppVersion, nam
 Cohesion: 0.22
 Nodes (4): Invalid, InvalidDateTimeError, InvalidDurationError, InvalidIntervalError
 
-### Community 128 - "ZoolooPrinterModule"
-Cohesion: 0.09
-Nodes (13): styles, ChangeEventPayload, OnLoadEventPayload, ZoolooPrinterModuleEvents, ZoolooPrinterViewProps, BluetoothDevice, ZoolooPrinterModule, NativeView (+5 more)
+### Community 128 - "ZoolooPrinter.types.ts"
+Cohesion: 0.25
+Nodes (6): ChangeEventPayload, OnLoadEventPayload, ZoolooPrinterModuleEvents, ZoolooPrinterViewProps, NativeView, ZoolooPrinterView()
 
 ### Community 129 - "PrinterManager"
-Cohesion: 0.16
-Nodes (5): BluetoothAdapter, BluetoothSocket, ByteArray, Charset, PrinterManager
+Cohesion: 0.22
+Nodes (4): BluetoothAdapter, BluetoothSocket, ByteArray, PrinterManager
 
-### Community 130 - "preview.tsx"
-Cohesion: 0.19
-Nodes (15): PreviewScreen(), styles, gerarLinhasComprovante(), gerarTextoComprovante(), getSiglaModalidade(), PuleTermica(), PuleTermicaProps, styles (+7 more)
+### Community 130 - "CarrinhoContext.tsx"
+Cohesion: 0.18
+Nodes (13): gerarTextoComprovante(), getSiglaModalidade(), PuleTermica(), PuleTermicaProps, styles, CarrinhoContext, CarrinhoContextData, CarrinhoProvider() (+5 more)
 
 ### Community 132 - "reset-project.js"
 Cohesion: 0.22
 Nodes (7): exampleDirPath, fs, oldDirs, path, readline, rl, root
 
-### Community 133 - ".forEach"
-Cohesion: 0.04
-Nodes (80): a(), a$9(), applyArabicPresentationForms(), applyReviver(), applyStyles(), applySubstitution(), arabicRequiredLigatures(), around() (+72 more)
+### Community 133 - "e"
+Cohesion: 0.03
+Nodes (110): a(), a$9(), addSVGToImgSrc(), applyStyles(), around(), around1(), attachOutsideHandlers(), b() (+102 more)
 
 ### Community 134 - "Plano Técnico de Desenvolvimento — App Zooloo"
 Cohesion: 0.10
@@ -869,8 +879,8 @@ Cohesion: 0.14
 Nodes (13): 1. Identify Independent Domains, 2. Create Focused Agent Tasks, 3. Dispatch in Parallel, 4. Review and Integrate, Agent Prompt Structure, Common Mistakes, Dispatching Parallel Agents, Overview (+5 more)
 
 ### Community 170 - "getDeviceSerial"
-Cohesion: 0.44
-Nodes (6): styles, TerminalScreen(), generateFallbackSerial(), getDeviceSerial(), getDeviceSerialStored(), saveDeviceSerialStored()
+Cohesion: 0.54
+Nodes (5): TerminalScreen(), generateFallbackSerial(), getDeviceSerial(), getDeviceSerialStored(), saveDeviceSerialStored()
 
 ### Community 171 - "Testing Skills With Subagents"
 Cohesion: 0.15
@@ -897,8 +907,8 @@ Cohesion: 0.17
 Nodes (12): 3. Configurações de Negócio (`cfg_`), `cfg_area_comissao_modalidade` — Comissão por Área/Modalidade, `cfg_area_cotacao` — Multiplicadores por Área/Extração/Modalidade, `cfg_area_extracao` — Extrações ativas por área, `cfg_area_limite` — Limites de palpite por Área/Modalidade, `cfg_coletor_area` — Áreas que um Coletor pode acessar, `cfg_extracao_descarga` — Limite de descarga por Extração/Modalidade, `cfg_extracao_modalidade` — Modalidades disponíveis por Extração (+4 more)
 
 ### Community 177 - ".getSetting"
-Cohesion: 0.06
-Nodes (57): aD(), bg(), Ca(), cD(), contains(), dD(), dk(), ed() (+49 more)
+Cohesion: 0.05
+Nodes (69): aD(), cm(), contains(), dD(), Df(), dk(), ed(), Eg() (+61 more)
 
 ### Community 178 - "Returns: "OK" or lists conflicts"
 Cohesion: 0.18
@@ -932,9 +942,17 @@ Nodes (5): 🏗️ Arquitetura e Stack Tecnológico, 🚀 Fluxos Operacionais Cr
 Cohesion: 0.20
 Nodes (10): 2. Cadastros Mestres (`cad_`), `cad_area` — Áreas/Franquias, `cad_coletor` — Gerentes/Coletores, `cad_extracao` — Extrações (Sorteios recorrentes), `cad_modalidade_bilhetinho` — Configurações por colocação para Bilhetinho/Quininha/Seninha, `cad_modalidade_jb` — Configurações extras para JB, `cad_modalidade` — Modalidades de Aposta, `cad_pessoas` — Clientes (opcional, LGPD) (+2 more)
 
+### Community 187 - "ZoolooPrinterModule"
+Cohesion: 0.22
+Nodes (3): BluetoothDevice, ZoolooPrinterModule, .expo
+
+### Community 188 - ".formatDateTimeFromString"
+Cohesion: 0.04
+Nodes (28): buildRegex(), digitRegex(), eraForDateTime(), escapeToken(), expandMacroTokens(), explainFromTokens(), Formatter, getCachedINF() (+20 more)
+
 ### Community 189 - "argument"
-Cohesion: 0.05
-Nodes (52): addGlyphNames(), addGlyphNamesAll(), addGlyphNamesToUnicodeMap(), argument(), average(), buildPath(), computeCheckSum(), defineDependentProperty() (+44 more)
+Cohesion: 0.06
+Nodes (37): argument(), average(), buildPath(), computeCheckSum(), defineDependentProperty(), EXCALIDRAW_EXTERNAL_GET_LABEL_KEY_SET, fail(), fontToSfntTable() (+29 more)
 
 ### Community 192 - "Welcome to your Expo app 👋"
 Cohesion: 0.20
@@ -1116,52 +1134,44 @@ Nodes (4): Pattern, Reference, Skill Types, Technique
 Cohesion: 0.50
 Nodes (4): Example: TDD Skill Bulletproofing, Initial Test (Failed), Iteration 1 - Add Counter, Iteration 2 - Add Foundational Principle
 
-### Community 241 - "instance"
-Cohesion: 0.18
-Nodes (9): bind(), Calendar, component_subscribe(), create_fragment(), get_current_component$1(), instance(), not_equal$1(), onDestroy() (+1 more)
+### Community 241 - "resolveBlockMap"
+Cohesion: 0.53
+Nodes (6): containsNewline(), flowIndentCheck(), resolveBlockMap(), resolveBlockSeq(), resolveCollection(), resolveProps()
 
-### Community 268 - "join"
-Cohesion: 0.22
-Nodes (10): clamp(), ensureFolderExists(), getDotsForDailyNote(), getFormattedTagAttributes(), getNotePath(), getNoteTags(), getWordCount(), getWordLengthAsDots() (+2 more)
+### Community 252 - "b$4"
+Cohesion: 0.50
+Nodes (5): b$4(), h$3(), l$4(), o$a(), v$1()
 
-### Community 269 - "nextAfter"
-Cohesion: 0.24
-Nodes (10): addTimezone(), fromOneDayEarlier(), isSkippingTooManyMonths(), isSkippingTooManyYears(), nextAfter(), nextAfterMonths(), nextAfterYears(), nextReferenceDate() (+2 more)
+### Community 268 - "e$4"
+Cohesion: 0.50
+Nodes (5): c$4(), e$4(), o$4(), r$4(), s$4()
+
+### Community 269 - "getElementMatrix"
+Cohesion: 0.60
+Nodes (5): create$1(), getElementMatrix(), getTransformMatrix(), multiply$1(), svgTransformToCSSTransform()
 
 ### Community 270 - "filterAttrsToElementValues"
 Cohesion: 0.50
 Nodes (5): filterAttrsToElementValues(), getGroupAttrs(), getNum(), presAttrs(), presAttrsToElementValues()
 
-### Community 271 - "milhar.tsx"
-Cohesion: 0.39
-Nodes (6): MilharScreen(), styles, calcularTotalAposta(), getHojeLocalDate(), parsePalpitesPosicionais(), validarMilhar()
-
-### Community 274 - "Spike: impressora interna CloudPOS (maquininha)"
-Cohesion: 0.22
-Nodes (8): API nativa mínima (quando SDK existir), Artefatos necessários, Contexto, Contrato JS unificado (futuro), Decisões, Próximos passos (fora deste hardening), Riscos, Spike: impressora interna CloudPOS (maquininha)
-
-### Community 278 - "encryptStoredAPIKey"
-Cohesion: 0.32
-Nodes (8): decodeBase64(), decodeObfuscatedAPIKeyPayload(), encryptPersistedAPIKeys(), encryptProviderProfiles(), encryptStoredAPIKey(), isEncryptedStoredAPIKey(), isObfuscatedAPIKey(), xorWithSecret()
-
-### Community 279 - "Setup inicial do Obsidian para o projeto Zooloo"
-Cohesion: 0.50
-Nodes (4): Passo 1: Criar o vault do projeto, Passo 2: Instalar plugins essenciais, Passo 3: Configurar o Graph View, Setup inicial do Obsidian para o projeto Zooloo
+### Community 271 - "Exemplo concreto: como usar na Fase 2 (aposta do Bicho)"
+Cohesion: 0.40
+Nodes (5): 1. Criar a nota da fase, 2. Durante o desenvolvimento, 3. Fim do dia, 4. Como o Graph View te ajuda, Exemplo concreto: como usar na Fase 2 (aposta do Bicho)
 
 ## Knowledge Gaps
-- **1211 isolated node(s):** `crypto`, `http`, `fs`, `path`, `OPCODES` (+1206 more)
+- **1188 isolated node(s):** `crypto`, `http`, `fs`, `path`, `OPCODES` (+1183 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **63 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **58 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `p()` connect `a` to `dataview/main.js`, `obsidian-tasks-plugin/main.js`, `fromObject`, `e`, `t`, `templater-obsidian/main.js`, `DataviewApi`, `.onload`, `.push`, `isValid`, `.slice`, `f`, `constructor`, `format`, `y$1`, `resolve`, `n`, `toString`, `display`, `e`, `Zn`, `k`?**
-  _High betweenness centrality (0.172) - this node is a cross-community bridge._
-- **Why does `SegmentChainer$1()` connect `k` to `obsidian-excalidraw-plugin/main.js`, `f`, `.forEach`, `.push`, `ExcalidrawAutomate`, `a`, `t`, `argument`?**
+- **Why does `p()` connect `a` to `dataview/main.js`, `obsidian-kanban/main.js`, `obsidian-tasks-plugin/main.js`, `e`, `e`, `l`, `templater-obsidian/main.js`, `DataviewApi`, `.onload`, `isValid`, `.slice`, `f`, `constructor`, `display`, `y$1`, `resolve`, `n`, `toString`, `z`, `Fe`?**
+  _High betweenness centrality (0.178) - this node is a cross-community bridge._
+- **Why does `SegmentChainer$1()` connect `e` to `obsidian-excalidraw-plugin/main.js`, `f`, `.push`, `ExcalidrawAutomate`, `a`, `l`, `.forEach`, `argument`?**
   _High betweenness centrality (0.117) - this node is a cross-community bridge._
 - **Why does `n$a` connect `get` to `obsidian-excalidraw-plugin/main.js`, `createFilterOrErrorMessage`?**
-  _High betweenness centrality (0.074) - this node is a cross-community bridge._
+  _High betweenness centrality (0.071) - this node is a cross-community bridge._
 - **Are the 90 inferred relationships involving `e()` (e.g. with `a$9()` and `.render()`) actually correct?**
   _`e()` has 90 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 81 inferred relationships involving `n()` (e.g. with `aS()` and `bO()`) actually correct?**
@@ -1169,4 +1179,4 @@ _Questions this graph is uniquely positioned to answer:_
 - **Are the 78 inferred relationships involving `r()` (e.g. with `ba()` and `bO()`) actually correct?**
   _`r()` has 78 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `crypto`, `http`, `fs` to the rest of the system?**
-  _1211 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1188 weakly-connected nodes found - possible documentation gaps or missing edges._
