@@ -120,8 +120,8 @@
     "semantic_hash": ""
   },
   "__tests__/app/terminal.test.tsx": {
-    "mtime": 1788112901.3146372,
-    "ast_hash": "a06eb23c0a70757b1b92db2547a10304",
+    "mtime": 1785091652.3433442,
+    "ast_hash": "95e6cd1fe0b2b9f765c70d1c9fee7b4e",
     "semantic_hash": ""
   },
   "__tests__/context/AuthContext.test.tsx": {
@@ -165,8 +165,8 @@
     "semantic_hash": ""
   },
   "__tests__/setup.ts": {
-    "mtime": 1788112711.3296669,
-    "ast_hash": "d3becbf7a713c2597e439c21957b2841",
+    "mtime": 1785091565.448573,
+    "ast_hash": "e30485cb56d2b1304432a9295eeb6330",
     "semantic_hash": ""
   },
   "__tests__/utils/apostaHelpers.test.ts": {
@@ -175,58 +175,63 @@
     "semantic_hash": ""
   },
   "app.json": {
-    "mtime": 1788112690.7949302,
-    "ast_hash": "23b883c48b6beed75ae39ca8ee9afdad",
+    "mtime": 1787616369.5935028,
+    "ast_hash": "277c092f86131be46b28a2a652ee927a",
     "semantic_hash": ""
   },
   "app/(tabs)/_layout.tsx": {
-    "mtime": 1788112385.2140093,
-    "ast_hash": "6318526d21c85ee36dc3eecafd158e24",
+    "mtime": 1785715976.649354,
+    "ast_hash": "0efe8f0fa9a724e6f60f7fbd9db9c88c",
     "semantic_hash": ""
   },
   "app/(tabs)/index.tsx": {
-    "mtime": 1788112571.0267806,
-    "ast_hash": "3e6bdc42c3a1d5a83c0c27dbaf132e6f",
+    "mtime": 1785085350.2885823,
+    "ast_hash": "6cbcf901b6d318484056c0d9d9202250",
     "semantic_hash": ""
   },
   "app/_layout.tsx": {
-    "mtime": 1788112260.8572304,
-    "ast_hash": "c5603050f39c678fc97f8453749c9b9c",
+    "mtime": 1785091478.60107,
+    "ast_hash": "580fefdb93fe527d7c5ade7aa11dd3a1",
     "semantic_hash": ""
   },
   "app/aposta/_layout.tsx": {
-    "mtime": 1788119785.154507,
-    "ast_hash": "6dc53433307639498b96e2058f91ee5d",
+    "mtime": 1785074731.0529194,
+    "ast_hash": "74f0e81219f3b52c14b0ad9004872e07",
     "semantic_hash": ""
   },
   "app/aposta/milhar.tsx": {
-    "mtime": 1788112552.6894257,
-    "ast_hash": "3c74bc44a050d68d30feef8b209ed12c",
+    "mtime": 1785085686.9898295,
+    "ast_hash": "98880f923aee9d5db367c08919e5572c",
     "semantic_hash": ""
   },
   "app/aposta/modalidades.tsx": {
-    "mtime": 1788119802.927746,
-    "ast_hash": "0d089bd10d86e9041972082359da92e2",
+    "mtime": 1787618054.5105417,
+    "ast_hash": "f4a2a7dfaaa1861a4e20c23474806126",
     "semantic_hash": ""
   },
   "app/aposta/premios.tsx": {
-    "mtime": 1788112830.6715055,
-    "ast_hash": "563d12e83a24f9786ce3856f59ee50fd",
+    "mtime": 1785085709.4702408,
+    "ast_hash": "e0f8f96c5c7da5405338ae68d4cec5d6",
     "semantic_hash": ""
   },
   "app/aposta/preview.tsx": {
-    "mtime": 1788112488.53481,
-    "ast_hash": "407fef690105257278bffbf3fd9af142",
+    "mtime": 1785370722.3563926,
+    "ast_hash": "cd34954593adf2f163017e69675b8199",
     "semantic_hash": ""
   },
   "app/login.tsx": {
-    "mtime": 1788112552.6520817,
-    "ast_hash": "5221f03a89d6b547c1b182d9d8bddde7",
+    "mtime": 1785091462.0249484,
+    "ast_hash": "f8addd4bd1c923a6ad89967997727346",
+    "semantic_hash": ""
+  },
+  "app/modal.tsx": {
+    "mtime": 1785085280.2890666,
+    "ast_hash": "c1995ee3d6dab08971bda1096af23c11",
     "semantic_hash": ""
   },
   "app/terminal.tsx": {
-    "mtime": 1788112571.0369425,
-    "ast_hash": "313abb81cec83cb9780b53a0cebb1cb9",
+    "mtime": 1785091478.62507,
+    "ast_hash": "795fb3e6d7a6e22292336c8531bcb2e7",
     "semantic_hash": ""
   },
   "assets/styles/colors.ts": {
@@ -245,8 +250,18 @@
     "semantic_hash": ""
   },
   "components/PuleTermica.tsx": {
-    "mtime": 1788112652.1151965,
-    "ast_hash": "92d9a1ae94ff0ae3fb528f0d73941cd2",
+    "mtime": 1785889535.5605292,
+    "ast_hash": "04c2234d0b744b7b86e9c1a64b1d1a2a",
+    "semantic_hash": ""
+  },
+  "components/external-link.tsx": {
+    "mtime": 1784400188.2620442,
+    "ast_hash": "a71bdc8e0bd55812a1e97662ade442d1",
+    "semantic_hash": ""
+  },
+  "components/haptic-tab.tsx": {
+    "mtime": 1784400188.2620442,
+    "ast_hash": "3865d2fa7a067a97b4a0bbc8f7dcb2db",
     "semantic_hash": ""
   },
   "components/hello-wave.tsx": {
@@ -285,8 +300,8 @@
     "semantic_hash": ""
   },
   "components/ui/screen.tsx": {
-    "mtime": 1788112275.381597,
-    "ast_hash": "f645738abdf337418e2bb72b83536df2",
+    "mtime": 1785085660.2728736,
+    "ast_hash": "cffe41cfa8b3cc53929573110d7ec1c8",
     "semantic_hash": ""
   },
   "components/ui/tab-bar-background.tsx": {
@@ -390,8 +405,8 @@
     "semantic_hash": ""
   },
   "types/aposta.ts": {
-    "mtime": 1788112431.0587242,
-    "ast_hash": "dd557635e3aaf1de5d83bafe3ab8a5a0",
+    "mtime": 1787618017.328279,
+    "ast_hash": "44f55c570279d822c0c3efac246f4eac",
     "semantic_hash": ""
   },
   "utils/apostaHelpers.ts": {
@@ -835,13 +850,13 @@
     "semantic_hash": ""
   },
   "__tests__/services/PrinterService.test.ts": {
-    "mtime": 1788118828.0160787,
-    "ast_hash": "cb7ee89ec380f0e621754249307b74ac",
+    "mtime": 1786302552.9005413,
+    "ast_hash": "86bc91c3f228766f2bbb8c3d1e85a42e",
     "semantic_hash": ""
   },
   "app/(tabs)/configuracoes.tsx": {
-    "mtime": 1788112451.1576693,
-    "ast_hash": "155227e0405575e46bf6e9aea6825e7f",
+    "mtime": 1786302539.3993552,
+    "ast_hash": "c56dddd85eaa1fc591ab38b07caa85e2",
     "semantic_hash": ""
   },
   "modules/zooloo-printer/.eslintrc.js": {
@@ -920,38 +935,8 @@
     "semantic_hash": ""
   },
   "__tests__/app/modalidades.test.tsx": {
-    "mtime": 1788112711.3398473,
-    "ast_hash": "9238c5f389fa51dc9bab5ba1ec35c2c3",
-    "semantic_hash": ""
-  },
-  "__tests__/app/milhar.test.tsx": {
-    "mtime": 1788112767.2607424,
-    "ast_hash": "c78af3113a5e4cb7f8e3047424162104",
-    "semantic_hash": ""
-  },
-  "__tests__/app/premios.test.tsx": {
-    "mtime": 1788112806.5384548,
-    "ast_hash": "c35d92518913e2f45c05bb5dd9f1b20d",
-    "semantic_hash": ""
-  },
-  "__tests__/utils/routeParams.test.ts": {
-    "mtime": 1788112749.5591853,
-    "ast_hash": "d3c25be2f09e4c6ed419bfa41c900810",
-    "semantic_hash": ""
-  },
-  "plugins/withZoolooAndroidTheme.js": {
-    "mtime": 1788112683.3402574,
-    "ast_hash": "dfd8b3911d404c30db092d89627aedfe",
-    "semantic_hash": ""
-  },
-  "utils/routeParams.ts": {
-    "mtime": 1788112172.6799104,
-    "ast_hash": "51e12634b151b058b92f7ae8777524eb",
-    "semantic_hash": ""
-  },
-  "CLAUDE.md": {
-    "mtime": 1788103732.558954,
-    "ast_hash": "1fe24e31bdac1871927a6de5aa9326e1",
+    "mtime": 1787618109.903936,
+    "ast_hash": "f27f65658b4ad3f5efa1a0104227929e",
     "semantic_hash": ""
   }
 }

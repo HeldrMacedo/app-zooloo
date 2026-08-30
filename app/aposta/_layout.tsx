@@ -1,15 +1,23 @@
+import { colors } from '@/assets/styles/colors';
 import { Stack } from 'expo-router';
 
 export default function ApostaLayout() {
-  //headerStyle: { backgroundColor: '#3B82F6'}
   return (
-    <Stack>
+    <Stack
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: colors.brand.system,
+        },
+        headerTintColor: colors.white,
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}
+    >
       <Stack.Screen
         name="modalidades"
-        options={{ title: 'Jogo do Bicho', headerBackTitle: 'Voltar' }}
-
+        options={{ title: 'JB', headerBackTitle: 'Voltar' }}
       />
-
       <Stack.Screen
         name="milhar"
         options={{ title: 'Digite o Palpite', headerBackTitle: 'Voltar' }}

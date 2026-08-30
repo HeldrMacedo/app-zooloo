@@ -58,7 +58,7 @@ export default function ModalidadesScreen() {
           style={styles.cartButton}
           testID="cart-button"
         >
-          <Ionicons name="cart-outline" size={28} color={colors.gray[800]} />
+          <Ionicons name="cart-outline" size={28} color={colors.white} />
           {itensQuantidade > 0 && (
             <View style={styles.cartBadge}>
               <Text style={styles.cartBadgeText}>{itensQuantidade}</Text>
