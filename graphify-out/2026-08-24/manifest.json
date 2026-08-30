@@ -145,8 +145,8 @@
     "semantic_hash": ""
   },
   "__tests__/services/apostaService.test.ts": {
-    "mtime": 1787618064.9056156,
-    "ast_hash": "59d8e95a15bbcde452db15244e240a73",
+    "mtime": 1785370109.7813113,
+    "ast_hash": "a42b31a8a3e566634332b8dab07deb07",
     "semantic_hash": ""
   },
   "__tests__/services/auth.test.ts": {
@@ -175,8 +175,8 @@
     "semantic_hash": ""
   },
   "app.json": {
-    "mtime": 1787616369.5935028,
-    "ast_hash": "277c092f86131be46b28a2a652ee927a",
+    "mtime": 1786314524.7734802,
+    "ast_hash": "6d79f7eb97a9a54de78633e5ca7aeaf9",
     "semantic_hash": ""
   },
   "app/(tabs)/_layout.tsx": {
@@ -205,8 +205,8 @@
     "semantic_hash": ""
   },
   "app/aposta/modalidades.tsx": {
-    "mtime": 1787618054.5105417,
-    "ast_hash": "f4a2a7dfaaa1861a4e20c23474806126",
+    "mtime": 1785085426.6209266,
+    "ast_hash": "cedc9fe46a976b0d47c6d4a042bff579",
     "semantic_hash": ""
   },
   "app/aposta/premios.tsx": {
@@ -380,8 +380,8 @@
     "semantic_hash": ""
   },
   "services/apostaService.ts": {
-    "mtime": 1787618033.3843923,
-    "ast_hash": "f41bebedeb7f33c5496bd16b4c54f92d",
+    "mtime": 1784400188.2662253,
+    "ast_hash": "1f7a547a6b1f8b807129b730e3ea6107",
     "semantic_hash": ""
   },
   "services/auth.ts": {
@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "types/aposta.ts": {
-    "mtime": 1787618017.328279,
-    "ast_hash": "44f55c570279d822c0c3efac246f4eac",
+    "mtime": 1785702884.7269378,
+    "ast_hash": "104c34a7f9fde540a87dde544b7462a6",
     "semantic_hash": ""
   },
   "utils/apostaHelpers.ts": {
@@ -685,8 +685,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1787510370.2910047,
-    "ast_hash": "597bb0c2101083ea6c539a83744a0bca",
+    "mtime": 1786314375.7983685,
+    "ast_hash": "21000b8ace1891cf4ee46d3b9bd14c49",
     "semantic_hash": ""
   },
   "bugs/BUG-001-aposta-service-data-hardcoded.md": {
@@ -932,11 +932,6 @@
   "docs/superpowers/specs/2026-08-04-cloudpos-printer.md": {
     "mtime": 1786302571.5047936,
     "ast_hash": "1fa76d2fb5680039170345e2af19c5db",
-    "semantic_hash": ""
-  },
-  "__tests__/app/modalidades.test.tsx": {
-    "mtime": 1787618109.903936,
-    "ast_hash": "f27f65658b4ad3f5efa1a0104227929e",
     "semantic_hash": ""
   }
 }

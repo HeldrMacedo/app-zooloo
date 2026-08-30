@@ -143,3 +143,21 @@ cd android
 # APK: android/app/build/outputs/apk/release/app-release.apk
 
 (ou npx expo run:android --variant release)
+
+### Opção A: Modo Debug (Recomendado para testes rápidos)
+
+```bash
+cd android
+./gradlew assembleDebug
+cd ..
+adb install -r android/app/build/outputs/apk/debug/app-debug.apk
+```
+
+### Opção B: Modo Release (Produção/Stand-alone)
+
+```bash
+cd android
+./gradlew assembleRelease
+cd ..
+adb install -r android/app/build/outputs/apk/release/app-release.apk
+```

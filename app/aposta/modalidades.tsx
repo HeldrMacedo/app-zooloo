@@ -1,23 +1,54 @@
 import { colors } from '@/assets/styles/colors';
 import { Screen } from '@/components/ui/screen';
 import { useCarrinho } from '@/context/CarrinhoContext';
+import { ApostaService } from '@/services/apostaService';
+import { Modalidade } from '@/types/aposta';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useNavigation } from 'expo-router';
-import { useLayoutEffect } from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
-// Modalidades estáticas para MVP - depois virão do backend.
-// Apenas a MILHAR está ativa para esta fase.
-const MODALIDADES = [
-  { id: 2, nome: 'MILHAR', sigla: 'M', digitos: 4, ativa: true },
-  { id: 4, nome: 'CENTENA', sigla: 'C', digitos: 3, ativa: false },
-  { id: 6, nome: 'GRUPO', sigla: 'G', digitos: 2, ativa: false },
-  { id: 8, nome: 'DEZENA', sigla: 'D', digitos: 2, ativa: false },
-];
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 export default function ModalidadesScreen() {
   const navigation = useNavigation();
   const { itensQuantidade } = useCarrinho();
+
+  const [modalidades, setModalidades] = useState<Modalidade[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const carregarModalidades = useCallback(async (isRefresh = false) => {
+    if (isRefresh) {
+      setRefreshing(true);
+    } else {
+      setLoading(true);
+    }
+    setError(null);
+
+    try {
+      // Carrega as modalidades cadastradas para Jogo do Bicho (filtro_banca = 1)
+      const data = await ApostaService.listarModalidades(1);
+      setModalidades(data);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Erro ao carregar modalidades.';
+      setError(msg);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    carregarModalidades();
+  }, [carregarModalidades]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -25,6 +56,7 @@ export default function ModalidadesScreen() {
         <TouchableOpacity
           onPress={() => router.push('/aposta/preview')}
           style={styles.cartButton}
+          testID="cart-button"
         >
           <Ionicons name="cart-outline" size={28} color={colors.gray[800]} />
           {itensQuantidade > 0 && (
@@ -37,7 +69,7 @@ export default function ModalidadesScreen() {
     });
   }, [navigation, itensQuantidade]);
 
-  const handleSelect = (mod: (typeof MODALIDADES)[0]) => {
+  const handleSelect = (mod: Modalidade) => {
     if (mod.ativa) {
       router.push({
         pathname: '/aposta/milhar',
@@ -50,30 +82,65 @@ export default function ModalidadesScreen() {
     <Screen safe="withHeader" contentStyle={styles.screenContent} styleBarBottom={colors.black}>
       <Text style={styles.title}>Selecione a Modalidade</Text>
 
-      <FlatList
-        data={MODALIDADES}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
+      {loading && !refreshing ? (
+        <View style={styles.centerContainer} testID="loading-indicator">
+          <ActivityIndicator size="large" color={colors.blue[600]} />
+          <Text style={styles.loadingText}>Carregando modalidades...</Text>
+        </View>
+      ) : error && modalidades.length === 0 ? (
+        <View style={styles.centerContainer} testID="error-container">
+          <Ionicons name="alert-circle-outline" size={48} color={colors.red[500]} />
+          <Text style={styles.errorText}>{error}</Text>
           <TouchableOpacity
-            onPress={() => handleSelect(item)}
-            disabled={!item.ativa}
-            style={[styles.card, item.ativa ? styles.cardActive : styles.cardInactive]}
-            activeOpacity={0.85}
+            style={styles.retryButton}
+            onPress={() => carregarModalidades()}
+            activeOpacity={0.8}
+            testID="retry-button"
           >
-            <View>
-              <Text style={[styles.cardName, !item.ativa && styles.cardNameInactive]}>
-                {item.nome}
-              </Text>
-              <Text style={styles.cardDigits}>{item.digitos} dígitos</Text>
-            </View>
-            <View style={[styles.siglaWrap, item.ativa ? styles.siglaActive : styles.siglaInactive]}>
-              <Text style={[styles.siglaText, !item.ativa && styles.siglaTextInactive]}>
-                {item.sigla}
-              </Text>
-            </View>
+            <Text style={styles.retryButtonText}>Tentar Novamente</Text>
           </TouchableOpacity>
-        )}
-      />
+        </View>
+      ) : (
+        <FlatList
+          data={modalidades}
+          keyExtractor={(item) => item.id.toString()}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => carregarModalidades(true)}
+              colors={[colors.blue[600]]}
+            />
+          }
+          ListEmptyComponent={
+            <View style={styles.emptyContainer}>
+              <Text style={styles.emptyText}>Nenhuma modalidade cadastrada encontrada.</Text>
+            </View>
+          }
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() => handleSelect(item)}
+              disabled={!item.ativa}
+              style={[styles.card, item.ativa ? styles.cardActive : styles.cardInactive]}
+              activeOpacity={0.85}
+              testID={`modalidade-card-${item.id}`}
+            >
+              <View style={styles.cardInfo}>
+                <Text style={[styles.cardName, !item.ativa && styles.cardNameInactive]}>
+                  {item.nome}
+                </Text>
+                <Text style={styles.cardDigits}>
+                  {item.digitos > 0 ? `${item.digitos} dígitos` : 'Modalidade ativa'}
+                </Text>
+              </View>
+              <View style={[styles.siglaWrap, item.ativa ? styles.siglaActive : styles.siglaInactive]}>
+                <Text style={[styles.siglaText, !item.ativa && styles.siglaTextInactive]}>
+                  {item.sigla}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )}
+        />
+      )}
     </Screen>
   );
 }
@@ -81,6 +148,7 @@ export default function ModalidadesScreen() {
 const styles = StyleSheet.create({
   screenContent: {
     padding: 16,
+    flex: 1,
   },
   cartButton: {
     marginRight: 16,
@@ -104,8 +172,48 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   title: {
+    fontSize: 16,
+    fontWeight: '600',
     color: colors.gray[500],
-    marginBottom: 8,
+    marginBottom: 12,
+  },
+  centerContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 24,
+  },
+  loadingText: {
+    marginTop: 12,
+    fontSize: 14,
+    color: colors.gray[600],
+  },
+  errorText: {
+    marginTop: 12,
+    fontSize: 14,
+    //color: colors.red[600],
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  retryButton: {
+    backgroundColor: colors.blue[600],
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 8,
+  },
+  retryButtonText: {
+    color: colors.white,
+    fontWeight: '700',
+    fontSize: 14,
+  },
+  emptyContainer: {
+    padding: 32,
+    alignItems: 'center',
+  },
+  emptyText: {
+    color: colors.gray[500],
+    fontSize: 14,
+    textAlign: 'center',
   },
   card: {
     padding: 20,
@@ -131,8 +239,11 @@ const styles = StyleSheet.create({
     borderColor: colors.border.light,
     opacity: 0.5,
   },
+  cardInfo: {
+    flex: 1,
+  },
   cardName: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '700',
     color: colors.gray[900],
   },
@@ -145,11 +256,12 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   siglaWrap: {
-    width: 40,
-    height: 40,
+    width: 44,
+    height: 44,
     borderRadius: 999,
     alignItems: 'center',
     justifyContent: 'center',
+    marginLeft: 12,
   },
   siglaActive: {
     backgroundColor: colors.blue[100],
@@ -159,6 +271,7 @@ const styles = StyleSheet.create({
   },
   siglaText: {
     fontWeight: '700',
+    fontSize: 14,
     color: colors.blue[700],
   },
   siglaTextInactive: {

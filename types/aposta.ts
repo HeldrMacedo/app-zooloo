@@ -3,6 +3,17 @@ export interface Modalidade {
   nome: string;
   sigla: string;
   digitos: number;
+  ativa?: boolean;
+  modalidade_id?: number;
+  jogo_id?: number;
+  filtro_banca?: number;
+  apresentacao?: string;
+  abreviacao?: string;
+  tamanho_max?: number;
+  qtd_colocacao_premio?: number;
+  multiplicador?: number;
+  ordem?: number;
+  ativo?: string | boolean;
 }
 
 export interface ApostaItem {

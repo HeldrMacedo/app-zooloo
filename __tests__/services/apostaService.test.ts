@@ -10,6 +10,98 @@ describe('ApostaService', () => {
     jest.clearAllMocks();
   });
 
+  describe('listarModalidades', () => {
+    it('deve chamar apiCall com os parametros corretos para filtro_banca = 1 por padrao', async () => {
+      const mockBackendData = [
+        {
+          modalidade_id: 2,
+          jogo_id: 2,
+          apresentacao: 'MILHAR',
+          abreviacao: 'M',
+          tamanho_max: 4,
+          ativo: 'S',
+        },
+        {
+          modalidade_id: 4,
+          jogo_id: 4,
+          apresentacao: 'CENTENA',
+          abreviacao: 'C',
+          tamanho_max: 3,
+          ativo: 'N',
+        },
+      ];
+
+      (apiCall as jest.Mock).mockResolvedValueOnce(mockBackendData);
+
+      const result = await ApostaService.listarModalidades(1);
+
+      expect(apiCall).toHaveBeenCalledWith({
+        class: 'ModalidadeRestService',
+        method: 'listar',
+        data: { filtro_banca: 1 },
+      });
+
+      expect(result).toHaveLength(2);
+      expect(result[0]).toEqual(
+        expect.objectContaining({
+          id: 2,
+          nome: 'MILHAR',
+          sigla: 'M',
+          digitos: 4,
+          ativa: true,
+          modalidade_id: 2,
+          jogo_id: 2,
+          filtro_banca: 1,
+        }),
+      );
+      expect(result[1]).toEqual(
+        expect.objectContaining({
+          id: 4,
+          nome: 'CENTENA',
+          sigla: 'C',
+          digitos: 3,
+          ativa: false,
+          modalidade_id: 4,
+          jogo_id: 4,
+          filtro_banca: 1,
+        }),
+      );
+    });
+
+    it('deve extrair data caso a api retorne dentro do envelope data', async () => {
+      const mockBackendEnvelope = {
+        data: [
+          {
+            id: 6,
+            nome: 'GRUPO',
+            sigla: 'G',
+            digitos: 2,
+            ativa: true,
+          },
+        ],
+      };
+
+      (apiCall as jest.Mock).mockResolvedValueOnce(mockBackendEnvelope);
+
+      const result = await ApostaService.listarModalidades(1);
+
+      expect(result).toHaveLength(1);
+      expect(result[0].id).toBe(6);
+      expect(result[0].nome).toBe('GRUPO');
+      expect(result[0].sigla).toBe('G');
+      expect(result[0].digitos).toBe(2);
+      expect(result[0].ativa).toBe(true);
+    });
+
+    it('deve lidar com resposta vazia graciosamente', async () => {
+      (apiCall as jest.Mock).mockResolvedValueOnce({ data: null });
+
+      const result = await ApostaService.listarModalidades(1);
+
+      expect(result).toEqual([]);
+    });
+  });
+
   describe('registrarBilhete', () => {
     it('deve chamar apiCall com os parametros corretos', async () => {
       const mockPayload = {
