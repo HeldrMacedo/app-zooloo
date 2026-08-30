@@ -47,7 +47,7 @@ describe('PrinterService', () => {
 
     // Reattach printLines if a previous test deleted it for the legacy fallback path
     if (typeof (ZoolooPrinterModule as { printLines?: unknown }).printLines !== 'function') {
-      (ZoolooPrinterModule as { printLines: jest.Mock }).printLines = jest.fn();
+      (ZoolooPrinterModule as unknown as { printLines: jest.Mock }).printLines = jest.fn();
     }
     (ZoolooPrinterModule.isInternalPrinterAvailable as jest.Mock).mockResolvedValue(false);
     (ZoolooPrinterModule.printInternal as jest.Mock).mockResolvedValue(false);

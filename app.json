@@ -10,7 +10,7 @@
       "apiBaseUrl": "http://192.168.0.105",
       "allowInsecureHttp": true
     },
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true
@@ -47,7 +47,8 @@
         }
       ],
       "expo-web-browser",
-      "expo-secure-store"
+      "expo-secure-store",
+      "./plugins/withZoolooAndroidTheme"
     ],
     "experiments": {
       "typedRoutes": true,

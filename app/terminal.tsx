@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   Alert,
   Platform,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -48,12 +49,25 @@ export default function TerminalScreen() {
     }
   };
 
+  // `terminal` e rota publica: em cold start / deep link nao ha historico.
+  const handleVoltar = () => {
+    if (router.canGoBack()) {
+      router.back();
+      return;
+    }
+    router.replace('/login');
+  };
+
   return (
     <Screen>
-      <View style={styles.container}>
+      <ScrollView
+        style={styles.flex}
+        contentContainerStyle={styles.scrollContent}
+        keyboardShouldPersistTaps="handled"
+      >
         <View style={styles.headerRow}>
           <TouchableOpacity
-            onPress={() => router.back()}
+            onPress={handleVoltar}
             accessibilityRole="button"
             accessibilityLabel="Voltar"
             hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
@@ -62,7 +76,9 @@ export default function TerminalScreen() {
           >
             <MaterialIcons name="arrow-back" size={24} color={colors.text.body} />
           </TouchableOpacity>
-          <Text style={styles.title}>Terminal / Dispositivo</Text>
+          <Text style={styles.title} numberOfLines={1}>
+            Terminal / Dispositivo
+          </Text>
           <View style={styles.backButton} />
         </View>
 
@@ -105,14 +121,17 @@ export default function TerminalScreen() {
             <Text style={styles.secondaryButtonText}>Voltar ao login</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  flex: {
     flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
     paddingHorizontal: 24,
     paddingVertical: 24,
   },

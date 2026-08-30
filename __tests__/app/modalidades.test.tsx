@@ -91,7 +91,12 @@ describe('ModalidadesScreen', () => {
 
     expect(router.push).toHaveBeenCalledWith({
       pathname: '/aposta/milhar',
-      params: { id: 2, nome: 'MILHAR', sigla: 'M', digitos: 4 },
+      params: {
+        modalidadeId: '2',
+        modalidadeNome: 'MILHAR',
+        modalidadeSigla: 'M',
+        digitos: '4',
+      },
     });
   });
 

@@ -9,7 +9,7 @@ import { Extracao } from '@/types/aposta';
 import { getHojeLocalDate } from '@/utils/apostaHelpers';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -21,12 +21,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function PreviewScreen() {
   const { itens, removerItem, limparCarrinho, getTotalEstimado } = useCarrinho();
   const { terminal } = useAuth();
 
-  const [dataSorteio, setDataSorteio] = useState(getHojeLocalDate());
+  // A data e sempre "hoje"; nao ha seletor de data nesta tela.
+  const [dataSorteio] = useState(getHojeLocalDate());
   const [extracoes, setExtracoes] = useState<Extracao[]>([]);
   const [extracoesSelecionadas, setExtracoesSelecionadas] = useState<number[]>([]);
   const [ratearExtracoes, setRatearExtracoes] = useState(false);
@@ -34,11 +36,7 @@ export default function PreviewScreen() {
 
   const [reciboData, setReciboData] = useState<any>(null);
 
-  useEffect(() => {
-    carregarExtracoes();
-  }, [dataSorteio]);
-
-  const carregarExtracoes = async () => {
+  const carregarExtracoes = useCallback(async () => {
     setLoading(true);
     try {
       const data = await ApostaService.listarExtracoes(dataSorteio);
@@ -54,7 +52,11 @@ export default function PreviewScreen() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [dataSorteio]);
+
+  useEffect(() => {
+    carregarExtracoes();
+  }, [carregarExtracoes]);
 
   const handleToggleExtracao = (id: number) => {
     let selecionadas = [...extracoesSelecionadas];
@@ -136,22 +138,25 @@ export default function PreviewScreen() {
   if (reciboData) {
     return (
       <Modal visible animationType="slide">
-        <Screen contentStyle={styles.reciboScreen}>
-          <PuleTermica
-            data={reciboData}
-            onFechar={() => {
-              setReciboData(null);
-              router.dismissAll();
-            }}
-          />
-        </Screen>
+        {/* Modal e outra janela no Android: os insets da raiz nao propagam. */}
+        <SafeAreaProvider>
+          <Screen contentStyle={styles.reciboScreen}>
+            <PuleTermica
+              data={reciboData}
+              onFechar={() => {
+                setReciboData(null);
+                router.dismissAll();
+              }}
+            />
+          </Screen>
+        </SafeAreaProvider>
       </Modal>
     );
   }
 
   return (
     <Screen safe="withHeader" contentStyle={styles.screenContent}>
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         <Text style={styles.pageTitle}>Revisar Apostas</Text>
 
         {itens.length === 0 ? (
@@ -210,12 +215,13 @@ export default function PreviewScreen() {
                     onPress={() => handleToggleExtracao(ext.sorteio_id)}
                     style={styles.extracaoRow}
                   >
-                    <View>
+                    <View style={styles.extracaoInfo}>
                       <Text
                         style={[
                           styles.extracaoTitle,
                           isSelected ? styles.extracaoSelected : styles.extracaoUnselected,
                         ]}
+                        numberOfLines={2}
                       >
                         {`Extração ${ext.descricao || ext.descricao_mobile}`}
                       </Text>
@@ -298,7 +304,11 @@ export default function PreviewScreen() {
 
 const styles = StyleSheet.create({
   screenContent: {
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingTop: 16,
+  },
+  scrollContent: {
+    paddingBottom: 24,
   },
   reciboScreen: {
     backgroundColor: colors.white,
@@ -413,6 +423,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 12,
   },
+  extracaoInfo: {
+    flex: 1,
+    marginRight: 12,
+  },
   extracaoTitle: {
     fontWeight: '700',
   },
@@ -487,6 +501,8 @@ const styles = StyleSheet.create({
     paddingTop: 16,
   },
   totalFinalLabel: {
+    flexShrink: 1,
+    marginRight: 8,
     color: colors.blue[900],
     fontWeight: '700',
     fontSize: 18,
@@ -495,9 +511,11 @@ const styles = StyleSheet.create({
     color: colors.blue[900],
     fontWeight: '900',
     fontSize: 24,
+    flexShrink: 1,
+    textAlign: 'right',
   },
   confirmButton: {
-    height: 56,
+    minHeight: 56,
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',

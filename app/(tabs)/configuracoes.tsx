@@ -10,8 +10,9 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '@/assets/styles/colors';
+import { Screen } from '@/components/ui/screen';
 import { PreferredPrinter, PrinterService } from '@/services/PrinterService';
-import { BluetoothDevice } from '../../modules/zooloo-printer';
+import { BluetoothDevice } from '@/modules/zooloo-printer';
 
 export default function ConfiguracoesScreen() {
   const [devices, setDevices] = useState<BluetoothDevice[]>([]);
@@ -156,26 +157,32 @@ export default function ConfiguracoesScreen() {
           <Ionicons
             name="print-outline"
             size={24}
-            color={isConnected ? '#fff' : colors.gray[700]}
+            color={isConnected ? colors.white : colors.gray[700]}
           />
           <View style={styles.deviceTextContainer}>
-            <Text style={[styles.deviceName, isConnected && styles.textWhite]}>
+            <Text
+              style={[styles.deviceName, isConnected && styles.textWhite]}
+              numberOfLines={2}
+            >
               {item.name}
               {isPreferred && !isConnected ? ' (preferida)' : ''}
             </Text>
-            <Text style={[styles.deviceMac, isConnected && styles.textWhite]}>
+            <Text
+              style={[styles.deviceMac, isConnected && styles.textWhite]}
+              numberOfLines={1}
+            >
               {item.macAddress}
             </Text>
           </View>
         </View>
 
         {isConnecting ? (
-          <ActivityIndicator color={isConnected ? '#fff' : colors.blue[500]} />
+          <ActivityIndicator color={isConnected ? colors.white : colors.blue[500]} />
         ) : (
           <Ionicons
             name={isConnected ? 'checkmark-circle' : 'chevron-forward'}
             size={24}
-            color={isConnected ? '#fff' : colors.gray[400]}
+            color={isConnected ? colors.white : colors.gray[400]}
           />
         )}
       </TouchableOpacity>
@@ -183,7 +190,7 @@ export default function ConfiguracoesScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <Screen safe="withTabBar" contentStyle={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Impressoras Bluetooth</Text>
         <TouchableOpacity onPress={loadDevices} style={styles.refreshButton}>
@@ -195,7 +202,7 @@ export default function ConfiguracoesScreen() {
       {preferred && (
         <View style={styles.preferredBanner}>
           <Ionicons name="star" size={16} color={colors.blue[600]} />
-          <Text style={styles.preferredText}>
+          <Text style={styles.preferredText} numberOfLines={2}>
             Preferida: {preferred.name} ({preferred.macAddress})
           </Text>
           <TouchableOpacity onPress={handleClearPreferred} hitSlop={8}>
@@ -255,12 +262,12 @@ export default function ConfiguracoesScreen() {
             disabled={printing}
           >
             {printing ? (
-              <ActivityIndicator color="#fff" style={{ marginRight: 8 }} />
+              <ActivityIndicator color={colors.white} style={{ marginRight: 8 }} />
             ) : (
               <Ionicons
                 name="receipt-outline"
                 size={20}
-                color="#fff"
+                color={colors.white}
                 style={{ marginRight: 8 }}
               />
             )}
@@ -270,7 +277,7 @@ export default function ConfiguracoesScreen() {
           </TouchableOpacity>
         </View>
       )}
-    </View>
+    </Screen>
   );
 }
 
@@ -284,8 +291,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 20,
-    paddingTop: 40,
-    backgroundColor: '#fff',
+    backgroundColor: colors.background.card,
     borderBottomWidth: 1,
     borderBottomColor: colors.border.light,
   },
@@ -369,19 +375,20 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     padding: 16,
+    paddingBottom: 24,
   },
   deviceCard: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#fff',
+    backgroundColor: colors.background.card,
     padding: 16,
     borderRadius: 12,
     marginBottom: 12,
     borderWidth: 1,
     borderColor: colors.border.light,
     elevation: 2,
-    shadowColor: '#000',
+    shadowColor: colors.black,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
@@ -391,10 +398,13 @@ const styles = StyleSheet.create({
     borderColor: colors.blue[600],
   },
   deviceInfo: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    marginRight: 12,
   },
   deviceTextContainer: {
+    flex: 1,
     marginLeft: 12,
   },
   deviceName: {
@@ -408,11 +418,11 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   textWhite: {
-    color: '#fff',
+    color: colors.white,
   },
   footer: {
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: colors.background.card,
     borderTopWidth: 1,
     borderTopColor: colors.border.light,
     gap: 10,
@@ -445,7 +455,7 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   testButtonText: {
-    color: '#fff',
+    color: colors.white,
     fontSize: 16,
     fontWeight: 'bold',
   },

@@ -1,6 +1,8 @@
 import { colors } from '@/assets/styles/colors';
 import { Screen } from '@/components/ui/screen';
+import type { MilharRouteParams } from '@/types/aposta';
 import { validarMilhar } from '@/utils/apostaHelpers';
+import { numberParam, stringParam } from '@/utils/routeParams';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useCallback, useState } from 'react';
 import {
@@ -15,11 +17,11 @@ import {
 } from 'react-native';
 
 export default function MilharScreen() {
-  const params = useLocalSearchParams();
-  const modalidadeId = Number(params.id) || 2;
-  const modalidadeNome = (params.nome as string) || 'MILHAR';
-  const modalidadeSigla = (params.sigla as string) || 'M';
-  const digitosReq = Number(params.digitos) || 4;
+  const params = useLocalSearchParams<MilharRouteParams>();
+  const modalidadeId = numberParam(params.modalidadeId, 2);
+  const modalidadeNome = stringParam(params.modalidadeNome, 'MILHAR');
+  const modalidadeSigla = stringParam(params.modalidadeSigla, 'M');
+  const digitosReq = numberParam(params.digitos, 4);
 
   const [palpite, setPalpite] = useState('');
   const [palpitesAdicionados, setPalpitesAdicionados] = useState<string[]>([]);
@@ -62,9 +64,11 @@ export default function MilharScreen() {
     router.push({
       pathname: '/aposta/premios',
       params: {
-        modalidadeId,
+        modalidadeId: String(modalidadeId),
         modalidadeNome,
         modalidadeSigla,
+        // Sem repassar `digitos` a tela de premios gravava 4 fixo no carrinho.
+        digitos: String(digitosReq),
         palpites: JSON.stringify(palpitesConfirmados),
       },
     });
@@ -87,10 +91,14 @@ export default function MilharScreen() {
   return (
     <Screen safe="withHeader">
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        // No Android o manifest ja usa adjustResize; 'height' compensaria duas vezes.
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={styles.flex}
       >
-        <ScrollView contentContainerStyle={styles.scrollContent}>
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+        >
           <Text style={styles.title}>
             {modalidadeNome} ({modalidadeSigla})
           </Text>
@@ -177,7 +185,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderRadius: 8,
     paddingHorizontal: 16,
-    height: 56,
+    minHeight: 56,
   },
   input: {
     flex: 1,
@@ -228,7 +236,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   nextButton: {
-    height: 56,
+    minHeight: 56,
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',

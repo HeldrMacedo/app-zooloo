@@ -3,6 +3,7 @@ import { TabBarBackground } from '@/components/ui/tab-bar-background';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
+import { StyleSheet } from 'react-native';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -16,6 +17,8 @@ export default function TabLayout() {
         tabBarBackground: () => <TabBarBackground />,
         tabBarStyle: {
           backgroundColor: 'transparent',
+          // Sem borderTopWidth a cor da borda era inerte.
+          borderTopWidth: StyleSheet.hairlineWidth,
           borderTopColor: colorScheme === 'dark' ? colors.gray[700] : colors.border.light,
         },
       }}

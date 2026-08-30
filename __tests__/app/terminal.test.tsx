@@ -50,4 +50,29 @@ describe('TerminalScreen', () => {
     fireEvent.press(getByText('Voltar ao login'));
     expect(router.replace).toHaveBeenCalledWith('/login');
   });
+
+  describe('botão voltar do header', () => {
+    it('usa o histórico quando existe', async () => {
+      (router.canGoBack as jest.Mock).mockReturnValue(true);
+
+      const { getByTestId } = render(<TerminalScreen />);
+      await waitFor(() => getByTestId('terminal-back-button'), { timeout: 10000 });
+      fireEvent.press(getByTestId('terminal-back-button'));
+
+      expect(router.back).toHaveBeenCalled();
+      expect(router.replace).not.toHaveBeenCalled();
+    });
+
+    it('cai para /login em cold start, quando não há histórico', async () => {
+      // `terminal` é rota pública: pode ser aberta direto, sem tela anterior.
+      (router.canGoBack as jest.Mock).mockReturnValue(false);
+
+      const { getByTestId } = render(<TerminalScreen />);
+      await waitFor(() => getByTestId('terminal-back-button'), { timeout: 10000 });
+      fireEvent.press(getByTestId('terminal-back-button'));
+
+      expect(router.back).not.toHaveBeenCalled();
+      expect(router.replace).toHaveBeenCalledWith('/login');
+    });
+  });
 });

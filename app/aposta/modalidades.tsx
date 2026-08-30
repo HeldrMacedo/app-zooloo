@@ -73,7 +73,12 @@ export default function ModalidadesScreen() {
     if (mod.ativa) {
       router.push({
         pathname: '/aposta/milhar',
-        params: { id: mod.id, nome: mod.nome, sigla: mod.sigla, digitos: mod.digitos },
+        params: {
+          modalidadeId: String(mod.id),
+          modalidadeNome: mod.nome,
+          modalidadeSigla: mod.sigla,
+          digitos: String(mod.digitos),
+        },
       });
     }
   };
@@ -104,6 +109,7 @@ export default function ModalidadesScreen() {
         <FlatList
           data={modalidades}
           keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={styles.listContent}
           refreshControl={
             <RefreshControl
               refreshing={refreshing}
@@ -147,8 +153,12 @@ export default function ModalidadesScreen() {
 
 const styles = StyleSheet.create({
   screenContent: {
-    padding: 16,
     flex: 1,
+    paddingHorizontal: 16,
+    paddingTop: 16,
+  },
+  listContent: {
+    paddingBottom: 24,
   },
   cartButton: {
     marginRight: 16,
@@ -161,8 +171,10 @@ const styles = StyleSheet.create({
     right: 0,
     backgroundColor: colors.red[500],
     borderRadius: 999,
-    width: 20,
+    // minWidth (nao width) porque o carrinho chega a 150 itens.
+    minWidth: 20,
     height: 20,
+    paddingHorizontal: 4,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -191,7 +203,7 @@ const styles = StyleSheet.create({
   errorText: {
     marginTop: 12,
     fontSize: 14,
-    //color: colors.red[600],
+    color: colors.red[500],
     textAlign: 'center',
     marginBottom: 16,
   },

@@ -85,3 +85,29 @@ export interface BilheteRegistroResponse {
   terminal_id?: number | string;
   sorteios?: SorteioDetalhe[];
 }
+
+/**
+ * Contrato dos params do fluxo de aposta (modalidades → milhar → premios).
+ *
+ * Todos os valores são `string` porque o Expo Router serializa params na URL.
+ * Use os helpers de `@/utils/routeParams` para converter com segurança.
+ */
+/**
+ * `type` (nao `interface`) porque o Expo Router exige compatibilidade com
+ * `UnknownOutputParams` (`Record<string, string | string[]>`), e interfaces nao
+ * ganham index signature implicita em TypeScript.
+ *
+ * Os valores sao `string | string[]`: o router devolve array quando a mesma
+ * chave aparece repetida na URL. Use os helpers de `@/utils/routeParams`.
+ */
+export type MilharRouteParams = {
+  modalidadeId: string | string[];
+  modalidadeNome: string | string[];
+  modalidadeSigla: string | string[];
+  digitos: string | string[];
+};
+
+export type PremiosRouteParams = MilharRouteParams & {
+  /** Array de palpites serializado como JSON. */
+  palpites: string | string[];
+};

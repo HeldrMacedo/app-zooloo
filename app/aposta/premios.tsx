@@ -1,11 +1,14 @@
 import { colors } from '@/assets/styles/colors';
 import { Screen } from '@/components/ui/screen';
 import { useCarrinho } from '@/context/CarrinhoContext';
+import type { PremiosRouteParams } from '@/types/aposta';
 import { calcularTotalAposta } from '@/utils/apostaHelpers';
+import { jsonArrayParam, numberParam, stringParam } from '@/utils/routeParams';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useMemo, useState } from 'react';
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -30,14 +33,15 @@ interface IntervaloAdicionado {
 }
 
 export default function PremiosScreen() {
-  const params = useLocalSearchParams();
+  const params = useLocalSearchParams<PremiosRouteParams>();
   const { adicionarItem } = useCarrinho();
 
-  const modalidadeId = Number(params.modalidadeId) || 2;
-  const modalidadeNome = (params.modalidadeNome as string) || 'MILHAR';
-  const modalidadeSigla = (params.modalidadeSigla as string) || 'M';
-  const palpitesStr = (params.palpites as string) || '[]';
-  const palpites: string[] = JSON.parse(palpitesStr);
+  const modalidadeId = numberParam(params.modalidadeId, 2);
+  const modalidadeNome = stringParam(params.modalidadeNome, 'MILHAR');
+  const modalidadeSigla = stringParam(params.modalidadeSigla, 'M');
+  const digitos = numberParam(params.digitos, 4);
+  // jsonArrayParam nunca lanca: param malformado vira [] e cai no estado de erro.
+  const palpites = jsonArrayParam(params.palpites);
 
   const [listaIntervalos, setListaIntervalos] = useState<IntervaloAdicionado[]>([]);
   const [premiosSelecionados, setPremiosSelecionados] = useState<number[]>([1]);
@@ -86,7 +90,7 @@ export default function PremiosScreen() {
 
   const handleAdicionarIntervalo = () => {
     if (valorDecimal <= 0) {
-      alert('Digite um valor maior que zero.');
+      Alert.alert('Valor inválido', 'Digite um valor maior que zero.');
       return;
     }
     const novoIntervalo: IntervaloAdicionado = {
@@ -110,7 +114,7 @@ export default function PremiosScreen() {
 
     if (intervalos.length === 0) {
       if (valorDecimal <= 0) {
-        alert('Adicione pelo menos um intervalo válido.');
+        Alert.alert('Intervalo obrigatório', 'Adicione pelo menos um intervalo válido.');
         return;
       }
       intervalos = [
@@ -132,7 +136,7 @@ export default function PremiosScreen() {
             id: modalidadeId,
             nome: modalidadeNome,
             sigla: modalidadeSigla,
-            digitos: 4,
+            digitos,
           },
           palpites,
           colocacao_inicial: intervalo.minPremio,
@@ -143,20 +147,44 @@ export default function PremiosScreen() {
         });
       });
 
+      // dismissAll() ja volta para modalidades (primeira rota do stack);
+      // um push aqui empilhava uma segunda copia identica da mesma tela.
       router.dismissAll();
-      router.push('/aposta/modalidades');
     } catch (e: any) {
-      alert(e.message);
+      Alert.alert('Não foi possível adicionar', e.message);
     }
   };
 
   const canAddInterval = valorDecimal > 0;
   const canAddToCart = listaIntervalos.length > 0 || valorDecimal > 0;
 
+  // Sem palpites nao ha aposta a precificar: param ausente ou malformado.
+  if (palpites.length === 0) {
+    return (
+      <Screen safe="withHeader">
+        <View style={styles.emptyState} testID="premios-sem-palpites">
+          <Ionicons name="alert-circle-outline" size={48} color={colors.red[500]} />
+          <Text style={styles.emptyTitle}>Nenhum palpite recebido</Text>
+          <Text style={styles.emptyText}>
+            Volte e selecione os palpites novamente para continuar.
+          </Text>
+          <TouchableOpacity
+            onPress={() => router.back()}
+            style={styles.emptyButton}
+            testID="premios-voltar-button"
+          >
+            <Text style={styles.emptyButtonText}>Voltar</Text>
+          </TouchableOpacity>
+        </View>
+      </Screen>
+    );
+  }
+
   return (
     <Screen safe="withHeader">
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        // No Android o manifest ja usa adjustResize; 'height' compensaria duas vezes.
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={styles.flex}
       >
         <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -190,12 +218,20 @@ export default function PremiosScreen() {
                   </TouchableOpacity>
                 );
               })}
-              <View style={styles.resetRow}>
-                <Text>Resetar: </Text>
-                <Pressable onPress={() => setPremiosSelecionados([1])}>
-                  <Ionicons name="sync" size={24} color={colors.black} />
-                </Pressable>
-              </View>
+            </View>
+
+            {/* Fora do grid: como 11o item flex ele quebrava o space-between
+                da ultima linha de premios. */}
+            <View style={styles.resetRow}>
+              <Text style={styles.resetLabel}>Resetar: </Text>
+              <Pressable
+                onPress={() => setPremiosSelecionados([1])}
+                hitSlop={8}
+                accessibilityRole="button"
+                accessibilityLabel="Resetar prêmios selecionados"
+              >
+                <Ionicons name="sync" size={24} color={colors.black} />
+              </Pressable>
             </View>
             <Text style={styles.rangeHint}>
               Do {minPremio}º ao {maxPremio}º prêmio.
@@ -249,8 +285,8 @@ export default function PremiosScreen() {
               <Text style={styles.sectionTitle}>Intervalos Adicionados:</Text>
               {listaIntervalos.map((item) => (
                 <View key={item.id} style={styles.intervaloCard}>
-                  <View>
-                    <Text style={styles.intervaloTitle}>
+                  <View style={styles.intervaloInfo}>
+                    <Text style={styles.intervaloTitle} numberOfLines={2}>
                       {item.minPremio}º ao {item.maxPremio}º{' '}
                       <Text style={styles.intervaloMeta}>
                         • {item.rateado ? 'Rateado' : 'Por Cada'}
@@ -307,11 +343,43 @@ export default function PremiosScreen() {
 }
 
 const styles = StyleSheet.create({
+  emptyState: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 24,
+  },
+  emptyTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: colors.gray[800],
+    marginTop: 12,
+    textAlign: 'center',
+  },
+  emptyText: {
+    color: colors.gray[500],
+    textAlign: 'center',
+    marginTop: 8,
+    marginBottom: 24,
+  },
+  emptyButton: {
+    backgroundColor: colors.blue[600],
+    borderRadius: 12,
+    paddingHorizontal: 32,
+    paddingVertical: 14,
+  },
+  emptyButtonText: {
+    color: colors.white,
+    fontSize: 16,
+    fontWeight: '700',
+  },
   flex: {
     flex: 1,
   },
   scrollContent: {
     padding: 16,
+    flexGrow: 1,
+    paddingBottom: 32,
   },
   palpitesBlock: {
     marginBottom: 24,
@@ -377,6 +445,11 @@ const styles = StyleSheet.create({
   resetRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'flex-end',
+    marginTop: 4,
+  },
+  resetLabel: {
+    color: colors.gray[600],
   },
   rangeHint: {
     fontSize: 12,
@@ -402,6 +475,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 16,
+    // Em tela estreita / fonte grande o switchRow desce para a linha de baixo
+    // em vez de estourar a largura do card.
+    flexWrap: 'wrap',
+    gap: 8,
   },
   switchRow: {
     flexDirection: 'row',
@@ -433,7 +510,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border.default,
     borderRadius: 8,
-    height: 56,
+    minHeight: 56,
     paddingHorizontal: 16,
     fontSize: 24,
     fontWeight: '700',
@@ -441,7 +518,7 @@ const styles = StyleSheet.create({
   },
   intervalButton: {
     marginTop: 16,
-    height: 48,
+    minHeight: 48,
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
@@ -466,6 +543,10 @@ const styles = StyleSheet.create({
   },
   listaBlock: {
     marginBottom: 24,
+  },
+  intervaloInfo: {
+    flex: 1,
+    marginRight: 12,
   },
   intervaloCard: {
     backgroundColor: colors.white,
@@ -519,16 +600,20 @@ const styles = StyleSheet.create({
     borderColor: colors.blue[100],
   },
   totalLabel: {
+    flexShrink: 1,
+    marginRight: 8,
     color: colors.blue[800],
     fontWeight: '700',
   },
   totalValue: {
+    flexShrink: 1,
+    textAlign: 'right',
     fontSize: 24,
     fontWeight: '900',
     color: colors.blue[900],
   },
   cartButton: {
-    height: 56,
+    minHeight: 56,
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',

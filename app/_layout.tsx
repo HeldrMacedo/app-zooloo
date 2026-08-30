@@ -36,8 +36,6 @@ function RootLayoutNav() {
   useEffect(() => {
     if (isLoading) return;
 
-    SplashScreen.hideAsync();
-
     const root = segments[0] as string | undefined;
     const onPublicRoute = root != null && PUBLIC_ROUTES.has(root);
 
@@ -46,13 +44,13 @@ function RootLayoutNav() {
       if (onPublicRoute) {
         router.replace('/(tabs)');
       }
-      return;
-    }
-
-    // Não autenticado: não force /login se já estiver em rota pública (ex.: /terminal).
-    if (!onPublicRoute) {
+    } else if (!onPublicRoute) {
+      // Não autenticado: não force /login se já estiver em rota pública (ex.: /terminal).
       router.replace('/login');
     }
+
+    // Esconder o splash só depois de decidir a rota evita o flash da tela errada.
+    SplashScreen.hideAsync();
   }, [isLoading, isAuthenticated, segments]);
 
   // Não renderizar nada até que o estado de carregamento inicial seja resolvido
@@ -67,7 +65,6 @@ function RootLayoutNav() {
       <Stack.Screen name="terminal" />
       <Stack.Screen name="(tabs)" />
       <Stack.Screen name="aposta" />
-      <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
     </Stack>
   );
 }

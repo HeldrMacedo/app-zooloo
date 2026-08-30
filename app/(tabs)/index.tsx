@@ -33,9 +33,13 @@ export default function HomeScreen() {
     <Screen safe="withTabBar">
       <View style={styles.container}>
         <View style={styles.header}>
-          <View>
-            <Text style={styles.greeting}>Olá, Helder</Text>
-            <Text style={styles.subtitle}>O que deseja fazer hoje?</Text>
+          <View style={styles.headerInfo}>
+            <Text style={styles.greeting} numberOfLines={1}>
+              Olá, Helder
+            </Text>
+            <Text style={styles.subtitle} numberOfLines={2}>
+              O que deseja fazer hoje?
+            </Text>
           </View>
           <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
             <Ionicons name="log-out-outline" size={24} color={colors.danger.DEFAULT} />
@@ -48,9 +52,13 @@ export default function HomeScreen() {
             style={styles.gameCard}
             activeOpacity={0.85}
           >
-            <View>
-              <Text style={styles.gameTitle}>Jogo do Bicho</Text>
-              <Text style={styles.gameSubtitle}>Faça sua aposta agora</Text>
+            <View style={styles.gameInfo}>
+              <Text style={styles.gameTitle} numberOfLines={2}>
+                Jogo do Bicho
+              </Text>
+              <Text style={styles.gameSubtitle} numberOfLines={2}>
+                Faça sua aposta agora
+              </Text>
             </View>
             <View style={styles.gameIconWrap}>
               <Ionicons name="dice-outline" size={32} color={colors.white} />
@@ -76,6 +84,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 32,
+  },
+  headerInfo: {
+    flex: 1,
+    marginRight: 12,
+  },
+  gameInfo: {
+    flex: 1,
+    marginRight: 12,
   },
   greeting: {
     fontSize: 24,

@@ -75,8 +75,13 @@ jest.mock('expo-router', () => ({
     push: jest.fn(),
     replace: jest.fn(),
     back: jest.fn(),
+    canGoBack: jest.fn(() => true),
+    dismissAll: jest.fn(),
+    dismissTo: jest.fn(),
   },
   useSegments: jest.fn(() => []),
+  useLocalSearchParams: jest.fn(() => ({})),
+  useNavigation: jest.fn(() => ({ setOptions: jest.fn() })),
   Stack: Object.assign(
     ({ children }: { children?: unknown }) => children ?? null,
     { Screen: () => null },

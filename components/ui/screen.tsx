@@ -4,7 +4,7 @@ import { useSystemBars } from '@/hooks/use-system-bars';
 import { StatusBar } from 'expo-status-bar';
 import { type ReactNode } from 'react';
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
-import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 /**
  * Presets de faixas do sistema por tipo de navegação:
@@ -47,6 +47,11 @@ export type ScreenProps = {
 /**
  * Container de tela com safe area e faixas coloridas nas barras do sistema.
  * As faixas top/bottom ficam sempre edge-to-edge (largura total da tela).
+ *
+ * O `SafeAreaProvider` vive apenas na raiz (`app/_layout.tsx`). Um provider
+ * aninhado aqui remedia o proprio frame ja inset e devolvia insets ~zero para
+ * os filhos. Ao renderizar `Screen` dentro de um `<Modal>` (janela nova no
+ * Android), envolva com `<SafeAreaProvider>` no proprio Modal.
  */
 export function Screen({
   children,
@@ -65,21 +70,20 @@ export function Screen({
   const bottomBarColor = styleBarBottom || systemBarColor;
 
   return (
-    <SafeAreaProvider>
-      <View style={[styles.shell, { backgroundColor: systemBarColor }, style]}>
-        <StatusBar style={systemBarStyle} backgroundColor={systemBarColor} />
+    <View style={[styles.shell, { backgroundColor: systemBarColor }, style]}>
+      {/* backgroundColor e no-op sob edge-to-edge: as faixas abaixo pintam a cor. */}
+      <StatusBar style={systemBarStyle} />
 
-        {bars.top ? (
-          <View style={{ height: insets.top, backgroundColor: systemBarColor }} />
-        ) : null}
+      {bars.top ? (
+        <View style={{ height: insets.top, backgroundColor: systemBarColor }} />
+      ) : null}
 
-        <View style={[styles.content, contentStyle]}>{children}</View>
+      <View style={[styles.content, contentStyle]}>{children}</View>
 
-        {bars.bottom ? (
-          <View style={{ height: insets.bottom, backgroundColor: bottomBarColor }} />
-        ) : null}
-      </View>
-    </SafeAreaProvider>
+      {bars.bottom ? (
+        <View style={{ height: insets.bottom, backgroundColor: bottomBarColor }} />
+      ) : null}
+    </View>
   );
 }
 

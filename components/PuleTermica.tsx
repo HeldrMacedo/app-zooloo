@@ -16,6 +16,16 @@ import {
   View,
 } from 'react-native';
 
+/**
+ * Largura util do cupom termico em colunas de fonte monoespacada.
+ * O payload ESC/POS depende desse numero: alterar muda o que sai na impressora.
+ */
+const COLUNAS_CUPOM = 47;
+const DIVISOR = '-'.repeat(COLUNAS_CUPOM);
+const DIVISOR_APOSTAS = '-'.repeat(21) + 'APOSTAS' + '-'.repeat(19);
+const PONTILHADO = '.'.repeat(38);
+
+
 interface PuleTermicaProps {
   data: BilheteRegistroResponse;
   onFechar: () => void;
@@ -67,7 +77,7 @@ export function gerarLinhasComprovante(data: BilheteRegistroResponse): string[] 
   lines.push(`Data: ${dataHora}`);
   lines.push(`Terminal: ${terminal}`);
   lines.push(`Operador: ${vendedor}`);
-  lines.push('---------------------APOSTAS-------------------');
+  lines.push(DIVISOR_APOSTAS);
 
   if (data.sorteios && data.sorteios.length > 0) {
     data.sorteios.forEach((s) => {
@@ -91,20 +101,20 @@ export function gerarLinhasComprovante(data: BilheteRegistroResponse): string[] 
     lines.push(`R$ ${(data.total_bilhete || 0).toFixed(2).replace('.', ',')}`);
   }
 
-  lines.push('-----------------------------------------------');
+  lines.push(DIVISOR);
   lines.push('Total:');
   lines.push(`R$ ${(data.total_bilhete || 0).toFixed(2).replace('.', ',')}`);
-  lines.push('-----------------------------------------------');
+  lines.push(DIVISOR);
   lines.push('ATENÇÃO, TODAS AS APOSTAS A PARTIR DE 5,00 TERÃO');
   lines.push('DIREITO A MILHAR BRINDE, QUE SERÁ PREMIADA NO');
   lines.push('VALOR DE 300,00.');
   lines.push('-- BILHETE VÁLIDO PARA RECLAMAÇÃO --');
-  lines.push('-----------------------------------------------');
+  lines.push(DIVISOR);
   lines.push('Reclamações: 6 dia(s)');
-  lines.push('-----------------------------------------------');
+  lines.push(DIVISOR);
   lines.push(`${autorizacao}`);
   lines.push(`Bilhete: ${bilheteNo}`);
-  lines.push('-----------------------------------------------');
+  lines.push(DIVISOR);
   lines.push('Pagamento:');
   lines.push('Dinheiro');
 
@@ -245,7 +255,9 @@ export default function PuleTermica({ data, onFechar }: PuleTermicaProps) {
           <Text style={[styles.mono, styles.line]}>Terminal: {terminal}</Text>
           <Text style={[styles.mono, styles.line]}>Operador: {vendedor}</Text>
 
-          <Text style={[styles.mono, styles.divider]}>---------------------APOSTAS-------------------</Text>
+          <Text style={[styles.mono, styles.divider]} numberOfLines={1}>
+            {DIVISOR_APOSTAS}
+          </Text>
 
           {data.sorteios && data.sorteios.length > 0 ? (
             data.sorteios.map((s, index) => {
@@ -261,7 +273,9 @@ export default function PuleTermica({ data, onFechar }: PuleTermicaProps) {
                   <Text style={[styles.mono, styles.modTitle]}>{(s.modalidade_apresentacao || 'APOSTA').toUpperCase()}</Text>
                   <Text style={[styles.mono, styles.palpiteText]}>
                     {palpitesStr}
-                    <Text style={styles.dotsText}>......................................</Text>
+                    <Text style={styles.dotsText} numberOfLines={1}>
+                      {PONTILHADO}
+                    </Text>
                   </Text>
                   <Text style={[styles.mono, styles.line]}>{coloc}</Text>
                   <Text style={[styles.mono, styles.valorText]}>R$ {s.valor_palpites.toFixed(2).replace('.', ',')}</Text>
@@ -275,7 +289,9 @@ export default function PuleTermica({ data, onFechar }: PuleTermicaProps) {
             </View>
           )}
 
-          <Text style={[styles.mono, styles.divider]}>-----------------------------------------------</Text>
+          <Text style={[styles.mono, styles.divider]} numberOfLines={1}>
+            {DIVISOR}
+          </Text>
 
           <View style={styles.totalRow}>
             <Text style={[styles.mono, styles.totalLabel]}>Total:</Text>
@@ -284,21 +300,29 @@ export default function PuleTermica({ data, onFechar }: PuleTermicaProps) {
             </Text>
           </View>
 
-          <Text style={[styles.mono, styles.divider]}>-----------------------------------------------</Text>
+          <Text style={[styles.mono, styles.divider]} numberOfLines={1}>
+            {DIVISOR}
+          </Text>
 
           <Text style={[styles.mono, styles.disclaimer]}>
             ATENÇÃO, TODAS AS APOSTAS A PARTIR DE 5,00 TERÃO DIREITO A MILHAR BRINDE, QUE SERÁ PREMIADA NO VALOR DE 300,00.
           </Text>
           <Text style={[styles.mono, styles.disclaimerCenter]}>-- BILHETE VÁLIDO PARA RECLAMAÇÃO --</Text>
 
-          <Text style={[styles.mono, styles.divider]}>-----------------------------------------------</Text>
+          <Text style={[styles.mono, styles.divider]} numberOfLines={1}>
+            {DIVISOR}
+          </Text>
           <Text style={[styles.mono, styles.line]}>Reclamações: 6 dia(s)</Text>
-          <Text style={[styles.mono, styles.divider]}>-----------------------------------------------</Text>
+          <Text style={[styles.mono, styles.divider]} numberOfLines={1}>
+            {DIVISOR}
+          </Text>
 
           <Text style={[styles.mono, styles.hashValue]}>{autorizacao}</Text>
           <Text style={[styles.mono, styles.hashValue]}>Bilhete: {bilheteNo}</Text>
 
-          <Text style={[styles.mono, styles.divider]}>-----------------------------------------------</Text>
+          <Text style={[styles.mono, styles.divider]} numberOfLines={1}>
+            {DIVISOR}
+          </Text>
           <Text style={[styles.mono, styles.line]}>Pagamento:</Text>
           <Text style={[styles.mono, styles.lineBold]}>Dinheiro</Text>
         </View>
@@ -410,7 +434,6 @@ const styles = StyleSheet.create({
   },
   palpiteText: {
     fontSize: 13,
-    flexWrap: 'wrap',
   },
   dotsText: {
     color: '#888888',

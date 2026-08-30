@@ -41,7 +41,8 @@ export default function LoginScreen() {
   return (
     <Screen>
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        // No Android o manifest ja usa adjustResize; 'height' compensaria duas vezes.
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={styles.flex}
       >
         <ScrollView
