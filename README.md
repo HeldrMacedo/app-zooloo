@@ -1,163 +1,57 @@
-# Welcome to your Expo app 👋
+# App Zooloo
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+PDV móvel (Expo / React Native) para registrar apostas de Jogo do Bicho, Lotinha, Quininha e
+Seninha, no celular do vendedor ou em maquinetas POS Android com impressora térmica.
+Backend: repositório `zooloo` (PHP/Adianti).
 
-## Get started
+- **Agentes de IA:** comecem por [AGENTS.md](AGENTS.md).
+- **Arquitetura:** [ARCHITECTURE.md](ARCHITECTURE.md).
+- **Planos e progresso:** [docs/exec-plans/](docs/exec-plans/README.md).
 
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Rodar
 
 ```bash
-npm run reset-project
+npm install
+npm start            # Expo dev server
+npm run check        # lint + typecheck + testes + docs:check
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Estrutura da documentação (Obsidian)
 
-## Learn more
+O repositório é um vault do Obsidian. Os links `[[...]]` resolvem pelo nome do arquivo.
 
-To learn more about developing your project with Expo, look at the following resources:
+```
+AGENTS.md                mapa para agentes (curto, só ponteiros)
+ARCHITECTURE.md          camadas e pastas do código
+docs/
+  product-specs/         regras dos jogos, fluxo de telas
+  design-docs/           plano técnico, autenticação, specs, princípios de ouro, adr/
+  exec-plans/            active/, completed/, tech-debt.md, roadmap.md (Kanban)
+  references/            banco de dados, backend, app legado
+  QUALITY_SCORE.md       nota por área
+templates/               Templater: nova-tarefa, novo-bug, nova-decisao-arquitetural
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Ferramentas de IA
 
-## Join the community
+- **[Graphify](https://github.com/Graphify-Labs/graphify)** — grafo de conhecimento do código em
+  `graphify-out/`. `python -m graphify update .` atualiza de forma incremental;
+  `python -m graphify tree` gera `graphify-out/GRAPH_TREE.html`.
+- **[Superpowers](https://github.com/obra/superpowers)** — skills de processo (brainstorming,
+  writing-plans, TDD, systematic-debugging, verification-before-completion) em `.agents/skills/`.
 
-Join our community of developers creating universal apps.
+## APK para a maquininha
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
-
-## Estrutura de arquivos para o obsidian
-
-app-zooloo/
-├─ docs/                      ← Arquitetura e decisões (CLAUDE.md vai aqui)
-│  ├─ CLAUDE.md               ← índice operacional do app
-│  ├─ README-AUTH.md          ← autenticação (já existe)
-│  ├─ plano.md                ← roadmap geral (já existe)
-│  ├─ arquitetura-dados.md    ← como o banco está modelado
-│  ├─ regras-negocio.md       ← cópia das regras dos jogos (regraJogos.md)
-│  └─ decisoes/               ← ADRs (Architecture Decision Records)
-│     └─ 001-por-que-expo-router.md
-│
-├─ tasks/                     ← Fases e tarefas granulares
-│  ├─ roadmap.md              ← kanban board (link para as fases)
-│  ├─ fase-0-regras.md        ← checkboxes das tarefas da Fase 0
-│  ├─ fase-1-autenticacao.md  ← já concluída (histórico)
-│  ├─ fase-2-aposta-bicho.md  ← próxima fatia (em andamento)
-│  └─ backlog.md              ← ideias/melhorias futuras
-│
-├─ bugs/                      ← Problemas conhecidos
-│  ├─ template-bug.md         ← template para novos bugs
-│  └─ 2025-05-23-login-offline.md
-│
-├─ daily/                     ← Diário de desenvolvimento (opcional)
-│  └─ 2025-05-23.md           ← "hoje fiz X, travei em Y, amanhã vou Z"
-│
-└─ templates/                 ← Templates Templater
-   ├─ nova-tarefa.md
-   ├─ novo-bug.md
-   └─ nova-decisao-arquitetural.md
-
----
-
-## 🤖 Ferramentas de IA e Metodologia (AI Agent Tooling)
-
-Este projeto conta com ferramentas avançadas para apoiar o desenvolvimento com Agentes Inteligentes de IA:
-
-### 1. 🌐 [Graphify](https://github.com/Graphify-Labs/graphify)
-
-- **Repositório**: [https://github.com/Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify)
-- **Descrição**: Mapeia toda a base de código do projeto em um **Grafo de Conhecimento** (`graphify-out/`). Permite consultar a arquitetura, visualizar caminhos de dependência entre módulos e explorar o grafo no Obsidian ou via relatório interativo HTML (`GRAPH_TREE.html`).
-- **Comandos Principais**:
-  - `python -m graphify . --code-only`: Gera o grafo de conhecimento inicial do código.
-  - `python -m graphify update .`: Atualização incremental rápida dos arquivos modificados.
-  - `python -m graphify tree`: Gera a visualização em árvore interativa (`graphify-out/GRAPH_TREE.html`).
-
-### 2. ⚡ [Superpowers](https://github.com/obra/superpowers)
-
-- **Repositório**: [https://github.com/obra/superpowers](https://github.com/obra/superpowers)
-- **Descrição**: Metodologia de engenharia de software composta por 14 habilidades (*skills*) estruturadas que garantem disciplina e alto padrão no código gerado pelo agente:
-  - **`brainstorming`**: Refinamento de requisitos e decisões de design antes de programar.
-  - **`writing-plans`**: Criação de planos de implementação detalhados e testáveis.
-  - **`test-driven-development`**: Desenvolvimento Orientado a Testes (TDD).
-  - **`systematic-debugging`**: Análise sistemática de causa-raiz e logs antes de aplicar correções.
-  - **`verification-before-completion`**: Verificação rigorosa com testes no terminal antes de concluir qualquer tarefa.
-
-## Como gerar APK para a maquininha
-
-cd /home/helder/Desenvolvimento/app-zooloo/android
-
-# 32-bit + 64-bit, útil se a POS for 32-bit
-
-./gradlew assembleRelease -PreactNativeArchitectures=armeabi-v7a,arm64-v8a
-Instale:
-
+```bash
+cd android
+./gradlew assembleDebug                                                         # debug
+./gradlew assembleRelease -PreactNativeArchitectures=armeabi-v7a,arm64-v8a      # release 32+64-bit
 adb install -r app/build/outputs/apk/release/app-release.apk
-
-## Como testar direito no celular
-
-Opção A — desenvolvimento (recomendada para debug)
-
-No PC:
-
-cd /home/helder/Desenvolvimento/app-zooloo
-npx expo start --dev-client
-
-• Celular e PC na mesma rede Wi‑Fi.
-• Abra o app de novo.
-• Se pedir host: IP da máquina (ex. 192.168.x.x:8081), não localhost.
-
-Com USB:
-
-adb reverse tcp:8081 tcp:8081
-npx expo start --dev-client
-
-Opção B — APK que abre sozinho (sem Metro)
-Gere release (JS embutido):
-
-cd android
-./gradlew assembleRelease
-
-# APK: android/app/build/outputs/apk/release/app-release.apk
-
-(ou npx expo run:android --variant release)
-
-### Opção A: Modo Debug (Recomendado para testes rápidos)
-
-```bash
-cd android
-./gradlew assembleDebug
-cd ..
-adb install -r android/app/build/outputs/apk/debug/app-debug.apk
 ```
 
-### Opção B: Modo Release (Produção/Stand-alone)
+## Testar no celular (dev client)
 
 ```bash
-cd android
-./gradlew assembleRelease
-cd ..
-adb install -r android/app/build/outputs/apk/release/app-release.apk
+npx expo start --dev-client           # celular e PC na mesma Wi-Fi; host = IP do PC, não localhost
+adb reverse tcp:8081 tcp:8081         # alternativa via USB
 ```

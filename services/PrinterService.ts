@@ -31,7 +31,7 @@ export class PrinterService {
 
   /**
    * Impressora embutida da maquininha (CloudPOS).
-   * Stub: false até integração com SDK oficial (ver docs/superpowers/specs/2026-08-04-cloudpos-printer.md).
+   * Stub: false até integração com SDK oficial (ver docs/design-docs/2026-08-04-cloudpos-printer.md).
    */
   static async isInternalPrinterAvailable(): Promise<boolean> {
     try {

@@ -43,3 +43,13 @@ app-example
 # generated native folders
 /ios
 /android
+
+# generated reports
+coverage/
+
+# local tool state (per-developer)
+.claude/settings.local.json
+.claude/.headroom*
+.kilo/
+.serena/cache/
+.obsidian/workspace.json

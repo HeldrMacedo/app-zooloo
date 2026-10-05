@@ -9,6 +9,9 @@
     "ios": "NODE_OPTIONS=--dns-result-order=ipv4first expo start --ios",
     "web": "NODE_OPTIONS=--dns-result-order=ipv4first expo start --web",
     "lint": "expo lint",
+    "typecheck": "tsc --noEmit",
+    "docs:check": "node scripts/check-docs.mjs",
+    "check": "npm run lint && npm run typecheck && npm test -- --silent && npm run docs:check",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
@@ -72,7 +75,8 @@
     "testPathIgnorePatterns": [
       "/node_modules/",
       "<rootDir>/__tests__/setup.ts",
-      "<rootDir>/__tests__/__mocks__/"
+      "<rootDir>/__tests__/__mocks__/",
+      "<rootDir>/.kilo/"
     ],
     "collectCoverageFrom": [
       "services/**/*.{ts,tsx}",
@@ -87,7 +91,10 @@
         "lines": 80,
         "statements": 80
       }
-    }
+    },
+    "modulePathIgnorePatterns": [
+      "<rootDir>/.kilo/"
+    ]
   },
   "private": true
 }
