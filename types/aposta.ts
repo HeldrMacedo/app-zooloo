@@ -43,6 +43,7 @@ export interface JogoPayload {
   colocacao_inicial: number;
   colocacao_final: number;
   valor_palpite: number;
+  rateado: boolean; // true = valor dividido entre as colocações; false = 'Por Cada'
 }
 
 export interface BilheteRegistroPayload {
@@ -65,8 +66,8 @@ export interface SorteioDetalhe {
   palpites: string[];
   colocao_inicial: number;
   colocao_final: number;
-  valor_palpites: number;
-  total_sorteio: number;
+  valor_palpites: number; // valor de uma aposta numa colocação (base do prêmio)
+  total_sorteio: number; // valor cobrado pelo item
   sorteado?: string;
   sorteado_valor?: number;
   previsao_premio?: number;

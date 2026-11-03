@@ -143,6 +143,7 @@ As seguintes regras aplicam-se transversalmente a todas as modalidades de aposta
 
 ### Lógica de Cálculo de Prêmio e Rateio
 *   **Multiplicadores e Cotas Especiais:** O prêmio estimado de uma aposta (`previsao_premio`) é gerado pelo multiplicador padrão da modalidade (`cad_modalidade.multiplicador`) multiplicado pelo valor jogado. No entanto, se o palpite estiver cadastrado e ativo em `cfg_palpite_cotado`, a estimativa de prêmio é multiplicada pela cotação reduzida (`cotacao / 100`).
+*   **Valor do palpite (`valor_palpites`):** é o valor de uma aposta numa colocação, não o valor digitado. O backend calcula a partir de `valor_palpite` + `rateado` enviados pelo app (regra completa em `../zooloo/docs/product-specs/dominio.md` § "Valor do palpite"). Ex.: Milhar 1º ao 5º, 2 palpites, R$ 1,00 rateado = total R$ 2,00, `valor_palpites` 0,20, previsão R$ 800.
 *   **Lógica de Rateio por Colocação:**
     *   No Jogo do Bicho regular, quando uma aposta é feita abrangendo várias colocações (ex: do 1º ao 5º prêmio, ou do 1º ao 10º prêmio), a apuração do prêmio ganho pelo cliente (`ganhou_premio_total`) é dividida pela quantidade de colocações que dividem o prêmio, utilizando a coluna `qtd_colocacao_premio` da tabela `int_jogo`.
     *   A fórmula matemática aplicada pelo banco para calcular o prêmio do rateio de colocações em `func_trg_mv_sorteio_regular` é:

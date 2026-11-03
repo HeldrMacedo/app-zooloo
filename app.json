@@ -7,7 +7,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "appzooloo",
     "extra": {
-      "apiBaseUrl": "http://192.168.0.105",
+      "apiBaseUrl": "http://192.168.0.106",
       "allowInsecureHttp": true
     },
     "userInterfaceStyle": "light",

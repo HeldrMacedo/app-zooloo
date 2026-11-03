@@ -92,7 +92,7 @@ export function gerarLinhasComprovante(data: BilheteRegistroResponse): string[] 
           ? `${sigla} ${s.colocao_inicial}`
           : `${sigla} ${s.colocao_inicial} ao ${s.colocao_final}`;
 
-      const valor = `R$ ${s.valor_palpites.toFixed(2).replace('.', ',')}`;
+      const valor = `R$ ${s.total_sorteio.toFixed(2).replace('.', ',')}`;
       lines.push(coloc);
       lines.push(valor);
     });
@@ -278,7 +278,7 @@ export default function PuleTermica({ data, onFechar }: PuleTermicaProps) {
                     </Text>
                   </Text>
                   <Text style={[styles.mono, styles.line]}>{coloc}</Text>
-                  <Text style={[styles.mono, styles.valorText]}>R$ {s.valor_palpites.toFixed(2).replace('.', ',')}</Text>
+                  <Text style={[styles.mono, styles.valorText]}>R$ {s.total_sorteio.toFixed(2).replace('.', ',')}</Text>
                 </View>
               );
             })

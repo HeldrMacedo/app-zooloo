@@ -19,6 +19,15 @@ exige `Authorization: Bearer <jwt>`. Resposta sempre no envelope
 
 Tipos do lado do app: `types/aposta.ts` (escritos à mão — não há geração a partir do PHP).
 
+### `BilheteRestService::registrar`
+
+Cada jogo leva `valor_palpite` (valor digitado por palpite) e `rateado` (`bitT_rateado` do
+carrinho: `true` = valor dividido entre as colocações, `false` = "por cada"). Montado por
+`montarJogosPayload` em `utils/apostaHelpers.ts`. O backend calcula `total_sorteio` e
+`valor_palpites` (valor de uma aposta numa colocação, base da previsão e do pagamento) — regra
+em `../zooloo/docs/product-specs/dominio.md` § "Valor do palpite". Na pule, o valor do item é
+`total_sorteio`, não `valor_palpites`.
+
 ## Disponível no backend, ainda não usado pelo app
 
 - `ModalidadeRestService::disponiveis`
@@ -35,4 +44,4 @@ Tipos do lado do app: `types/aposta.ts` (escritos à mão — não há geração
 2. Atualize esta tabela e `types/aposta.ts`.
 3. Ajuste o service do app e os testes em `__tests__/services/`.
 
-Última verificação contra o código do backend: 2026-10-05.
+Última verificação contra o código do backend: 2026-10-24.

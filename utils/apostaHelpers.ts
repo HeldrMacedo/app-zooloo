@@ -1,3 +1,5 @@
+import type { ApostaItem, JogoPayload } from '@/types/aposta';
+
 /** Valida se o palpite tem exatamente a quantidade de dígitos numéricos exigida pela modalidade. */
 export const validarMilhar = (palpite: string, digitos = 4): boolean => {
   if (!Number.isInteger(digitos) || digitos <= 0) return false;
@@ -38,3 +40,24 @@ export const getHojeLocalDate = (date = new Date()): string => {
   const day = String(date.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 };
+
+/**
+ * Monta os jogos do bilhete para BilheteRestService::registrar: um por extração × item.
+ * O backend calcula total_sorteio e valor_palpites a partir de valor_palpite + rateado.
+ */
+export const montarJogosPayload = (
+  itens: ApostaItem[],
+  sorteioIds: number[],
+  ratearExtracoes: boolean
+): JogoPayload[] =>
+  sorteioIds.flatMap((sorteioId) =>
+    itens.map((item) => ({
+      sorteio_id: sorteioId,
+      modalidade_id: item.modalidade.id,
+      palpites: item.palpites,
+      colocacao_inicial: item.colocacao_inicial,
+      colocacao_final: item.colocacao_final,
+      valor_palpite: ratearExtracoes ? item.valor_palpite / sorteioIds.length : item.valor_palpite,
+      rateado: item.bitT_rateado,
+    }))
+  );

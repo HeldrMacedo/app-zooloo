@@ -1,4 +1,5 @@
-import { validarMilhar, calcularTotalAposta, parsePalpitesPosicionais, getHojeLocalDate } from '../../utils/apostaHelpers';
+import { validarMilhar, calcularTotalAposta, parsePalpitesPosicionais, getHojeLocalDate, montarJogosPayload } from '../../utils/apostaHelpers';
+import type { ApostaItem } from '../../types/aposta';
 
 describe('apostaHelpers', () => {
   describe('validarMilhar', () => {
@@ -62,6 +63,41 @@ describe('apostaHelpers', () => {
     it('deve formatar data local no formato YYYY-MM-DD sem fuso UTC', () => {
       const mockDate = new Date(2026, 6, 29, 21, 30, 0); // 2026-07-29 21:30:00 local
       expect(getHojeLocalDate(mockDate)).toBe('2026-07-29');
+    });
+  });
+
+  describe('montarJogosPayload', () => {
+    const item = (rateado: boolean): ApostaItem => ({
+      id_interno: '1',
+      modalidade: { id: 33, nome: 'MILHAR', sigla: 'M', digitos: 4 },
+      palpites: ['1421', '8763'],
+      colocacao_inicial: 1,
+      colocacao_final: 5,
+      valor_palpite: 1,
+      total_item: rateado ? 2 : 10,
+      bitT_rateado: rateado,
+    });
+
+    it('envia rateado para o backend calcular total e valor por colocação', () => {
+      expect(montarJogosPayload([item(false)], [9], false)).toEqual([
+        {
+          sorteio_id: 9,
+          modalidade_id: 33,
+          palpites: ['1421', '8763'],
+          colocacao_inicial: 1,
+          colocacao_final: 5,
+          valor_palpite: 1,
+          rateado: false,
+        },
+      ]);
+    });
+
+    it('divide o valor entre as extrações quando ratearExtracoes', () => {
+      const jogos = montarJogosPayload([item(true)], [9, 10], true);
+      expect(jogos.map((j) => [j.sorteio_id, j.valor_palpite, j.rateado])).toEqual([
+        [9, 0.5, true],
+        [10, 0.5, true],
+      ]);
     });
   });
 });

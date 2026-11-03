@@ -115,6 +115,7 @@ describe('ApostaService', () => {
               colocacao_inicial: 1,
               colocacao_final: 5,
               valor_palpite: 5.0,
+              rateado: true,
             }
           ]
         }

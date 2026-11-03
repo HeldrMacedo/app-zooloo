@@ -6,7 +6,7 @@ import { useCarrinho } from '@/context/CarrinhoContext';
 import { ApostaService } from '@/services/apostaService';
 import AuthService from '@/services/auth';
 import { Extracao } from '@/types/aposta';
-import { getHojeLocalDate } from '@/utils/apostaHelpers';
+import { getHojeLocalDate, montarJogosPayload } from '@/utils/apostaHelpers';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
@@ -97,23 +97,7 @@ export default function PreviewScreen() {
         return;
       }
 
-      const jogosPayload = [];
-      for (const excId of extracoesSelecionadas) {
-        for (const item of itens) {
-          const valor = ratearExtracoes
-            ? item.valor_palpite / extracoesSelecionadas.length
-            : item.valor_palpite;
-
-          jogosPayload.push({
-            sorteio_id: excId,
-            modalidade_id: item.modalidade.id,
-            palpites: item.palpites,
-            colocacao_inicial: item.colocacao_inicial,
-            colocacao_final: item.colocacao_final,
-            valor_palpite: valor,
-          });
-        }
-      }
+      const jogosPayload = montarJogosPayload(itens, extracoesSelecionadas, ratearExtracoes);
 
       const payload = {
         data: {
